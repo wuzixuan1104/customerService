@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * @author      OA Wu <comdan66@gmail.com>
+ * @copyright   Copyright (c) 2013 - 2018, OACI
+ * @license     http://opensource.org/licenses/MIT  MIT License
+ * @link        https://www.ioa.tw/
+ */
+
+define ('OACI', '1');
+define ('CMD_FILE', array_shift ($argv));
+
+(@include_once 'core' . DIRECTORY_SEPARATOR . 'base.php') || exit ('初始化失敗！');
+(@include_once BASEPATH . 'core' . DIRECTORY_SEPARATOR . 'Init.php') || exit ('初始化失敗！');
+(@include_once BASEPATH . 'core' . DIRECTORY_SEPARATOR . 'Load.php') || gg ('初始化失敗！', 503);
+
+Load::sysCore ('Common.php', true, "config ('defines');");
+Load::sysCore ('Charset.php', true, "Charset::init ();");
+Load::sysCore ('Log.php', true);
+
+Load::cmdFunc ('create.php', true);
+Load::sysFunc ('file.php', true);
+Load::sysFunc ('inflector.php', true);
+
+Load::sysFunc ('file.php', true);
+Load::sysCore ('Model.php', true);
+Load::cmdLib ('MigrationTool.php', true, "MigrationTool::init ();");
+
+do {
+  headerText ();
+  echo "\n " . cc ('➜', 'R') . ' 請輸入您的選項' .  cc ('(q)', 'N') . '：';
+
+  ($cho = trim (fgets (STDIN))) || $cho = 'q';
+} while (!in_array (strtolower ($cho), array ('1', '2', '3', 'q')));
+
+$cho == '2' && cho2 ();
+$cho == '3' && cho3 ();
+$cho == 'q' && exit ("\n" . cc (str_repeat ('═', CLI_LEN), 'N') . "\n\n" . "  好的！下次別再按錯囉，期待您下次再使用，" . cc ('掰掰', 'W') . "～  \n\n" . cc (str_repeat ('═', CLI_LEN), 'N') . "\n\n");
