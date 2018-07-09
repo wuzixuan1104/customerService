@@ -11,12 +11,12 @@ class main extends Controller {
 
   public function index () {
     $asset = Asset::create (2)
-                  ->addCSS ('/assets/css/icon-site.css')
-                  ->addCSS ('/assets/css/site/layout.css')
+                  // ->addCSS ('/assets/css/icon-site.css')
+                  // ->addCSS ('/assets/css/site/layout.css')
 
-                  ->addJS ('/assets/js/res/jquery-1.10.2.min.js')
-                  ->addJS ('/assets/js/res/imgLiquid-min.js')
-                  ->addJS ('/assets/js/site/layout.js')
+                  // ->addJS ('/assets/js/res/jquery-1.10.2.min.js')
+                  // ->addJS ('/assets/js/res/imgLiquid-min.js')
+                  // ->addJS ('/assets/js/site/layout.js')
              ;
 
     return View::create ('index.php')
