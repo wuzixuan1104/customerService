@@ -10,6 +10,13 @@
 class main extends Controller {
 
   public function index () {
+    Load::lib('TrelloApi.php');
+    $trello = TrelloApi::create();
+
+    $result = $trello->request('GET', '/1/cards/5b42d950ad819e13e2699105');
+    print_r($result);
+    die;
+
     $asset = Asset::create (2)
                   // ->addCSS ('/assets/css/icon-site.css')
                   // ->addCSS ('/assets/css/site/layout.css')
