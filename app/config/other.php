@@ -11,12 +11,12 @@ return array (
   'base_url' => '',
   'encryption_key' => '',
 
-  'composer_autoload' => false,
+  'composer_autoload' => true,
   'charset' => 'UTF-8',
   'proxy_ips' => '',
   'time_reference' => 'local',
   'global_xss_filtering' => true,
-  
+
   'language'  => 'english',
   'subclass_prefix' => 'MY_',
   'permitted_uri_chars' => 'a-z 0-9~%.:_\-',

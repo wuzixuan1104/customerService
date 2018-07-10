@@ -7,14 +7,9 @@
  * @link        https://www.ioa.tw/
  */
 
-Router::get ('', 'main@index');
+abstract class ApiController extends Controller {
 
-
-Router::dir ('api', function () {
-  Router::post ('line', 'Line@index');
-});
-
-Router::dir ('admin', function () {
-  Router::get ('', 'main');
-
-});
+  public function __construct () {
+    parent::__construct ();
+  }
+}
