@@ -30,15 +30,15 @@ class Line extends ApiController {
 
       switch( get_class($log) ) {
         case 'Join':
-          if ( $msg = ForexProcess::begin() )
-            $msg->reply($event->getReplyToken());
+          // if ( $msg = ForexProcess::begin() )
+          //   $msg->reply($event->getReplyToken());
 
           break;
         case 'Leave':
           break;
         case 'Follow':
-          if ( $msg = ForexProcess::begin() )
-            $msg->reply($event->getReplyToken());
+          // if ( $msg = ForexProcess::begin() )
+          //   $msg->reply($event->getReplyToken());
 
           break;
         case 'Unfollow':
@@ -47,6 +47,10 @@ class Line extends ApiController {
           $pattern = 'hello';
           $pattern = !preg_match ('/\(\?P<k>.+\)/', $pattern) ? '/(?P<k>(' . $pattern . '))/i' : ('/(' . $pattern . ')/i');
           preg_match_all ($pattern, $log->text, $result);
+
+          MyLineBotMsg::create()
+            ->text('hello world')
+            ->reply($event->getReplyToken());
 
           // if ($result['k'] && $msg = ForexProcess::begin() )
           //   $msg->reply($event->getReplyToken());
