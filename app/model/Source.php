@@ -56,7 +56,7 @@ class Source extends Model {
     $response = MyLineBot::bot()->getProfile($event->getUserId());
     if ( $response->isSucceeded() && $profile = $response->getJSONDecodedBody() )
         return $profile['displayName'];
-    return '';
+    return '查無姓名';
   }
 
   public static function checkSourceExist($event) {
@@ -69,6 +69,7 @@ class Source extends Model {
         'title' => Source::getTitle($event),
         'type' => self::getType($event),
       );
+
       $transaction = function() use (&$obj, $param){
         return $obj = Source::create( $param );
       };

@@ -15,16 +15,24 @@ class Line extends ApiController {
   }
 
   public function index() {
+//     $channelSecret = '84d606410b28d02cc774c2e3d859d14d'; // Channel secret string
+// $httpRequestBody = ''; // Request body string
+// $hash = hash_hmac('sha256', $httpRequestBody, $channelSecret, true);
+// $signature = base64_encode($hash);
+// echo $signature;
+// die;
     Load::lib('MyLineBot.php');
     // Load::lib('ForexProcess.php');
     // Load::sysFunc('file.php');
 
     $events = MyLineBot::events();
+
     foreach( $events as $event ) {
+
       if( !$source = Source::checkSourceExist($event) )
         continue;
       $speaker = Source::checkSpeakerExist($event);
-
+      
       if (!$log = MyLineBotLog::init($source, $speaker, $event)->create())
         return false;
 

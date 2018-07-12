@@ -97,7 +97,7 @@ class MyLineBotLog {
   }
 
   public function create() {
-    if( $this->event->getType() == ' message' )
+    if( $this->event->getType() == 'message' )
       $this->setMessageParam();
 
     $class = get_class($this->event);
