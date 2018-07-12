@@ -11,9 +11,7 @@ Router::get ('', 'main@index');
 
 
 Router::dir ('api', function () {
-
   Router::post ('line', 'Line@index');
-  Router::get ('line', 'Line@index');
 });
 
 Router::dir ('admin', function () {
