@@ -35,7 +35,7 @@ class cli extends Controller {
       return true;
     };
 
-    if ($error = Lists::getTransactionError ($transactionLists, $lists, $board))
+    if ($error = Aaa::getTransactionError ($transactionLists, $lists, $board))
       exit('新增lists資料表錯誤');
 
     echo 'success';
