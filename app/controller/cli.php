@@ -32,7 +32,7 @@ class cli extends Controller {
         Aaa::create([1,2,3]);
         // if( !$obj = Aaa::create( [12] ) )
         //   return false;
-        // }
+        }
       return true;
     };
 
