@@ -776,6 +776,8 @@ class Model
 	public static function create($attributes, $validate=true, $guard_attributes=true)
 	{
 		$class_name = get_called_class();
+		var_dump($attributes);
+		exit;
 		$model = new $class_name($attributes, $guard_attributes);
 		$model->save($validate);
 		return $model;
