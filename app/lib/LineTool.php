@@ -18,7 +18,9 @@ class LineTool {
    * 呼叫此function 的模式 Follow, join, 傳入字串'hello'
    */
   public static function start() {
-    if( !$lists = Lists::find('all') )
+    Log::info('start');
+
+    if( !$lists = TList::find('all') )
       return false;
 
     foreach( array_chunk( $lists, 3 ) as $key => $list ) {
