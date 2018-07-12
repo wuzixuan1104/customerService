@@ -29,12 +29,18 @@ class Line extends ApiController {
 
     foreach( $events as $event ) {
 
-      if( !$source = Source::checkSourceExist($event) )
+      if( !$source = Source::checkSourceExist($event) ) {
+        Log::info('source fail');
         continue;
+      }
+
       $speaker = Source::checkSpeakerExist($event);
 
-      if (!$log = MyLineBotLog::init($source, $speaker, $event)->create())
+      if (!$log = MyLineBotLog::init($source, $speaker, $event)->create()) {
+        Log::info('log fail');
         return false;
+
+      }
 
       switch( get_class($log) ) {
         case 'Join':
