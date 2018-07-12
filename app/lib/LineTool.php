@@ -57,9 +57,15 @@ class LineTool {
     $source->save();
 
     return MyLineBotMsg::create()->template('這訊息要用手機的賴才看的到哦',
-      MyLineBotMsg::create()->templateConfirm( '輸入問題之後請點擊', [
-        MyLineBotActionMsg::create()->postback('送出', array('lib' => 'LineTool', 'method' => 'sendCard', 'param' => array() ), 'send'),
-      ]));
+      MyLineBotMsg::create()->templateConfirm( '你是女生？', [
+        MyLineBotActionMsg::create()->message('是', 'true'),
+            MyLineBotActionMsg::create()->message('否', 'false'),
+      ])
+  );
+    // return MyLineBotMsg::create()->template('這訊息要用手機的賴才看的到哦',
+    //   MyLineBotMsg::create()->templateConfirm( '輸入問題之後請點擊', [
+    //     MyLineBotActionMsg::create()->postback('送出', array('lib' => 'LineTool', 'method' => 'sendCard', 'param' => array() ), 'send'),
+    //   ]));
   }
 
   public static function sendCard() {
