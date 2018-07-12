@@ -21,7 +21,7 @@ class Line extends ApiController {
 
     $events = MyLineBot::events();
     Log::info(234);
-    Log::info($event);
+    Log::info($events);
     Log::info(123);
     foreach( $events as $event ) {
 
