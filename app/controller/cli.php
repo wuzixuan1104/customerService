@@ -29,9 +29,10 @@ class cli extends Controller {
 
       foreach($lists as $list) {
         print_r(['board_id' => $board->id, 'key_id' => $list->id, 'name' => $list->name]);
-        if( !$obj = Aaa::create( [12] ) )
-          return false;
-        }
+        Aaa::create([1,2,3]);
+        // if( !$obj = Aaa::create( [12] ) )
+        //   return false;
+        // }
       return true;
     };
 
