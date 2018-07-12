@@ -26,6 +26,7 @@ class cli extends Controller {
     $transactionLists = function ($lists, $board) {
       foreach($lists as $key => $list) {
         echo $key . "\r\n";
+        echo "===============\r\n";
         if( !$obj = Lists::create( array('board_id' => $board->id, 'key_id' => $list->id, 'name' => $list->name) ) ) {
           echo $key . ':' . 'fail';
           return false;
