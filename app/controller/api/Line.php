@@ -32,7 +32,7 @@ class Line extends ApiController {
       if( !$source = Source::checkSourceExist($event) )
         continue;
       $speaker = Source::checkSpeakerExist($event);
-      
+
       if (!$log = MyLineBotLog::init($source, $speaker, $event)->create())
         return false;
 
@@ -56,9 +56,13 @@ class Line extends ApiController {
           $pattern = !preg_match ('/\(\?P<k>.+\)/', $pattern) ? '/(?P<k>(' . $pattern . '))/i' : ('/(' . $pattern . ')/i');
           preg_match_all ($pattern, $log->text, $result);
 
+          Log::info('text');
           MyLineBotMsg::create()
-            ->text('hello world')
+            ->text($event->getText())
             ->reply($event->getReplyToken());
+          Log::info('end');
+
+
 
           // if ($result['k'] && $msg = ForexProcess::begin() )
           //   $msg->reply($event->getReplyToken());
