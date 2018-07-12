@@ -61,6 +61,8 @@ class MyLineBot extends LINEBot{
     parent::__construct ($client, $option);
   }
   public static function create() {
+    Log::info('token:' . config('line', 'channelToken'));
+    Log::info('channelSecret:' . config('line', 'channelSecret'));
     return new LINEBot( new CurlHTTPClient(config('line', 'channelToken')), ['channelSecret' => config('line', 'channelSecret')]);
   }
   public static function bot() {
