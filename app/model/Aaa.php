@@ -7,7 +7,7 @@
  * @link        https://www.ioa.tw/
  */
 
-class Lists extends Model {
+class Aaa extends Model {
   static $table_name = 'lists';
 
   static $has_one = array (
