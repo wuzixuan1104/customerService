@@ -34,8 +34,6 @@ if (!function_exists ('use_model')) {
     class Model extends ActiveRecord\Model {
 
       public static function create ($attributes, $validate = true, $guard_attributes = true) {
-        var_dump(static::table ()->columns);
-
         $attributes = array_intersect_key ($attributes, self::table ()->columns);
         return parent::create ($attributes, $validate, $guard_attributes);
       }
