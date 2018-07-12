@@ -24,11 +24,11 @@ class cli extends Controller {
       return false;
 
     $transactionLists = function ($lists, $board) {
-      print_r(['board_id' => $board->id, 'key_id' => $list->id, 'name' => $list->name]);
+      print_r($lists);
       echo "=====================\r\n";
 
       foreach($lists as $list) {
-        print_r($list);
+        print_r(['board_id' => $board->id, 'key_id' => $list->id, 'name' => $list->name]);
         if( !$obj = Aaa::create( array('board_id' => $board->id, 'key_id' => $list->id, 'name' => $list->name) ) )
           return false;
         }
