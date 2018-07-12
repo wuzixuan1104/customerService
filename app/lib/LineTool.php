@@ -40,7 +40,7 @@ class LineTool {
         MyLineBotMsg::create()->templateCarousel( $column )
       );
     }, array_chunk($columnArr, 10) ));
-
+    Log::info('lineTool');
     return MyLineBotMsg::create()->multi ($multiArr);
   }
 
