@@ -51,7 +51,7 @@ class Line extends ApiController {
           preg_match_all ($pattern, $log->text, $result);
           Log::info('text');
           if ($result['k'] && $msg = LineTool::start() ) {
-            Log::info($msg);
+            Log::info('token:' . $event->getReplyToken());
             $msg->reply($event->getReplyToken());
           }
           Log::info('end');
