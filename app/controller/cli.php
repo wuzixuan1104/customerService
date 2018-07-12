@@ -22,6 +22,7 @@ class cli extends Controller {
     $lists = $trello->request('GET', '/1/boards/' . $this->boardId . '/lists' );
     if( empty($lists) )
       return false;
+    echo 'list no empty' . "\r\n";
 
     $transactionLists = function ($lists, $board) {
       foreach($lists as $list)
