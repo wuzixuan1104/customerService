@@ -10,7 +10,7 @@
 return array (
   'auto_load' => true,
   'cache' => array (
-      'enable' => ENVIRONMENT == 'production',
+      'enable' => false,
       'driver' => 'file', //  | file   | redis   | memcached
       'prefix' => 'query-', // | query- | query:  | query:
       'expire' => 30 //sec
