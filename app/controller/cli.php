@@ -24,13 +24,13 @@ class cli extends Controller {
       return false;
 
     $transactionLists = function ($lists, $board) {
-      echo 123;
-      foreach($lists as $key => $list)
-        print_R($list);
+      foreach($lists as $key => $list) {
         if( !$obj = Lists::create( array('board_id' => $board->id, 'key_id' => $list->id, 'name' => $list->name) ) ) {
           echo $key .':' . 'fail';
           return false;
         }
+      }
+      echo 'ok';
       return true;
     };
 
