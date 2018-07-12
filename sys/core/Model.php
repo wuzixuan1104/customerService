@@ -30,9 +30,9 @@ if (!function_exists ('use_model')) {
     });
 
     class_alias ('ActiveRecord\Connection', 'ModelConnection');
-    
+
     class Model extends ActiveRecord\Model {
-      
+
       public static function create ($attributes, $validate = true, $guard_attributes = true) {
         $attributes = array_intersect_key ($attributes, self::table ()->columns);
         return parent::create ($attributes, $validate, $guard_attributes);

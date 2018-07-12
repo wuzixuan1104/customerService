@@ -19,6 +19,9 @@ class Aaa extends Model {
   static $belongs_to = array (
   );
 
+  public function __construct ($attrs = array (), $guardAttrs = true, $instantiatingViafind = false, $newRecord = true) {
+    parent::__construct ($attrs, $guardAttrs, $instantiatingViafind, $newRecord);
+  }
 
   public function destroy () {
     if (!isset ($this->id))

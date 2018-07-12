@@ -777,7 +777,7 @@ class Model
 	{
 		$class_name = get_called_class();
 		var_dump($class_name, $attributes);
-		
+
 		$model = new $class_name($attributes, $guard_attributes);
 		$model->save($validate);
 		return $model;

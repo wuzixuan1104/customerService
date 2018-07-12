@@ -28,8 +28,8 @@ class cli extends Controller {
       echo "=====================\r\n";
 
       foreach($lists as $list) {
-        print_r(['board_id' => $board->id, 'key_id' => $list->id, 'name' => $list->name]);
-        Aaa::create([1,2,3]);
+        
+        Aaa::create(['board_id' => $board->id, 'key_id' => $list->id, 'name' => $list->name]);
         exit;
 
         // if( !$obj = Aaa::create( [12] ) )
