@@ -24,18 +24,13 @@ class cli extends Controller {
       return false;
 
     $transactionLists = function ($lists, $board) {
-      print_r($lists);
-      echo "=====================\r\n";
-
-      foreach($lists as $list) {
-        print_r($list);
-        if( !$obj = Aaa::create(['board_id' => $board->id, 'key_id' => $list->id, 'name' => $list->name]) )
+      foreach($lists as $list)
+        if( !$obj = TList::create(['board_id' => $board->id, 'key_id' => $list->id, 'name' => $list->name]) )
           return false;
-      }
       return true;
     };
 
-    if ($error = Aaa::getTransactionError ($transactionLists, $lists, $board))
+    if ($error = TList::getTransactionError ($transactionLists, $lists, $board))
       exit('新增lists資料表錯誤');
 
     echo 'success';
