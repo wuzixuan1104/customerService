@@ -114,8 +114,16 @@ if (!function_exists ('_error_handler')) {
         '位置' => $filepath . '(' . $line . ')'
         )));
 
-    if ($isError)
+    if ($isError) {
+      Log::error(json_encode(array (
+        'detail' => array (
+        '類型' => isset ($levels[$severity]) ? $levels[$severity] : $severity,
+        '訊息' => $message,
+        '位置' => $filepath . '(' . $line . ')'
+      ))));
       exit(1);
+
+      }
   }
 }
 
@@ -132,6 +140,12 @@ if (!function_exists ('_exception_handler')) {
         'traces' => array_combine (array_map (function ($trace) { return (isset ($trace['file']) ? str_replace ('', '', $trace['file']) : '[呼叫函式]') . (isset ($trace['line']) ? '(' . $trace['line'] . ')' : ''); }, $exception->getTrace ()), array_map (function ($trace) { return (isset ($trace['class']) ? $trace['class'] : '') . (isset ($trace['type']) ? $trace['type'] : '') . (isset ($trace['function']) ? $trace['function'] : '') . (isset ($trace['args']) ? '(' . implode_recursive (', ', $trace['args']) . ')' : ''); }, $exception->getTrace ())))
       );
 
+    Log::error(json_encode(array (
+      'detail' => array (
+        '物件' => get_class ($exception),
+        '訊息' => $exception->getMessage (),
+        '檔案' => $exception->getFile () . '(' . $exception->getLine () . ')'),
+      'traces' => array_combine (array_map (function ($trace) { return (isset ($trace['file']) ? str_replace ('', '', $trace['file']) : '[呼叫函式]') . (isset ($trace['line']) ? '(' . $trace['line'] . ')' : ''); }, $exception->getTrace ()), array_map (function ($trace) { return (isset ($trace['class']) ? $trace['class'] : '') . (isset ($trace['type']) ? $trace['type'] : '') . (isset ($trace['function']) ? $trace['function'] : '') . (isset ($trace['args']) ? '(' . implode_recursive (', ', $trace['args']) . ')' : ''); }, $exception->getTrace ())))));
     exit(1);
   }
 }
@@ -139,7 +153,7 @@ if (!function_exists ('_exception_handler')) {
 if (!function_exists ('_shutdown_handler')) {
   function _shutdown_handler () {
     $lastError = error_get_last ();
-    
+
     if (isset ($lastError) && ($lastError['type'] & (E_ERROR | E_PARSE | E_CORE_ERROR | E_CORE_WARNING | E_COMPILE_ERROR | E_COMPILE_WARNING)))
       _error_handler ($lastError['type'], $lastError['message'], $lastError['file'], $lastError['line']);
   }
