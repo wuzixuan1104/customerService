@@ -49,10 +49,10 @@ class Line extends ApiController {
           $pattern = 'hello';
           $pattern = !preg_match ('/\(\?P<k>.+\)/', $pattern) ? '/(?P<k>(' . $pattern . '))/i' : ('/(' . $pattern . ')/i');
           preg_match_all ($pattern, $log->text, $result);
-
+          Log::info('text');
           if ($result['k'] && $msg = LineTool::start() )
             $msg->reply($event->getReplyToken());
-
+          Log::info('end');
           // if( $msg = ForexProcess::getCalcResult($source, $event->getText()) )
           //   $msg->reply($event->getReplyToken());
 
