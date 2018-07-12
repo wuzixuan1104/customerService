@@ -26,9 +26,10 @@ class cli extends Controller {
     $transactionLists = function ($lists, $board) {
       print_r($lists);
       echo "=====================\r\n";
+
       foreach($lists as $list) {
-        print_r($list);
-        if( !$obj = Lists::create( array('board_id' => $board->id, 'key_id' => $list->id, 'name' => $list->name) ) )
+
+        if( !$obj = Lists::create( array('board_id' => $board->id, 'key_id' => $list['id'], 'name' => $list['name']) ) )
           return false;
         }
       return true;
