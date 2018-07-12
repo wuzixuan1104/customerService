@@ -46,7 +46,24 @@ class LineTool {
     return MyLineBotMsg::create()->multi ($multiArr);
   }
 
-  public function getList() {
+  public static function getList($param, $log) {
+    if( empty($param['list_id']) )
+      return false;
+
+    if( !$source = Source::find_by_id($log->speaker_id) )
+      return false;
+
+    $source->process = json_encode( array('card_id' => '', 'list_id' => $param['list_id'], 'content' => '', 'date' => date('Y-m-d')) );
+    $source->save();
+
+    return MyLineBotMsg::create()->template('輸入問題之後請點擊',
+        MyLineBotMsg::create()->templateButton('按鈕', '説明', 'https://example.com/bot/images/image.jpg', [
+          MyLineBotActionMsg::create()->postback('送出', array('lib' => 'LineTool', 'method' => 'sendCard', 'param' => array() ), 'send'),
+        ])
+    );
+  }
+
+  public static function sendCard() {
 
   }
 }
