@@ -24,6 +24,7 @@ class cli extends Controller {
       return false;
 
     $transactionLists = function ($lists, $board) {
+      print_R($lists);
       foreach($lists as $key => $list) {
         echo $key . "\r\n";
         echo "===============\r\n";
