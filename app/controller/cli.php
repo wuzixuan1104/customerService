@@ -8,27 +8,31 @@
  */
 
 class cli extends Controller {
+  public $boardId = '5b3f393987de8b4eae408938';
 
   public function index () {
-    Load::lib ('phpQuery.php');
+    Load::lib('TrelloApi.php');
+    $trello = TrelloApi::create();
 
-    $url = 'http://occupy.sungchin.com/ximen/comebuy/';
+    //board 目前先指定其中一版
+    if( !$board = Board::create( array('key_id' => $this->boardId, 'name' => 'EC客服信箱', 'code' => 'lVs4BU5d') ) )
+      return false;
 
-    if (!($get_html_str = str_replace ('&amp;', '&', urldecode (file_get_contents ($url)))))
-      exit ('取不到原始碼！');
+    //list
+    $lists = $trello->request('GET', '/1/boards/' . $this->boardId . '/lists' );
+    if( empty($lists) )
+      return false;
 
-    // echo $get_html_str;
-    $query = phpQuery::newDocument ($get_html_str);
-    $title = pq (".info-list", $query);
+    $transactionLists = function ($lists, $board) {
+      foreach($lists as $list)
+        if( !$obj = Lists::create( array('board_id' => $board->id, 'key_id' => $list->id, 'name' => $list->name) ) )
+          return false;
+      return true;
+    };
 
-    // // $title->text ();
+    if ($error = Lists::getTransactionError ($transactionLists, $lists, $board))
+      exit('新增lists資料表錯誤');
 
-    // for ($i=0; $i < $title->length (); $i++) { 
-    //   $title->eq ($i)->text ()
-    // }
-
-    var_dump ($title->length ());
-    exit ();
-
+    echo 'success';
   }
 }

@@ -16,32 +16,24 @@ class Line extends ApiController {
 
   public function index() {
     Load::lib('MyLineBot.php');
-    // Load::lib('ForexProcess.php');
+    Load::lib('LineTool.php');
     // Load::sysFunc('file.php');
 
     $events = MyLineBot::events();
-    Log::info(234);
-    Log::info($events);
-    Log::info(123);
     foreach( $events as $event ) {
 
-      if( !$source = Source::checkSourceExist($event) ) {
-        Log::info('source fail');
+      if( !$source = Source::checkSourceExist($event) )
         continue;
-      }
 
       $speaker = Source::checkSpeakerExist($event);
 
-      if (!$log = MyLineBotLog::init($source, $speaker, $event)->create()) {
-        Log::info('log fail');
+      if (!$log = MyLineBotLog::init($source, $speaker, $event)->create())
         return false;
-
-      }
 
       switch( get_class($log) ) {
         case 'Join':
-          // if ( $msg = ForexProcess::begin() )
-          //   $msg->reply($event->getReplyToken());
+          if ( $msg = LineTool::start() )
+            $msg->reply($event->getReplyToken());
 
           break;
         case 'Leave':
@@ -58,17 +50,9 @@ class Line extends ApiController {
           $pattern = !preg_match ('/\(\?P<k>.+\)/', $pattern) ? '/(?P<k>(' . $pattern . '))/i' : ('/(' . $pattern . ')/i');
           preg_match_all ($pattern, $log->text, $result);
 
-          Log::info('text');
-          MyLineBotMsg::create()
-            ->text($event->getText())
-            ->reply($event->getReplyToken());
-          Log::info('end');
+          if ($result['k'] && $msg = LineTool::start() )
+            $msg->reply($event->getReplyToken());
 
-
-
-          // if ($result['k'] && $msg = ForexProcess::begin() )
-          //   $msg->reply($event->getReplyToken());
-          //
           // if( $msg = ForexProcess::getCalcResult($source, $event->getText()) )
           //   $msg->reply($event->getReplyToken());
 

@@ -24,7 +24,7 @@ class TrelloApi {
     } else {
       $url = 'https://api.trello.com' . $request . '?key=' . $this->key . '&token=' . $this->token;
     }
-    
+
     $c = curl_init();
     curl_setopt($c, CURLOPT_HEADER, 0);
     curl_setopt($c, CURLOPT_VERBOSE, 0);

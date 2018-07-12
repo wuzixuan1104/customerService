@@ -13,7 +13,8 @@ class main extends Controller {
     Load::lib('TrelloApi.php');
     $trello = TrelloApi::create();
 
-    $result = $trello->request('GET', '/1/cards/5b42d950ad819e13e2699105');
+    // $result = $trello->request('GET', '/1/cards/5b42d950ad819e13e2699105');
+    $result = $trello->request('GET', '/1/boards/5b3f393987de8b4eae408938');
     print_r($result);
     die;
 

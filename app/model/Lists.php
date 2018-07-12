@@ -7,7 +7,7 @@
  * @link        https://www.ioa.tw/
  */
 
-class List extends Model {
+class Lists extends Model {
   static $table_name = 'lists';
 
   static $has_one = array (
@@ -26,7 +26,7 @@ class List extends Model {
   public function destroy () {
     if (!isset ($this->id))
       return false;
-    
+
     return $this->delete ();
   }
 }
