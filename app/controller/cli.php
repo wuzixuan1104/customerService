@@ -23,15 +23,23 @@ class cli extends Controller {
     if( empty($lists) )
       return false;
 
-    $transactionLists = function ($lists, $board) {
-      foreach($lists as $list)
+    $transactionLists = function ($lists, $board, &$listIds) {
+      $listIds = '';
+      foreach($lists as $list) {
         if( !$obj = TList::create(['board_id' => $board->id, 'key_id' => $list->id, 'name' => $list->name]) )
           return false;
+        $listIds .= $obj->id . ',';
+      }
+      $listIds = rtrim($listIds, ',');
       return true;
     };
 
-    if ($error = TList::getTransactionError ($transactionLists, $lists, $board))
+    if ($error = TList::getTransactionError ($transactionLists, $lists, $board, $listIds))
       exit('新增lists資料表錯誤');
+
+    //servers
+    if( !Servicer::create( array('list_ids' => $listIds, 'key_id' => '591aaa419db460a704771400') ) )
+      exit('新增操作者錯誤');
 
     echo 'success';
   }
