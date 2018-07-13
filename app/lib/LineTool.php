@@ -47,11 +47,8 @@ class LineTool {
   }
 
   //取得客服問題分類表
-  public static function getList($param, $log) {
+  public static function getList($param, $source) {
     if( empty($param['list_id']) )
-      return false;
-
-    if( !$source = Source::find_by_id($log->speaker_id) )
       return false;
 
     $source->process = json_encode( array('card_id' => '', 'idList' => $param['list_id'], 'content' => '', 'date' => date('Y-m-d')) );
