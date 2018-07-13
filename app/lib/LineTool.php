@@ -72,12 +72,12 @@ class LineTool {
       return false;
     Log::info('2======================================');
 
-    if( $process['date'] && date('Y-m-d') > date('Y-m-d', strtotime('+1 week', $process['date'])) ) {
+    if( $process['date'] && strtotime('today') > strtotime('+1 week', strtotime($process['date'])) ) {
       // $process = '';
       Log::info('3======================================');
-      Log::info('now date: '. date('Y-m-d'));
+      Log::info('now date: '. strtotime('today'));
       Log::info('date: '. $process['date']);
-      Log::info('after 7 day: '. date('Y-m-d', strtotime('+1 week', $process['date'])));
+      Log::info('after 7 day: '. strtotime('+1 week', strtotime($process['date'])));
     } else {
       $process['content'] .= $text . "\r\n";
       $process = json_encode($process);
