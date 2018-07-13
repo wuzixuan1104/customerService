@@ -55,7 +55,7 @@ class Line extends ApiController {
 
           //檢查Source process是否非空，是則新增進去
           if( $source = Source::find_by_id($log->id) && !empty($source->process) )
-            LineTool::saveSourceProcess($source->process, $event->getText());
+            LineTool::saveSourceProcess($source, $event->getText());
 
           break;
         case 'Image':
