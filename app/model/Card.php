@@ -19,6 +19,16 @@ class Card extends Model {
   static $belongs_to = array (
   );
 
+  const STATUS_READY = 'ready';
+  const STATUS_PROCESS = 'process';
+  const STATUS_COMPLETE = 'finish';
+
+  static $statusTexts = array (
+    self::STATUS_READY  => '準備中',
+    self::STATUS_PROCESS  => '處理中',
+    self::STATUS_COMPLETE  => '已完成',
+  );
+
   public function __construct ($attrs = array (), $guardAttrs = true, $instantiatingViafind = false, $newRecord = true) {
     parent::__construct ($attrs, $guardAttrs, $instantiatingViafind, $newRecord);
   }
@@ -26,7 +36,7 @@ class Card extends Model {
   public function destroy () {
     if (!isset ($this->id))
       return false;
-    
+
     return $this->delete ();
   }
 }
