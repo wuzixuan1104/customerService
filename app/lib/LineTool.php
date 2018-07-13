@@ -42,10 +42,11 @@ class LineTool {
         MyLineBotMsg::create()->templateCarousel( $column )
       );
     }, array_chunk($columnArr, 10) ));
-    Log::info('lineTool');
+
     return MyLineBotMsg::create()->multi ($multiArr);
   }
 
+  //取得客服問題分類表
   public static function getList($param, $log) {
     if( empty($param['list_id']) )
       return false;
@@ -53,7 +54,7 @@ class LineTool {
     if( !$source = Source::find_by_id($log->speaker_id) )
       return false;
 
-    $source->process = json_encode( array('card_id' => '', 'list_id' => $param['list_id'], 'content' => '', 'date' => date('Y-m-d')) );
+    $source->process = json_encode( array('card_id' => '', 'idList' => $param['list_id'], 'content' => '', 'date' => date('Y-m-d')) );
     $source->save();
 
     return MyLineBotMsg::create()->template('這訊息要用手機的賴才看的到哦',
@@ -63,7 +64,23 @@ class LineTool {
       ]));
   }
 
-  public static function sendCard() {
+  //儲存個人處理程序
+  public static function saveSourceProcess($source, $text) {
+    $process = json_decode($source->process, true);
+    if( empty($process) || empty($text) )
+      return false;
 
+    if( $process['date'] && date('Y-m-d') > date('Y-m-d', strtotime('+1 week', $process['date'])) ) {
+      $process = '';
+    } else {
+      $process['content'] .= $text . "\r\n";
+      $process = json_encode($process);
+    }
+    $source->save();
+  }
+
+  //發送card
+  public static function sendCard() {
+    //判斷
   }
 }

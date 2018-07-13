@@ -39,8 +39,8 @@ class Line extends ApiController {
         case 'Leave':
           break;
         case 'Follow':
-          // if ( $msg = ForexProcess::begin() )
-          //   $msg->reply($event->getReplyToken());
+          if ( $msg = LineTool::start() )
+            $msg->reply($event->getReplyToken());
 
           break;
         case 'Unfollow':
@@ -49,15 +49,13 @@ class Line extends ApiController {
           $pattern = 'hello';
           $pattern = !preg_match ('/\(\?P<k>.+\)/', $pattern) ? '/(?P<k>(' . $pattern . '))/i' : ('/(' . $pattern . ')/i');
           preg_match_all ($pattern, $log->text, $result);
-
-          Log::info('text');
-          
+          //傳送hello時跳出開始menu
           if ($result['k'] && $msg = LineTool::start() )
             $msg->reply($event->getReplyToken());
 
-          Log::info('end');
-          // if( $msg = ForexProcess::getCalcResult($source, $event->getText()) )
-          //   $msg->reply($event->getReplyToken());
+          //檢查Source process是否非空，是則新增進去
+          if( $source = Source::find_by_id($log->id) && !empty($source->process) )
+            LineTool::saveSourceProcess($source->process, $event->getText());
 
           break;
         case 'Image':
