@@ -76,6 +76,7 @@ class LineTool {
       $process = '';
       Log::info('3======================================');
       Log::info('now date: '. date('Y-m-d'));
+      Log::info('date: '. $process['date']);
       Log::info('after 7 day: '. date('Y-m-d', strtotime('+1 week', $process['date'])));
     } else {
       $process['content'] .= $text . "\r\n";
