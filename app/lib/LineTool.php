@@ -82,7 +82,7 @@ class LineTool {
       $process['content'] .= $text . "\r\n";
       $process = json_encode($process);
       Log::info('4======================================');
-
+      Log::info($process);
     }
     $source->save();
     Log::info('5======================================');
