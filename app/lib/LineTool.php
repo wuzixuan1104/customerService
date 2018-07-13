@@ -66,7 +66,7 @@ class LineTool {
 
   //儲存個人處理程序
   public static function saveSourceProcess($source, $text) {
-    Log::info('1======================================');
+    Log::info($source->process);
     $process = json_decode($source->process, true);
     if( empty($process) || empty($text) )
       return false;
@@ -75,7 +75,8 @@ class LineTool {
     if( $process['date'] && date('Y-m-d') > date('Y-m-d', strtotime('+1 week', $process['date'])) ) {
       $process = '';
       Log::info('3======================================');
-
+      Log::info('now date: '. date('Y-m-d'));
+      Log::info('after 7 day: '. date('Y-m-d', strtotime('+1 week', $process['date'])));
     } else {
       $process['content'] .= $text . "\r\n";
       $process = json_encode($process);

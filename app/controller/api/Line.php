@@ -53,10 +53,7 @@ class Line extends ApiController {
           if ($result['k'] && $msg = LineTool::start() )
             $msg->reply($event->getReplyToken());
 
-          Log::info('Line1');
-          Log::info('log:' . $log->id);
           //檢查Source process是否非空，是則新增進去
-          
           if( !empty($source->process) )
             LineTool::saveSourceProcess($source, $event->getText());
 
