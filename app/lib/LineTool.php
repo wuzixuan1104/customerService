@@ -75,14 +75,8 @@ class LineTool {
     } else {
       $process['content'] .= $text . "\r\n";
       $process = json_encode($process);
-
     }
     $source->process = $process;
     $source->save();
-  }
-
-  //發送card
-  public static function sendCard() {
-    //判斷
   }
 }
