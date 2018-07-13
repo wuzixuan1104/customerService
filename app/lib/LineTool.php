@@ -66,7 +66,8 @@ class LineTool {
 
   //儲存個人處理程序
   public static function saveSourceProcess($source, $text) {
-    Log::info($source->process);
+    Log::info($source->id);
+    Log::info($text);
     $process = json_decode($source->process, true);
     if( empty($process) || empty($text) )
       return false;
