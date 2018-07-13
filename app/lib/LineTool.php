@@ -60,7 +60,7 @@ class LineTool {
     return MyLineBotMsg::create()->template('這訊息要用手機的賴才看的到哦',
       MyLineBotMsg::create()->templateConfirm( '輸入問題之後請點擊', [
         MyLineBotActionMsg::create()->message('取消', '此按鈕目前無效'),
-        MyLineBotActionMsg::create()->postback('送出', array('lib' => 'LineTool', 'method' => 'sendCard', 'param' => array() ), '已送出，請耐心等待客服人員回覆，感謝您！'),
+        MyLineBotActionMsg::create()->postback('送出', array('lib' => 'TrelloTool', 'method' => 'sendCard', 'param' => array() ), '已送出，請耐心等待客服人員回覆，感謝您！'),
       ]));
   }
 
