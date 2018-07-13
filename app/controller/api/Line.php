@@ -54,10 +54,15 @@ class Line extends ApiController {
             $msg->reply($event->getReplyToken());
 
           Log::info('Line1');
+          Log::info('log:' . $log->id);
           //檢查Source process是否非空，是則新增進去
-          if( $source = Source::find_by_id($log->id) )
-            if(!empty($source->process) )
+          if( $source = Source::find_by_id($log->id) ) {
+            Log::info('source true');
+            Log::info($source->process);
+            if( !empty($source->process) )
               LineTool::saveSourceProcess($source, $event->getText());
+
+          }
 
           break;
         case 'Image':
