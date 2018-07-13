@@ -73,7 +73,7 @@ class LineTool {
     Log::info('2======================================');
 
     if( $process['date'] && date('Y-m-d') > date('Y-m-d', strtotime('+1 week', $process['date'])) ) {
-      $process = '';
+      // $process = '';
       Log::info('3======================================');
       Log::info('now date: '. date('Y-m-d'));
       Log::info('date: '. $process['date']);
