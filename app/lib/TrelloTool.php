@@ -25,9 +25,9 @@ class TrelloTool {
     }
 
     if( !$list = TList::find_by_key_id($process['idList']) )
-      return false;
+      return MyLineBotMsg::create()->text('系統發生問題');;
     if( !$servicers = Servicer::find('all', array('where' => array('FIND_IN_SET( ?, `list_ids`)', $list->id) ) ) )
-      return false;
+      return MyLineBotMsg::create()->text('系統發生問題');
 
     $param = array(
       'name' => 'From: ' . $source->title . ' ' . date('Y-m-d H:i:s'),
@@ -42,7 +42,7 @@ class TrelloTool {
     //新增trello card
     $trello = TrelloApi::create();
     if( !$res = $trello->request('POST', '/1/cards', $param) )
-      return false;
+      return MyLineBotMsg::create()->text('無法傳送trello卡片');
 
     //將卡片存入資料庫
     $param = array(
@@ -55,10 +55,12 @@ class TrelloTool {
     );
 
     if( !$card = Card::create($param) )
-      return false;
+      return MyLineBotMsg::create()->text('資料庫處理失敗');
 
     //還原初始
     $source->process = '';
     $source->save();
+
+    return MyLineBotMsg::create()->text('已將信件送出給客服系統，請耐心等待回覆！');
   }
 }
