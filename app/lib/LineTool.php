@@ -66,28 +66,19 @@ class LineTool {
 
   //儲存個人處理程序
   public static function saveSourceProcess($source, $text) {
-    Log::info($source->id);
-    Log::info($text);
     $process = json_decode($source->process, true);
     if( empty($process) || empty($text) )
       return false;
-    Log::info('2======================================');
 
     if( $process['date'] && strtotime('today') > strtotime('+1 week', strtotime($process['date'])) ) {
-      // $process = '';
-      Log::info('3======================================');
-      Log::info('now date: '. strtotime('today'));
-      Log::info('date: '. $process['date']);
-      Log::info('after 7 day: '. strtotime('+1 week', strtotime($process['date'])));
+      $process = '';
     } else {
       $process['content'] .= $text . "\r\n";
       $process = json_encode($process);
-      Log::info('4======================================');
-      Log::info($process);
-    }
-    $source->save();
-    Log::info('5======================================');
 
+    }
+    $source->process = $process;
+    $source->save();
   }
 
   //發送card
