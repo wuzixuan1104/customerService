@@ -12,10 +12,15 @@ class main extends Controller {
   public function index () {
     Load::lib('TrelloApi.php');
     $trello = TrelloApi::create();
-
-    // $result = $trello->request('GET', '/1/cards/5b42d950ad819e13e2699105');
-    $result = $trello->request('GET', '/1/boards/5b3f393987de8b4eae408938');
-    print_r($result);
+    if( $cards = Card::find('all') ) {
+      foreach($cards as $card ) {
+        $res = $trello->setWebhook($card->id, 'hello', ['a' => 1, 'b' => 2]);
+        print_r($res);
+        die;
+      }
+    }
+    $res = $trello->setWebhook('123', 'hello', ['a' => 1, 'b' => 2]);
+    print_r($res);
     die;
 
     $asset = Asset::create (2)

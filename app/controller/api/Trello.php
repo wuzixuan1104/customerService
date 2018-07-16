@@ -7,15 +7,13 @@
  * @link        https://www.ioa.tw/
  */
 
-Router::get ('', 'main@index');
+class Trello extends ApiController {
+  public function __construct() {
+    parent::__construct();
+  }
 
-
-Router::dir ('api', function () {
-  Router::post('line', 'Line@index');
-  Router::post('trelloCallback', 'Trello@callback');
-});
-
-Router::dir ('admin', function () {
-  Router::get ('', 'main');
-
-});
+  public function callback() {
+    echo 'success';
+    die;
+  }
+}

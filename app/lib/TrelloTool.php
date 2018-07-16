@@ -25,7 +25,7 @@ class TrelloTool {
     }
 
     if( !$list = TList::find_by_key_id($process['idList']) )
-      return MyLineBotMsg::create()->text('系統發生問題');;
+      return MyLineBotMsg::create()->text('系統發生問題');
     if( !$servicers = Servicer::find('all', array('where' => array('FIND_IN_SET( ?, `list_ids`)', $list->id) ) ) )
       return MyLineBotMsg::create()->text('系統發生問題');
 
