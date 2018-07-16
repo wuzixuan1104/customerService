@@ -44,7 +44,7 @@ class TrelloTool {
     if( !$res = $trello->request('POST', '/1/cards', $param) )
       return MyLineBotMsg::create()->text('無法傳送trello卡片');
 
-    //將卡片存入資料庫
+    //將卡片\存入資料庫
     $param = array(
       'list_id' => $list->id,
       'key_id' => $res->id,

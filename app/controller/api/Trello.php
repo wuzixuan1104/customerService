@@ -14,10 +14,10 @@ class Trello extends ApiController {
 
   public function callback() {
 
-    // $json = file_get_contents('php://input');
+    $json = file_get_contents('php://input');
+    Log::info('webhook call back :' . $json);
     // $action = json_decode($json,true);
     // var_dump($action);
-    var_dump(1);
-
+    return true;
   }
 }

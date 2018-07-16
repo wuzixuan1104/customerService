@@ -7,11 +7,6 @@
  * @link        https://www.ioa.tw/
  */
 
-var_dump(1);
-
-exit;
-
-
 date_default_timezone_set ('Asia/Taipei');
 
 define ('OACI', '1');

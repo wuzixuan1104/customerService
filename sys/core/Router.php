@@ -20,7 +20,6 @@ class Router {
     self::$routers = self::$params = self::$directories = array ();
 
     Load::file (APPPATH . 'config' . DIRECTORY_SEPARATOR . 'router.php', true);
-
     self::parseRouters ();
   }
 
