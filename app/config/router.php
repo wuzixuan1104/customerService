@@ -12,7 +12,7 @@ Router::get ('', 'main@index');
 
 Router::dir ('api', function () {
   Router::post('line', 'Line@index');
-  Router::post('trelloCallback', 'Trello@callback');
+  Router::get('trelloCallback', 'Trello@callback');
 });
 
 Router::dir ('admin', function () {
