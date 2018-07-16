@@ -52,10 +52,9 @@ class TrelloApi {
       'description' => $desc,
     ];
 
-    echo $param['callbackURL'];
+    echo $param['callbackURL'] . "\r\n";
     $result = $this->request('POST', $url, $param, false);
-    echo 123;
-    print_r($result);
+    var_dump($result);
     die;
   }
 }
