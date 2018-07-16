@@ -11,13 +11,12 @@ class TrelloApi {
   public static function create() {
     return new TrelloApi( config('trello', 'key'), config('trello', 'token') );
   }
-  // /1/tokens/{APIToken}/webhooks/ \ =>
-  // /1/cards => ?key=&token=
+
   public function request ($type, $request, $args = false, $add = true) {
-    if (!$args)
-      $args = array();
-    elseif (!is_array($args))
-      $args = array($args);
+    // if (!$args)
+    //   $args = array();
+    // elseif (!is_array($args))
+    //   $args = array($args);
 
     $url = 'https://api.trello.com' . $request;
     $add && $url .= '?key=' . $this->key . '&token=' . $this->token;
@@ -27,14 +26,25 @@ class TrelloApi {
     curl_setopt($c, CURLOPT_VERBOSE, 0);
     curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($c, CURLOPT_URL, $url);
+    curl_setopt($c, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
 
-    if (count($args)) curl_setopt($c, CURLOPT_POSTFIELDS , http_build_query($args));
+    $data_string = json_encode($args);
+    curl_setopt($c, CURLOPT_POSTFIELDS, array("customer"=>$data_string));
 
-    switch ($type) {
-      case 'POST': curl_setopt($c, CURLOPT_POST, 1); break;
-      case 'GET': curl_setopt($c, CURLOPT_HTTPGET, 1); break;
-      default: curl_setopt($c, CURLOPT_CUSTOMREQUEST, $type);
-    }
+
+    // $c = curl_init();
+    // curl_setopt($c, CURLOPT_HEADER, 0);
+    // curl_setopt($c, CURLOPT_VERBOSE, 0);
+    // curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+    // curl_setopt($c, CURLOPT_URL, $url);
+    //
+    // if (count($args)) curl_setopt($c, CURLOPT_POSTFIELDS , http_build_query($args));
+
+    // switch ($type) {
+    //   case 'POST': curl_setopt($c, CURLOPT_POST, 1); break;
+    //   case 'GET': curl_setopt($c, CURLOPT_HTTPGET, 1); break;
+    //   default: curl_setopt($c, CURLOPT_CUSTOMREQUEST, $type);
+    // }
 
     $data = curl_exec($c);
     curl_close($c);
