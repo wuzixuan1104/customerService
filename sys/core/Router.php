@@ -23,7 +23,7 @@ class Router {
 
     self::parseRouters ();
   }
- 
+
   public static function dir ($prefix, $callback) {
     $callback ();
   }
@@ -56,7 +56,7 @@ class Router {
 
     RestfulUrl::addGroup ($prefixs, '', self::method ('get', explode ('/', implode ('/(:id)/', $uris) . '/(:id)/(:any)'), $controller . '@$' . ($c + 1) . '($1' . $t2 . ')', $models));
     RestfulUrl::addGroup ($prefixs, '', self::method ('post', explode ('/', implode ('/(:id)/', $uris) . '/(:id)/(:any)'), $controller . '@$' . ($c + 1) . '($1' . $t2 . ')', $models));
-    
+
     // RestfulUrl::addGroup ($prefixs, 'sorts', self::method ('get', explode ('/', implode ('/(:id)/', $uris) . '/sorts'), $controller . '@sorts(' . $t1 . ')', $models));
     RestfulUrl::addGroup ($prefixs, 'sorts', self::method ('post', explode ('/', implode ('/(:id)/', $uris) . '/sorts'), $controller . '@sorts(' . $t1 . ')', $models));
   }
@@ -119,7 +119,7 @@ class Router {
 
     self::setClass (array_shift ($segments));
     self::setMethod (array_shift ($segments));
-    
+
     self::setParams ($segments);
   }
   private static function validateRequest ($segments) {
