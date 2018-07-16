@@ -12,14 +12,8 @@ class main extends Controller {
   public function index () {
     Load::lib('TrelloApi.php');
     $trello = TrelloApi::create();
-    if( $cards = Card::find('all') ) {
-      foreach($cards as $card ) {
-        $res = $trello->setWebhook($card->id, 'hello', ['a' => 1, 'b' => 2]);
-        print_r($res);
-        die;
-      }
-    }
-    $res = $trello->setWebhook('123', 'hello', ['a' => 1, 'b' => 2]);
+
+    $res = $trello->setWebhook('5b486c17c801b2d657ed9f99', 'hello');
     print_r($res);
     die;
 

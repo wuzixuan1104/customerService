@@ -16,46 +16,14 @@
   </head>
   <body lang="zh-tw">
     <script>
-    var authenticationSuccess = function() {
-      console.log('Successful authentication');
-    };
-
-    var authenticationFailure = function() {
-      console.log('Failed authentication');
-    };
-    var url="https://trello.com/c/QyeGYHdi/1-card-1";
-
-
-    window.Trello.authorize({
-      type: 'popup',
-      name: 'Getting Started Application',
-      scope: {
-        read: 'true',
-        write: 'true' },
-      expiration: 'never',
-      success: authenticationSuccess,
-      error: authenticationFailure
+    $(function() {
+      $.post("https://api.trello.com/1/tokens/201fb7dc9a43e1bebc0e8fedec8e16d45a7c7c0922f828da539324f60640c5eb/webhooks/?key=4bf05439215ed92eafbb4e26d4064f2e", {
+        description: "My first webhook",
+        callbackURL: "http://qa.kerker.tw/api/trelloCallback",
+        idModel: "5b486c17c801b2d657ed9f99",
+      });
+      console.log('test');
     });
-
-    var myList = "5b42cf2739596c211c1e176b";
-
-    var creationSuccess = function (data) {
-      console.log('我成功惹！');
-      console.log(JSON.stringify(data, null, 2));
-    };
-
-    var newCard = {
-      name: '你是笨蛋笨蛋',
-      desc: '笨蛋是什麼～～～',
-      idList: myList,
-      pos: 'top'
-    };
-
-    window.Trello.post('/cards/', newCard, creationSuccess);
-    
-
-
-
     </script>
 
     Hello!!
