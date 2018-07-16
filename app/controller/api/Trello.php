@@ -13,7 +13,7 @@ class Trello extends ApiController {
   }
 
   public function callback() {
-    echo 'success';
-    die;
+    // echo 'success';
+    return true;
   }
 }
