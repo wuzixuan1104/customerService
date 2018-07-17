@@ -12,8 +12,8 @@ class main extends Controller {
   public function index () {
     Load::lib('TrelloApi.php');
     $trello = TrelloApi::create();
-    // $res = $trello->get('/1/cards/5b4d56d3779ff96615086eb0');
-    //
+    $res = $trello->get('/1/cards/5b4d56d3779ff96615086eb0');
+
     // $param = array(
     //   'name' => 'From: test' . ' ' . date('Y-m-d H:i:s'),
     //   'desc' => 123 . "\r\n" . "---",
@@ -27,7 +27,7 @@ class main extends Controller {
     // $res = $trello->post('/1/cards', $param);
     // print_r($res);
 
-    $res = $trello->setWebhook('5b4daf47c50ba749ccd0dbaf', 'hello');
+    // $res = $trello->setWebhook('5b4daf47c50ba749ccd0dbaf', 'hello');
     print_r($res);
     die;
 

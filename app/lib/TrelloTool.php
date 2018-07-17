@@ -41,8 +41,6 @@ class TrelloTool {
 
     //新增trello card
     $trello = TrelloApi::create();
-    // if( !$res = $trello->request('POST', '/1/cards', $param) )
-    //   return MyLineBotMsg::create()->text('無法傳送trello卡片');
     if( !$res = $trello->post('/1/cards', $param) )
       return MyLineBotMsg::create()->text('無法傳送trello卡片');
 
@@ -62,7 +60,7 @@ class TrelloTool {
     //還原初始
     $source->process = '';
     $source->save();
-
+    Log::info('hehehe');
     return MyLineBotMsg::create()->text('已將信件送出給客服系統，請耐心等待回覆！');
   }
 }

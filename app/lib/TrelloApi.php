@@ -28,7 +28,7 @@ class TrelloApi {
   public function setWebhook($idModel, $desc, $query = false) {
     $url = 'https://api.trello.com/1/tokens/' . config('trello', 'token') . '/webhooks/?key=' . config('trello', 'key');
     $param = json_encode([
-        'callbackURL' => 'https://qa.kerker.tw/' . 'api/trelloCallback' . ($query ? '?' . implode('&', array_map(function($k, $v) { return  $k . '=' . $v; }, array_keys($query), array_values($query) ) ) : ''),
+        'callbackURL' => Url::base() . 'api/trelloCallback' . ($query ? '?' . implode('&', array_map(function($k, $v) { return  $k . '=' . $v; }, array_keys($query), array_values($query) ) ) : ''),
         'idModel' => $idModel,
         'description' => $desc,
       ]);
