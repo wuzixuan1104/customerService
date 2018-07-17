@@ -41,8 +41,10 @@ class TrelloTool {
 
     //新增trello card
     $trello = TrelloApi::create();
-    if( !$res = $trello->post('/1/cards', $param) )
+    if( !$res = $trello->request('POST', '/1/cards', $param) )
       return MyLineBotMsg::create()->text('無法傳送trello卡片');
+    // if( !$res = $trello->post('/1/cards', $param) )
+    //   return MyLineBotMsg::create()->text('無法傳送trello卡片');
 
     Log::info('hehehe1');
 
