@@ -52,10 +52,10 @@ class TrelloTool {
     //將卡片\存入資料庫
     $param = array(
       'list_id' => $list->id,
-      'key_id' => $res->id,
+      'key_id' => $res['id'],
       'source_id' => $source->id,
-      'name' => $res->name,
-      'code' => $res->shortLink,
+      'name' => $res['name'],
+      'code' => $res['shortLink'],
       'status' => Card::STATUS_READY,
     );
     Log::info('param:' . json_encode($param));
