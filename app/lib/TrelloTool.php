@@ -60,8 +60,7 @@ class TrelloTool {
     Log::info('hehehe2');
 
     if( !$card = Card::create($param) )
-      Log::info('card fail');
-    return MyLineBotMsg::create()->text('資料庫處理失敗');
+      return MyLineBotMsg::create()->text('資料庫處理失敗');
 
     Log::info('hehehe3');
 
