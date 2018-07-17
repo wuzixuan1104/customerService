@@ -58,6 +58,7 @@ class TrelloTool {
       'code' => $res->shortLink,
       'status' => Card::STATUS_READY,
     );
+    Log::info('param:' . json_encode($param));
     Log::info('hehehe2');
 
     if( !$card = Card::create($param) )
