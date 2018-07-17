@@ -19,7 +19,7 @@ class cli extends Controller {
       return false;
 
     //list
-    $lists = $trello->request('GET', '/1/boards/' . $this->boardId . '/lists' );
+    $lists = $trello->get('/1/boards/' . $this->boardId . '/lists');
     if( empty($lists) )
       return false;
 

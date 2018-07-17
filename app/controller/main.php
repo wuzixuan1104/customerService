@@ -12,10 +12,25 @@ class main extends Controller {
   public function index () {
     Load::lib('TrelloApi.php');
     $trello = TrelloApi::create();
+    // $res = $trello->get('/1/cards/5b4d56d3779ff96615086eb0');
+    //
+    // $param = array(
+    //   'name' => 'From: test' . ' ' . date('Y-m-d H:i:s'),
+    //   'desc' => 123 . "\r\n" . "---",
+    //   'pos' => 'top',
+    //   'due' => date( 'Y-m-d', strtotime('today + 1 week')),
+    //   'dueComplete' => true,
+    //   'idList' => '5b42cf2739596c211c1e176b',
+    //   'idMembers' => '591aaa419db460a704771400'
+    // );
+    //
+    // $res = $trello->post('/1/cards', $param);
+    // print_r($res);
 
-    $res = $trello->setWebhook('5b486c17c801b2d657ed9f99', 'hello');
+    $res = $trello->setWebhook('5b4daf47c50ba749ccd0dbaf', 'hello');
     print_r($res);
     die;
+
 
     $asset = Asset::create (2)
                   // ->addCSS ('/assets/css/icon-site.css')
