@@ -45,6 +45,7 @@ class TrelloTool {
       return MyLineBotMsg::create()->text('無法傳送trello卡片');
 
     Log::info('hehehe1');
+
     //將卡片\存入資料庫
     $param = array(
       'list_id' => $list->id,
@@ -55,13 +56,19 @@ class TrelloTool {
       'status' => Card::STATUS_READY,
     );
     Log::info('hehehe2');
+
     if( !$card = Card::create($param) )
-      return MyLineBotMsg::create()->text('資料庫處理失敗');
+      Log::info('card fail');
+    return MyLineBotMsg::create()->text('資料庫處理失敗');
+
     Log::info('hehehe3');
+
     //還原初始
     $source->process = '';
     $source->save();
+
     Log::info('hehehe4');
+
     return MyLineBotMsg::create()->text('已將信件送出給客服系統，請耐心等待回覆！');
   }
 }
