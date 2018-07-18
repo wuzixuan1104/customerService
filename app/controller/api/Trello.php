@@ -36,8 +36,13 @@ class Trello extends ApiController {
       case Webhook::TYPE_COMMENT_CARD:
         if( !$card = Card::find_by_key_id($data['model']['id']) )
           return false;
+
         $card->status = Card::STATUS_PROCESS;
         $card->save();
+
+        $card->source->process = json_encode( array('idCard' => $card->key_id, 'idList' => $card->list->key_id, 'content' => '', 'date' => date('Y-m-d')) );
+        $card->source->save();
+        
         $sid = $card->source->sid;
         break;
     }
