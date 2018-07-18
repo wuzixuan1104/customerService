@@ -29,7 +29,7 @@ class Trello extends ApiController {
       'content' => $data['action']['data']['text'],
     );
 
-    if( !Webhook::create($param) )
+    if( !$webhook = Webhook::create($param) )
       return false;
 
     switch($data['action']['type']) {
@@ -41,8 +41,19 @@ class Trello extends ApiController {
         break;
     }
 
-    var_dump($param);
-    die;
+    if(!$sid)
+      return false;
+
+    Load::lib('MyLineBot.php');
+
+    $bot = MyLineBot::events();
+    $msg = MyLineBotMsg::create()->text($data['action']['data']['text']);
+    Log::info('msg:');
+    $response = $bot->pushMessage($sid, $msg);
+    Log::info('response');
+    $webhook->response = $response->getHTTPStatus() . ' ' . $response->getRawBody();
+    $webhook->save();
+    Log::info('web save');
     return true;
   }
 }
