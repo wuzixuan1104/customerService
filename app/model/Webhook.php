@@ -19,6 +19,11 @@ class Webhook extends Model {
   static $belongs_to = array (
   );
 
+  const TYPE_COMMENT_CARD = 'commentCard';
+  static $typeTexts = [
+    self::TYPE_COMMENT_CARD => '評論卡片',
+  ];
+
   public function __construct ($attrs = array (), $guardAttrs = true, $instantiatingViafind = false, $newRecord = true) {
     parent::__construct ($attrs, $guardAttrs, $instantiatingViafind, $newRecord);
   }
@@ -26,7 +31,7 @@ class Webhook extends Model {
   public function destroy () {
     if (!isset ($this->id))
       return false;
-    
+
     return $this->delete ();
   }
 }

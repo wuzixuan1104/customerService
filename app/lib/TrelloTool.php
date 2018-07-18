@@ -44,11 +44,16 @@ class TrelloTool {
     if( !$res = $trello->post('/1/cards', $param) )
       return MyLineBotMsg::create()->text('無法傳送trello卡片');
 
+    //新增webhook
+    if( !$hook = $trello->setWebhook($res['id'], $res['name']) )
+      return MyLineBotMsg::create()->text('卡片建立webhook失敗！');
+
     //將卡片\存入資料庫
     $param = array(
       'list_id' => $list->id,
       'key_id' => $res['id'],
       'source_id' => $source->id,
+      'webhook_key_id' => $hook['id'],
       'name' => $res['name'],
       'code' => $res['shortLink'],
       'status' => Card::STATUS_READY,
@@ -56,7 +61,7 @@ class TrelloTool {
 
     if( !$card = Card::create($param) )
       return MyLineBotMsg::create()->text('資料庫處理失敗');
-
+    
     //還原初始
     $source->process = '';
     $source->save();
