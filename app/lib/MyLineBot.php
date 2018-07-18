@@ -228,7 +228,7 @@ class MyLineBotLog {
 }
 
 class MyLineBotMsg {
-  private $builder;
+  public $builder;
 
   public function __construct() {
   }

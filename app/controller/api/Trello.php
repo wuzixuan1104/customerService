@@ -46,13 +46,18 @@ class Trello extends ApiController {
 
     Load::lib('MyLineBot.php');
 
-    $bot = MyLineBot::events();
+    $bot = MyLineBot::create();
+
     $msg = MyLineBotMsg::create()->text($data['action']['data']['text']);
-    Log::info('msg:');
-    $response = $bot->pushMessage($sid, $msg);
+  
+    Log::info('msg');
+
+    $response = $bot->pushMessage($sid, $msg->builder);
     Log::info('response');
+
     $webhook->response = $response->getHTTPStatus() . ' ' . $response->getRawBody();
     $webhook->save();
+
     Log::info('web save');
     return true;
   }
