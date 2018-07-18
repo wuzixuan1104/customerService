@@ -10,7 +10,7 @@
 return array (
     'up' => "CREATE TABLE `webhooks` (
         `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-        `type` enum('commentCard') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'commentCard' COMMENT 'commentCard',
+        `type` enum('commentCard', 'updateCheckItemStateOnCard') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'commentCard' COMMENT 'commentCard',
         `model_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'model ID',
         `servicer_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'trello人員ID',
         `content` text COLLATE utf8mb4_unicode_ci COMMENT '內容',

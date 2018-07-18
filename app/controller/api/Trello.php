@@ -27,7 +27,7 @@ class Trello extends ApiController {
       'type' => $data['action']['type'],
       'model_id' => $data['model']['id'],
       'servicer_id' => $servicer->id,
-      'content' => $data['action']['data']['text'],
+      'content' => json_encode($data['action']['data']),
     );
 
     if( !$webhook = Webhook::create($param) )
@@ -40,11 +40,33 @@ class Trello extends ApiController {
 
         $card->status = Card::STATUS_PROCESS;
         $card->save();
+        //自動把處理中打勾
+
+
 
         $card->source->process = json_encode( array('idCard' => $card->key_id, 'idList' => $card->list->key_id, 'content' => '', 'date' => date('Y-m-d')) );
         $card->source->save();
 
         $sid = $card->source->sid;
+        break;
+
+      case Webhook::TYPE_UPDATE_CHECK_ITEM_STATE_ON_CARD:
+        if( !$card = Card::find_by_key_id($data['action']['data']['card']['id']) )
+          return false;
+
+        //流程： 1. ready 2. process 3. finish
+        //complete => 傳來什麼是什麼, 但若status本來為較高流程則不許更改
+        //incomplete => 傳來什麼退一位 => 若傳來為process,但資料庫已為finish則不理
+        $item = $data['action']['data']['checkItem'];
+        $typeTexts = array_flip(Card::$typeTexts);
+
+        // if( $item['state'] == 'complete' ) {
+        //   $card->status = $typeTexts[$item['name']];
+        //   $card->save();
+        // } elseif ($typeTexts[$item['name']] == Card::TYPE_PROCESS && $card->status != Card::TYPE_FINISH ) {
+        //   $card->status = Card::TYPE_READY;
+        //   $card->save();
+        // }
         break;
     }
 
