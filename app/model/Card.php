@@ -17,6 +17,7 @@ class Card extends Model {
   );
 
   static $belongs_to = array (
+    array('source', 'class_name' => 'Source'),
   );
 
   const STATUS_READY = 'ready';

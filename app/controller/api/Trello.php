@@ -13,11 +13,36 @@ class Trello extends ApiController {
   }
 
   public function callback() {
+    $data = json_decode(file_get_contents('php://input'), true);
 
-    $json = file_get_contents('php://input');
-    Log::info('webhook call back :' . $json);
-    // $action = json_decode($json,true);
-    // var_dump($action);
+    if( !isset($data['action']['type']) || !isset(Webhook::$typeTexts[$data['action']['type']]) )
+      return false;
+
+    if( !$servicer = Servicer::find_by_key_id($data['action']['idMemberCreator']) )
+      return false;
+
+    $param = array(
+      'key_id' => $data['action']['id'],
+      'type' => $data['action']['type'],
+      'model_id' => $data['model']['id'],
+      'servicer_id' => $servicer->id,
+      'content' => $data['action']['data']['text'],
+    );
+
+    if( !Webhook::create($param) )
+      return false;
+
+    switch($data['action']['type']) {
+      case Webhook::TYPE_COMMENT_CARD:
+        if( !$card = Card::find_by_key_id($data['model']['id']) )
+          return false;
+
+        $sid = $card->source->sid;
+        break;
+    }
+
+    var_dump($param);
+    die;
     return true;
   }
 }
