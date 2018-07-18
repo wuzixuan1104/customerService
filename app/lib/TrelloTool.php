@@ -69,16 +69,17 @@ class TrelloTool {
     return MyLineBotMsg::create()->text('已將信件送出給客服系統，請耐心等待回覆！');
   }
 
-  public function replyCard() {
+  public static function replyCard() {
     $source = func_get_args()[1];
+
     $process = json_decode($source->process, true);
+    $source->process = '';
+    $source->save();
 
     if( !isset($process['idCard']) || empty($process['idCard']) )
       return MyLineBotMsg::create()->text('查無此問題，無法操作此步驟');
 
     if( $process['date'] && strtotime('today') > strtotime('+1 week', strtotime($process['date'])) ) {
-      $source->process = '';
-      $source->save();
       return MyLineBotMsg::create()->text('此問題已超過7天未送出，無法操作此步驟');
     }
 
@@ -86,11 +87,10 @@ class TrelloTool {
     //取得原本內容
     if( !$oriCard = $trello->get('/1/cards/' . $process['idCard']) )
       return MyLineBotMsg::create()->text('查無原本問題');
-    Log::info( 'ori:' . $oriCard->desc);
-    Log::info( $oriCard->desc . $process['content'] . "\r\n" . "---" );
-    Log::info(123);
-    if( !$put = $trello->put('/1/cards/' . $process['idCard'], array( 'desc' => $oriCard->desc . 'Re: ' . date('Y-m-d H:i:s') . "\r\n" . $process['content'] . "\r\n" . "---" )) )
+
+    if( !$trello->put('/1/cards/' . $process['idCard'], array( 'desc' => $oriCard['desc'] . "\r\n### Re: " . date('Y-m-d H:i:s') . "\r\n" . $process['content'] . "\r\n" . "---" )) )
       return MyLineBotMsg::create()->text('送出失敗');
+
     return MyLineBotMsg::create()->text('已將信件送出給客服系統，請耐心等待回覆！');
   }
 }

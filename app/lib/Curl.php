@@ -106,7 +106,7 @@ class Curl{
 
     $this->setOpt(CURLOPT_CUSTOMREQUEST, $method);
 
-    if(is_array($this->param))
+    if(is_array($this->params))
       $this->setOpt(CURLOPT_POSTFIELDS, http_build_query($this->params) );
     else
       $this->setOpt(CURLOPT_POSTFIELDS, $this->params );

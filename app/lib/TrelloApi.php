@@ -26,7 +26,8 @@ class TrelloApi {
   }
 
   public function put($req, $args) {
-    return Curl::init($this->url . $req, ['key' => $this->key, 'token' => $this->token])->custom('PUT');
+    return Curl::init($this->url . $req, ['key' => $this->key, 'token' => $this->token])
+            ->setParamField($args)->custom('PUT');
   }
 
   public function setWebhook($idModel, $desc, $query = false) {
