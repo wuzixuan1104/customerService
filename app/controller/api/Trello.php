@@ -42,7 +42,7 @@ class Trello extends ApiController {
 
         $card->source->process = json_encode( array('idCard' => $card->key_id, 'idList' => $card->list->key_id, 'content' => '', 'date' => date('Y-m-d')) );
         $card->source->save();
-        
+
         $sid = $card->source->sid;
         break;
     }
@@ -53,8 +53,6 @@ class Trello extends ApiController {
     Load::lib('MyLineBot.php');
 
     $bot = MyLineBot::create();
-    // $msg = MyLineBotMsg::create()->text($data['action']['data']['text']);
-
     $msg = MyLineBotMsg::create ()
             ->multi ([
               MyLineBotMsg::create ()->text ($data['action']['data']['text']),

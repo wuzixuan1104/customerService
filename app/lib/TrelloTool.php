@@ -44,6 +44,15 @@ class TrelloTool {
     if( !$res = $trello->post('/1/cards', $param) )
       return MyLineBotMsg::create()->text('無法傳送trello卡片');
 
+    //新增checklist
+    if( !$ckList = $trello->post('/1/checklists', array('idCard' => $res['id'], 'name' => '問題進度', 'pos' => 'top') ) )
+      return MyLineBotMsg::create()->text('無法新增trello問題進度列表');
+
+    //新增checkItem
+    if( !$trello->post('/1/checklists/' . $ckList['id'] . '/checkItems', array('name' => '處理中', 'pos' => 'bottom') ) ||
+        !$trello->post('/1/checklists/' . $ckList['id'] . '/checkItems', array('name' => '已完成', 'pos' => 'bottom') ) )
+      return MyLineBotMsg::create()->text('無法新增trello問題列表項目');
+
     //新增webhook
     if( !$hook = $trello->setWebhook($res['id'], $res['name']) )
       return MyLineBotMsg::create()->text('卡片建立webhook失敗！');
