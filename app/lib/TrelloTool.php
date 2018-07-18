@@ -86,9 +86,10 @@ class TrelloTool {
     //取得原本內容
     if( !$oriCard = $trello->get('/1/cards/' . $process['idCard']) )
       return MyLineBotMsg::create()->text('查無原本問題');
+    Log::info( 'ori:' . $oriCard->desc);
     Log::info( $oriCard->desc . $process['content'] . "\r\n" . "---" );
     Log::info(123);
-    if( !$put = $trello->put('/1/cards/' . $process['idCard'], array( 'desc' => $oriCard->desc . $process['content'] . "\r\n" . "---" )) )
+    if( !$put = $trello->put('/1/cards/' . $process['idCard'], array( 'desc' => $oriCard->desc . 'Re: ' . date('Y-m-d H:i:s') . "\r\n" . $process['content'] . "\r\n" . "---" )) )
       return MyLineBotMsg::create()->text('送出失敗');
     return MyLineBotMsg::create()->text('已將信件送出給客服系統，請耐心等待回覆！');
   }
