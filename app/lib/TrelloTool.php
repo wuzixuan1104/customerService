@@ -61,11 +61,32 @@ class TrelloTool {
 
     if( !$card = Card::create($param) )
       return MyLineBotMsg::create()->text('資料庫處理失敗');
-    
-    //還原初始
-    $source->process = '';
-    $source->save();
 
+    //將source的idCard做更新
+    $process = json_decode($card->source->process, true);
+    $process['idCard'] = $res['id'];
+    $card->source->process = json_encode($process);
+    $card->source->save();
+
+    return MyLineBotMsg::create()->text('已將信件送出給客服系統，請耐心等待回覆！');
+  }
+
+  public function replyCard() {
+    $source = func_get_args()[1];
+    $process = json_decode($source->process, true);
+
+    if( !isset($process['idCard']) || empty($process['idCard']) )
+      return MyLineBotMsg::create()->text('查無此問題，無法操作此步驟');
+
+    if( $process['date'] && strtotime('today') > strtotime('+1 week', strtotime($process['date'])) ) {
+      $source->process = '';
+      $source->save();
+      return MyLineBotMsg::create()->text('此問題已超過7天未送出，無法操作此步驟');
+    }
+
+    $trello = TrelloApi::create();
+    if( $put = $trello->put('/1/cards/' . $process['idCard'], array('desc' => $process['content'])) )
+      return MyLineBotMsg::create()->text('送出失敗');
     return MyLineBotMsg::create()->text('已將信件送出給客服系統，請耐心等待回覆！');
   }
 }

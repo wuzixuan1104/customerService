@@ -36,7 +36,8 @@ class Trello extends ApiController {
       case Webhook::TYPE_COMMENT_CARD:
         if( !$card = Card::find_by_key_id($data['model']['id']) )
           return false;
-
+        $card->status = Card::STATUS_PROCESS;
+        $card->save();
         $sid = $card->source->sid;
         break;
     }
@@ -47,18 +48,23 @@ class Trello extends ApiController {
     Load::lib('MyLineBot.php');
 
     $bot = MyLineBot::create();
+    // $msg = MyLineBotMsg::create()->text($data['action']['data']['text']);
 
-    $msg = MyLineBotMsg::create()->text($data['action']['data']['text']);
-  
-    Log::info('msg');
+    $msg = MyLineBotMsg::create ()
+            ->multi ([
+              MyLineBotMsg::create ()->text ($data['action']['data']['text']),
+              MyLineBotMsg::create()->template('這訊息要用手機的賴才看的到哦',
+                MyLineBotMsg::create()->templateConfirm( '輸入問題之後請點擊', [
+                  MyLineBotActionMsg::create()->message('取消', '您已按了取消'),
+                  MyLineBotActionMsg::create()->postback('送出', array('lib' => 'TrelloTool', 'method' => 'replyCard', 'param' => array() ), '您已按了送出'),
+                ]))
+            ]);
 
     $response = $bot->pushMessage($sid, $msg->builder);
-    Log::info('response');
 
     $webhook->response = $response->getHTTPStatus() . ' ' . $response->getRawBody();
     $webhook->save();
 
-    Log::info('web save');
     return true;
   }
 }

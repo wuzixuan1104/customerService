@@ -101,15 +101,18 @@ class Curl{
   }
 
   public function custom($method) {
-    if( !in_array($method, ['POST', 'GET']) || empty($this->params) )
+    if( !in_array($method, ['POST', 'GET', 'PUT']) || empty($this->params) )
       return $this;
 
     $this->setOpt(CURLOPT_CUSTOMREQUEST, $method);
-    $this->setOpt(CURLOPT_POSTFIELDS, $this->params );
+
+    if(is_array($this->param))
+      $this->setOpt(CURLOPT_POSTFIELDS, http_build_query($this->params) );
+    else
+      $this->setOpt(CURLOPT_POSTFIELDS, $this->params );
 
     $res = curl_exec($this->ch);
     curl_close($this->ch);
-
     return json_decode($res, true);
   }
 

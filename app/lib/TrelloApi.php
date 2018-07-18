@@ -25,6 +25,10 @@ class TrelloApi {
     return Curl::init($this->url . $req, ['key' => $this->key, 'token' => $this->token])->get();
   }
 
+  public function put($req, $args) {
+    return Curl::init($this->url . $req, ['key' => $this->key, 'token' => $this->token])->custom('PUT');
+  }
+
   public function setWebhook($idModel, $desc, $query = false) {
     $url = 'https://api.trello.com/1/tokens/' . config('trello', 'token') . '/webhooks/?key=' . config('trello', 'key');
     $param = json_encode([

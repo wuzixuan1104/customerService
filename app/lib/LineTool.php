@@ -51,7 +51,7 @@ class LineTool {
     if( empty($param['list_id']) )
       return false;
 
-    $source->process = json_encode( array('card_id' => '', 'idList' => $param['list_id'], 'content' => '', 'date' => date('Y-m-d')) );
+    $source->process = json_encode( array('idCard' => '', 'idList' => $param['list_id'], 'content' => '', 'date' => date('Y-m-d')) );
     $source->save();
 
     return MyLineBotMsg::create()->template('這訊息要用手機的賴才看的到哦',

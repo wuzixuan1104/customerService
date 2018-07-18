@@ -18,6 +18,7 @@ class Card extends Model {
 
   static $belongs_to = array (
     array('source', 'class_name' => 'Source'),
+    array('list', 'class_name' => 'TList'),
   );
 
   const STATUS_READY = 'ready';
