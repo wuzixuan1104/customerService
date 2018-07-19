@@ -83,7 +83,7 @@ class Trello extends ApiController {
           Load::lib('TrelloApi.php');
           $trello = TrelloApi::create();
 
-          if( !$trello->put('/1/cards/' . $card->key_id, array('dueComplete' => $card->status == Card::STATUS_FINISH ? true : false) ) )
+          if( !$trello->put('/1/cards/' . $card->key_id, $card->status == Card::STATUS_FINISH ? array('dueComplete' => true, 'pos' => 'bottom') : array('dueComplete' => false) ) )
             return false;
 
           foreach( $labels as $label ) {
