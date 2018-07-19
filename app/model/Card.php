@@ -23,12 +23,12 @@ class Card extends Model {
 
   const STATUS_READY = 'ready';
   const STATUS_PROCESS = 'process';
-  const STATUS_COMPLETE = 'finish';
+  const STATUS_FINISH = 'finish';
 
   static $statusTexts = array (
     self::STATUS_READY  => '準備中',
     self::STATUS_PROCESS  => '處理中',
-    self::STATUS_COMPLETE  => '已完成',
+    self::STATUS_FINISH  => '已完成',
   );
 
   public function __construct ($attrs = array (), $guardAttrs = true, $instantiatingViafind = false, $newRecord = true) {
