@@ -13,7 +13,6 @@ class Trello extends ApiController {
   }
 
   public function callback() {
-    Log::info(file_get_contents('php://input'));
     $data = json_decode(file_get_contents('php://input'), true);
 
     if( !isset($data['action']['type']) || !isset(Webhook::$typeTexts[$data['action']['type']]) )
@@ -32,7 +31,8 @@ class Trello extends ApiController {
 
     if( !$webhook = Webhook::create($param) )
       return false;
-
+    Log::info('type: '.$data['action']['type']);
+    Log::info('web:'. Webhook::TYPE_UPDATE_CHECK_ITEM_STATE_ON_CARD);
     switch($data['action']['type']) {
       case Webhook::TYPE_COMMENT_CARD:
         if( !$card = Card::find_by_key_id($data['model']['id']) )
