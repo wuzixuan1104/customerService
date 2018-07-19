@@ -45,6 +45,7 @@ class Trello extends ApiController {
         break;
 
       case Webhook::TYPE_UPDATE_CHECK_ITEM_STATE_ON_CARD:
+        Log::info( 'card id:' .$data['action']['data']['card']['id']);
         if( !$card = Card::find_by_key_id($data['action']['data']['card']['id']) )
           return false;
 
