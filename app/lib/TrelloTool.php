@@ -66,12 +66,12 @@ class TrelloTool {
     $param = array(
       'list_id' => $list->id,
       'key_id' => $res['id'],
-      'label_ids' => $label->id,
+      'label_ids' => json_encode( ['status' => $label->id, 'other' => ''] ),
       'source_id' => $source->id,
       'webhook_key_id' => $hook['id'],
       'name' => $res['name'],
       'code' => $res['shortLink'],
-      'status' => Card::STATUS_READY,
+      'status' => Card::STATUS_NEW,
     );
 
     if( !$card = Card::create($param) )

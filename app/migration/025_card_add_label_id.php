@@ -8,7 +8,7 @@
  */
 
 return array (
-    'up' => "ALTER TABLE `cards` ADD `label_ids` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'label ID' AFTER `source_id`;",
-    'down' => "ALTER TABLE `cards` DROP COLUMN `label_ids`;",
+    'up' => "ALTER TABLE `cards` ADD `alert` enum('none', 'immediate', 'deadline') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'none' COMMENT '警急狀態' AFTER `code`;",
+    'down' => "ALTER TABLE `cards` DROP COLUMN `alert`;",
     'at' => "2018-07-19 13:55:06",
   );

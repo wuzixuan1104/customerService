@@ -13,8 +13,10 @@ class Trello extends ApiController {
   }
 
   public function callback() {
-    // Log::info('======================================');
-    // Log::info(file_get_contents('php://input'));
+    Log::info(123);
+    Log::info('======================================');
+    Log::info(file_get_contents('php://input'));
+    die;
     $data = json_decode(file_get_contents('php://input'), true);
 
     if( !isset($data['action']['type']) || !isset(Webhook::$typeTexts[$data['action']['type']]) )
@@ -70,12 +72,31 @@ class Trello extends ApiController {
         $item = $data['action']['data']['checkItem'];
         $statusTexts = array_flip(Card::$statusTexts);
 
+        $oriStatus = $card->status;
         //是否變更 trello傳來的狀態 與 Card Status
-        if( $statusTexts[$item['name']] == Card::STATUS_PROCESS && $card->status != Card::STATUS_FINISH)
-          $card->status = ($item['state'] == 'complete') ? Card::STATUS_PROCESS : Card::STATUS_READY;
+        if( $statusTexts[$item['name']] == Card::STATUS_DEAL && $card->status != Card::STATUS_FINISH)
+          $card->status = ($item['state'] == 'complete') ? Card::STATUS_DEAL : Card::STATUS_YET;
         elseif( $statusTexts[$item['name']] == Card::STATUS_FINISH )
-          $card->status = ($item['state'] == 'complete') ? Card::STATUS_FINISH : Card::STATUS_PROCESS;
+          $card->status = ($item['state'] == 'complete') ? Card::STATUS_FINISH : Card::STATUS_DEAL;
+
         $card->save();
+        Log::info('card status:' . $card->status);
+        //label標籤 將舊的刪除 添加新的
+        if( $oriStatus != $card->status && $labels = Label::find('all', array( 'select' => 'key_id, tag', 'where' => array('tag IN (?)', array($oriStatus, $card->status) ) ) ) ) {
+          foreach( $labels as $label ) {
+            switch( $label['tag'] ) {
+              case $oriStatus:
+                if( !$trello->delete('/1/cards/' . $card->key_id . '/idLabels/' . $label['key_id'] ) )
+                  return false;
+                break;
+              case $card->status;
+                if( !$trello->post('/1/cards/' . $card->key_id . '/idLabels', array('value' => $label['key_id']) ) )
+                  return false;
+                break;
+            }
+          }
+        }
+
         break;
 
       case Webhook::TYPE_DELETE_CARD:

@@ -30,6 +30,11 @@ class TrelloApi {
             ->setParamField($args)->custom('PUT');
   }
 
+  public function delete($req, $args = '') {
+    return Curl::init($this->url . $req, ['key' => $this->key, 'token' => $this->token])
+            ->setParamField($args)->custom('DELETE');
+  }
+
   public function setWebhook($idModel, $desc, $query = false) {
     $url = 'https://api.trello.com/1/tokens/' . config('trello', 'token') . '/webhooks/?key=' . config('trello', 'key');
     $param = json_encode([

@@ -21,14 +21,26 @@ class Card extends Model {
     array('list', 'class_name' => 'TList'),
   );
 
-  const STATUS_READY = 'ready';
-  const STATUS_PROCESS = 'process';
+  const STATUS_NEW = 'new';
+  const STATUS_YET = 'yet';
+  const STATUS_DEAL = 'deal';
   const STATUS_FINISH = 'finish';
 
+  const ALERT_NONE = 'none';
+  const ALERT_IMMEDIATE = 'immediate';
+  const ALERT_DEADLINE = 'deadline';
+
   static $statusTexts = array (
-    self::STATUS_READY  => '準備中',
-    self::STATUS_PROCESS  => '處理中',
+    self::STATUS_NEW  => '新new',
+    self::STATUS_YET => '尚未處理',
+    self::STATUS_DEAL  => '處理中',
     self::STATUS_FINISH  => '已完成',
+  );
+
+  static $alertTexts = array(
+    self::ALERT_NONE => '無',
+    self::ALERT_IMMEDIATE => '立即處理',
+    self::ALERT_DEADLINE => '已到期',
   );
 
   public function __construct ($attrs = array (), $guardAttrs = true, $instantiatingViafind = false, $newRecord = true) {
