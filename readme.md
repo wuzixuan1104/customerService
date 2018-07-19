@@ -9,7 +9,7 @@
 
 ## 示意圖
 + trello客服後台
-<img src='assets/img/trello1.png' width='500'>
+<img src='assets/img/trello1.png' width='800'>
 
 
 ## 使用工具：
