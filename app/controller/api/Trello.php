@@ -45,20 +45,15 @@ class Trello extends ApiController {
         break;
 
       case Webhook::TYPE_UPDATE_CHECK_ITEM_STATE_ON_CARD:
-        Log::info( 'card id:' .$data['action']['data']['card']['id']);
         if( !$card = Card::find_by_key_id($data['action']['data']['card']['id']) )
           return false;
 
         $item = $data['action']['data']['checkItem'];
-        Log::info('itme:' . json_encode($item));
-        Log::info('card tpye:' . json_encode(Card::$statusTexts) );
         $statusTexts = array_flip(Card::$statusTexts);
-
-        Log::info('typeText: ' . json_encode($statusTexts));
 
         if( $statusTexts[$item['name']] == Card::STATUS_PROCESS && $card->status != Card::STATUS_FINISH)
           $card->status = ($item['state'] == 'complete') ? Card::STATUS_PROCESS : Card::STATUS_READY;
-        else
+        elseif( $statusTexts[$item['name']] == Card::STATUS_FINISH )
           $card->status = ($item['state'] == 'complete') ? Card::STATUS_FINISH : Card::STATUS_PROCESS;
         Log::info('status: ' . $card->status);
         $card->save();
