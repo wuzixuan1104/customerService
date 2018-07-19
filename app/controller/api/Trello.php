@@ -13,10 +13,9 @@ class Trello extends ApiController {
   }
 
   public function callback() {
-    // Log::info(123);
-    // Log::info('======================================');
-    // Log::info(file_get_contents('php://input'));
-    // die;
+    Log::info('======================================');
+    Log::info(file_get_contents('php://input'));
+    die;
     $data = json_decode(file_get_contents('php://input'), true);
 
     if( !isset($data['action']['type']) || !isset(Webhook::$typeTexts[$data['action']['type']]) )
@@ -90,7 +89,7 @@ class Trello extends ApiController {
                 if( !$trello->delete('/1/cards/' . $card->key_id . '/idLabels/' . $label->key_id ) )
                   return false;
                 break;
-              case $card->status;
+              case $card->status:
                 if( !$trello->post('/1/cards/' . $card->key_id . '/idLabels', array('value' => $label->key_id) ) )
                   return false;
                 break;
