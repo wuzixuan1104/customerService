@@ -13,9 +13,9 @@ class Trello extends ApiController {
   }
 
   public function callback() {
-    Log::info('======================================');
-    Log::info(file_get_contents('php://input'));
-    die;
+    // Log::info('======================================');
+    // Log::info(file_get_contents('php://input'));
+    // die;
     $data = json_decode(file_get_contents('php://input'), true);
 
     if( !isset($data['action']['type']) || !isset(Webhook::$typeTexts[$data['action']['type']]) )
@@ -82,6 +82,9 @@ class Trello extends ApiController {
         if( $oriStatus != $card->status && $labels = Label::find('all', array( 'select' => 'key_id, tag', 'where' => array('tag IN (?)', array($oriStatus, $card->status) ) ) ) ) {
           Load::lib('TrelloApi.php');
           $trello = TrelloApi::create();
+
+          if( $card->status == Card::STATUS_FINISH && !$trello->put('/1/cards/' . $card->key_id, array('dueComplete' => true) ) )
+            return false;
 
           foreach( $labels as $label ) {
             switch( $label->tag ) {

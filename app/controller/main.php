@@ -13,7 +13,7 @@ class main extends Controller {
     Load::lib('TrelloApi.php');
     $trello = TrelloApi::create();
 
-    $res = $trello->get('/1/boards/5b3f393987de8b4eae408938/?labels=all&label_fields=color');
+    $res = $trello->get('/1/cards/5b503292ffcda93c5b839b28');
 
     // $param = array(
     //   'name' => 'From: test' . ' ' . date('Y-m-d H:i:s'),
