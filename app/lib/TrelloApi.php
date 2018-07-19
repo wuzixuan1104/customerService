@@ -30,9 +30,11 @@ class TrelloApi {
             ->setParamField($args)->custom('PUT');
   }
 
-  public function delete($req, $args = '') {
+  public function delete($req, $args = []) {
+    $args = json_encode($args);
     return Curl::init($this->url . $req, ['key' => $this->key, 'token' => $this->token])
-            ->setParamField($args)->custom('DELETE');
+            ->setHttpHeader(['Content-Type' => 'application/json', 'Content-Length' => strlen($args) ])
+            ->setParamField($args)->custom("DELETE");
   }
 
   public function setWebhook($idModel, $desc, $query = false) {

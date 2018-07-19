@@ -13,10 +13,10 @@ class Trello extends ApiController {
   }
 
   public function callback() {
-    Log::info(123);
-    Log::info('======================================');
-    Log::info(file_get_contents('php://input'));
-    die;
+    // Log::info(123);
+    // Log::info('======================================');
+    // Log::info(file_get_contents('php://input'));
+    // die;
     $data = json_decode(file_get_contents('php://input'), true);
 
     if( !isset($data['action']['type']) || !isset(Webhook::$typeTexts[$data['action']['type']]) )
@@ -49,13 +49,11 @@ class Trello extends ApiController {
         if(!$sid = $card->source->sid)
           return false;
 
-        Load::lib('MyLineBot.php');
-
         $bot = MyLineBot::create();
         $msg = MyLineBotMsg::create ()->multi ([
                   MyLineBotMsg::create ()->text ($data['action']['data']['text']),
                   MyLineBotMsg::create()->template('這訊息要用手機的賴才看的到哦',
-                    MyLineBotMsg::create()->templateConfirm( '輸入問題之後請點擊', [
+                    MyLineBotMsg::create()->templateConfirm( '輸入之後請點擊', [
                       MyLineBotActionMsg::create()->message('取消', '您已按了取消'),
                       MyLineBotActionMsg::create()->postback('送出', array('lib' => 'TrelloTool', 'method' => 'replyCard', 'param' => array() ), '您已按了送出'),]))
                 ]);
@@ -80,17 +78,20 @@ class Trello extends ApiController {
           $card->status = ($item['state'] == 'complete') ? Card::STATUS_FINISH : Card::STATUS_DEAL;
 
         $card->save();
-        Log::info('card status:' . $card->status);
+
         //label標籤 將舊的刪除 添加新的
         if( $oriStatus != $card->status && $labels = Label::find('all', array( 'select' => 'key_id, tag', 'where' => array('tag IN (?)', array($oriStatus, $card->status) ) ) ) ) {
+          Load::lib('TrelloApi.php');
+          $trello = TrelloApi::create();
+
           foreach( $labels as $label ) {
-            switch( $label['tag'] ) {
+            switch( $label->tag ) {
               case $oriStatus:
-                if( !$trello->delete('/1/cards/' . $card->key_id . '/idLabels/' . $label['key_id'] ) )
+                if( !$trello->delete('/1/cards/' . $card->key_id . '/idLabels/' . $label->key_id ) )
                   return false;
                 break;
               case $card->status;
-                if( !$trello->post('/1/cards/' . $card->key_id . '/idLabels', array('value' => $label['key_id']) ) )
+                if( !$trello->post('/1/cards/' . $card->key_id . '/idLabels', array('value' => $label->key_id) ) )
                   return false;
                 break;
             }

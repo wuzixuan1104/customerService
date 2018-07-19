@@ -101,7 +101,7 @@ class Curl{
   }
 
   public function custom($method) {
-    if( !in_array($method, ['POST', 'GET', 'PUT']) || empty($this->params) )
+    if( !in_array($method, ['POST', 'GET', 'PUT', 'DELETE']) || empty($this->params) )
       return $this;
 
     $this->setOpt(CURLOPT_CUSTOMREQUEST, $method);
