@@ -12,7 +12,7 @@
 <img src='assets/img/trello1.png' width='800'>
 
 + linebot顧客回覆訊息
-<img src='assets/img/linebot1.png' width='200'>
+<img src='assets/img/linebot1.png' width='400'>
 
 ## 使用工具：
 + Trello Api: https://trello.readme.io/docs/get-started
