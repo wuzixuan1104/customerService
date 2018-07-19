@@ -21,10 +21,12 @@ class Webhook extends Model {
 
   const TYPE_COMMENT_CARD = 'commentCard';
   const TYPE_UPDATE_CHECK_ITEM_STATE_ON_CARD = 'updateCheckItemStateOnCard';
+  const TYPE_DELETE_CARD = 'deleteCard';
 
   static $typeTexts = [
     self::TYPE_COMMENT_CARD => '評論卡片',
     self::TYPE_UPDATE_CHECK_ITEM_STATE_ON_CARD => '更新卡片上的列表狀態',
+    self::TYPE_DELETE_CARD => '刪除卡片',
   ];
 
   public function __construct ($attrs = array (), $guardAttrs = true, $instantiatingViafind = false, $newRecord = true) {

@@ -78,6 +78,11 @@ class Trello extends ApiController {
         $card->save();
 
         break;
+      case Webhook::TYPE_DELETE_CARD:
+        if( $card = Card::find_by_key_id($data['action']['data']['card']['id']) && !$card->destroy() )
+          return false;
+
+        break;
     }
 
     return true;
