@@ -34,7 +34,6 @@ class TrelloTool {
       'desc' => $process['content'] . "\r\n" . "---",
       'pos' => 'top',
       'due' => date( 'Y-m-d', strtotime('today + 1 week')),
-      'dueComplete' => true,
       'idList' => $process['idList'],
       'idMembers' => implode(',', array_map(function($ser){ return $ser->key_id; }, $servicers)),
     );

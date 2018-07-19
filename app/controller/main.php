@@ -12,9 +12,8 @@ class main extends Controller {
   public function index () {
     Load::lib('TrelloApi.php');
     $trello = TrelloApi::create();
-    print_r(Card::$typeTexts);
-    die;
-    $res = $trello->get('/1/cards/5b4d56d3779ff96615086eb0');
+
+    $res = $trello->get('/1/boards/5b3f393987de8b4eae408938/?labels=all&label_fields=color');
 
     // $param = array(
     //   'name' => 'From: test' . ' ' . date('Y-m-d H:i:s'),
