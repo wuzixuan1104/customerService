@@ -13,6 +13,8 @@ class Trello extends ApiController {
   }
 
   public function callback() {
+    Log::info('======================================');
+    Log::info(file_get_contents('php://input'));
     $data = json_decode(file_get_contents('php://input'), true);
 
     if( !isset($data['action']['type']) || !isset(Webhook::$typeTexts[$data['action']['type']]) )
@@ -31,8 +33,9 @@ class Trello extends ApiController {
 
     if( !$webhook = Webhook::create($param) )
       return false;
-    Log::info('type: '.$data['action']['type']);
-    Log::info('web:'. Webhook::TYPE_UPDATE_CHECK_ITEM_STATE_ON_CARD);
+
+    Load::lib('MyLineBot.php');
+
     switch($data['action']['type']) {
       case Webhook::TYPE_COMMENT_CARD:
         if( !$card = Card::find_by_key_id($data['model']['id']) )
@@ -41,7 +44,23 @@ class Trello extends ApiController {
         $card->source->process = json_encode( array('idCard' => $card->key_id, 'idList' => $card->list->key_id, 'content' => '', 'date' => date('Y-m-d')) );
         $card->source->save();
 
-        $sid = $card->source->sid;
+        if(!$sid = $card->source->sid)
+          return false;
+
+        Load::lib('MyLineBot.php');
+
+        $bot = MyLineBot::create();
+        $msg = MyLineBotMsg::create ()->multi ([
+                  MyLineBotMsg::create ()->text ($data['action']['data']['text']),
+                  MyLineBotMsg::create()->template('這訊息要用手機的賴才看的到哦',
+                    MyLineBotMsg::create()->templateConfirm( '輸入問題之後請點擊', [
+                      MyLineBotActionMsg::create()->message('取消', '您已按了取消'),
+                      MyLineBotActionMsg::create()->postback('送出', array('lib' => 'TrelloTool', 'method' => 'replyCard', 'param' => array() ), '您已按了送出'),]))
+                ]);
+
+        $response = $bot->pushMessage($sid, $msg->builder);
+        $webhook->response = $response->getHTTPStatus() . ' ' . $response->getRawBody();
+        $webhook->save();
         break;
 
       case Webhook::TYPE_UPDATE_CHECK_ITEM_STATE_ON_CARD:
@@ -51,36 +70,15 @@ class Trello extends ApiController {
         $item = $data['action']['data']['checkItem'];
         $statusTexts = array_flip(Card::$statusTexts);
 
+        //是否變更 trello傳來的狀態 與 Card Status
         if( $statusTexts[$item['name']] == Card::STATUS_PROCESS && $card->status != Card::STATUS_FINISH)
           $card->status = ($item['state'] == 'complete') ? Card::STATUS_PROCESS : Card::STATUS_READY;
         elseif( $statusTexts[$item['name']] == Card::STATUS_FINISH )
           $card->status = ($item['state'] == 'complete') ? Card::STATUS_FINISH : Card::STATUS_PROCESS;
-        Log::info('status: ' . $card->status);
         $card->save();
 
         break;
     }
-
-    if(!$sid)
-      return false;
-
-    Load::lib('MyLineBot.php');
-
-    $bot = MyLineBot::create();
-    $msg = MyLineBotMsg::create ()
-            ->multi ([
-              MyLineBotMsg::create ()->text ($data['action']['data']['text']),
-              MyLineBotMsg::create()->template('這訊息要用手機的賴才看的到哦',
-                MyLineBotMsg::create()->templateConfirm( '輸入問題之後請點擊', [
-                  MyLineBotActionMsg::create()->message('取消', '您已按了取消'),
-                  MyLineBotActionMsg::create()->postback('送出', array('lib' => 'TrelloTool', 'method' => 'replyCard', 'param' => array() ), '您已按了送出'),
-                ]))
-            ]);
-
-    $response = $bot->pushMessage($sid, $msg->builder);
-
-    $webhook->response = $response->getHTTPStatus() . ' ' . $response->getRawBody();
-    $webhook->save();
 
     return true;
   }
