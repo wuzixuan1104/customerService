@@ -48,9 +48,10 @@ class Trello extends ApiController {
         Log::info( 'card id:' .$data['action']['data']['card']['id']);
         if( !$card = Card::find_by_key_id($data['action']['data']['card']['id']) )
           return false;
-        Log::info(123);
+
         $item = $data['action']['data']['checkItem'];
         Log::info('itme:' . json_encode($item));
+        Log::info('card tpye:' . json_encode(Card::$typeTexts) );
         $typeTexts = array_flip(Card::$typeTexts);
 
         Log::info('typeText: ' . json_encode($typeTexts));
