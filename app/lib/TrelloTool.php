@@ -34,7 +34,7 @@ class TrelloTool {
     $param = array(
       'name' => 'From: ' . $source->title . ' ' . date('Y-m-d H:i:s'),
       'desc' => $process['content'] . "\r\n" . "---",
-      'pos' => 'bottom',
+      'pos' => 'top',
       'due' => date( 'Y-m-d', strtotime('today + 1 week')),
       'idList' => $process['idList'],
       'idMembers' => implode(',', array_map(function($ser){ return $ser->key_id; }, $servicers)),
