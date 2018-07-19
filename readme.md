@@ -7,6 +7,11 @@
 目前問題種類簡單分為：檢舉配送品質、退貨問題、貨到缺件反應、付款問題、換貨問題、維修保固問題、發票問題、我要申訴。
 不同種類的問題可以分別指派給不同群的客服專員回答，當有人提出該分類的問題，便會發送通知給該專員回答，而每個問題都會有時間提醒，問題會依照時間有不同的標籤顏色警示。
 
+## 示意圖
++ trello客服後台
+<img src='assets/img/trello1.png' width='500'>
+
+
 ## 使用工具：
 + Trello Api: https://trello.readme.io/docs/get-started
 + Linebot: https://developers.line.me/en/docs/messaging-api/overview/
