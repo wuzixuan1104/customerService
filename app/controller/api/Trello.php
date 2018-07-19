@@ -13,8 +13,8 @@ class Trello extends ApiController {
   }
 
   public function callback() {
-    Log::info('======================================');
-    Log::info(file_get_contents('php://input'));
+    // Log::info('======================================');
+    // Log::info(file_get_contents('php://input'));
     $data = json_decode(file_get_contents('php://input'), true);
 
     if( !isset($data['action']['type']) || !isset(Webhook::$typeTexts[$data['action']['type']]) )
@@ -76,12 +76,12 @@ class Trello extends ApiController {
         elseif( $statusTexts[$item['name']] == Card::STATUS_FINISH )
           $card->status = ($item['state'] == 'complete') ? Card::STATUS_FINISH : Card::STATUS_PROCESS;
         $card->save();
-
         break;
-      case Webhook::TYPE_DELETE_CARD:
-        if( $card = Card::find_by_key_id($data['action']['data']['card']['id']) && !$card->destroy() )
-          return false;
 
+      case Webhook::TYPE_DELETE_CARD:
+        if( $card = Card::find_by_key_id($data['action']['data']['card']['id']) )
+          if( $card->destroy() )
+            return false;
         break;
     }
 
