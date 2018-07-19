@@ -54,12 +54,12 @@ class Trello extends ApiController {
         Log::info('card tpye:' . json_encode(Card::$statusTexts) );
         $statusTexts = array_flip(Card::$statusTexts);
 
-        Log::info('typeText: ' . json_encode($typeTexts));
+        Log::info('typeText: ' . json_encode($statusTexts));
 
-        if( $statusTexts[$item['name']] == Card::TYPE_PROCESS && $card->status != Card::TYPE_FINISH)
-          $card->status = ($item['state'] == 'complete') ? Card::TYPE_PROCESS : Card::TYPE_READY;
+        if( $statusTexts[$item['name']] == Card::STATUS_PROCESS && $card->status != Card::STATUS_FINISH)
+          $card->status = ($item['state'] == 'complete') ? Card::STATUS_PROCESS : Card::STATUS_READY;
         else
-          $card->status = ($item['state'] == 'complete') ? Card::TYPE_FINISH : Card::TYPE_PROCESS;
+          $card->status = ($item['state'] == 'complete') ? Card::STATUS_FINISH : Card::STATUS_PROCESS;
         Log::info('status: ' . $card->status);
         $card->save();
 
