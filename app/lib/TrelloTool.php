@@ -28,6 +28,8 @@ class TrelloTool {
       return MyLineBotMsg::create()->text('系統發生問題');
     if( !$servicers = Servicer::find('all', array('where' => array('FIND_IN_SET( ?, `list_ids`)', $list->id) ) ) )
       return MyLineBotMsg::create()->text('系統發生問題');
+    if( !$label = Label::find('one', array('where' => array('tag = ?', Label::TAG_NEW) ) ) )
+      return MyLineBotMsg::create()->text('系統發生問題');
 
     $param = array(
       'name' => 'From: ' . $source->title . ' ' . date('Y-m-d H:i:s'),
@@ -52,6 +54,10 @@ class TrelloTool {
         !$trello->post('/1/checklists/' . $ckList['id'] . '/checkItems', array('name' => '已完成', 'pos' => 'bottom') ) )
       return MyLineBotMsg::create()->text('無法新增trello問題列表項目');
 
+    //新增label
+    if( !$trello->post('/1/cards/' . $res['id'] . '/idLabels', array('value' => $label->key_id) ) )
+      return MyLineBotMsg::create()->text('無法新增trello標籤');
+
     //新增webhook
     if( !$hook = $trello->setWebhook($res['id'], $res['name']) )
       return MyLineBotMsg::create()->text('卡片建立webhook失敗！');
@@ -60,6 +66,7 @@ class TrelloTool {
     $param = array(
       'list_id' => $list->id,
       'key_id' => $res['id'],
+      'label_ids' => $label->id,
       'source_id' => $source->id,
       'webhook_key_id' => $hook['id'],
       'name' => $res['name'],

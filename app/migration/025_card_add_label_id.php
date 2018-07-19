@@ -8,7 +8,7 @@
  */
 
 return array (
-    'up' => "ALTER TABLE `cards` ADD `label_id` int(11) unsigned DEFAULT 0 COMMENT 'label ID' AFTER `source_id`;",
-    'down' => "ALTER TABLE `cards` DROP COLUMN `label_id`;",
+    'up' => "ALTER TABLE `cards` ADD `label_ids` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'label ID' AFTER `source_id`;",
+    'down' => "ALTER TABLE `cards` DROP COLUMN `label_ids`;",
     'at' => "2018-07-19 13:55:06",
   );

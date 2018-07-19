@@ -18,6 +18,19 @@ class Label extends Model {
 
   static $belongs_to = array (
   );
+  const TAG_NEW = 'new';
+  const TAG_DEAL = 'deal';
+  const TAG_FINISH = 'finish';
+  const TAG_IMMEDIATE = 'immediate';
+  const TAG_DEADLINE = 'deadline';
+
+  static $tagTexts = [
+    self::TAG_NEW => '新new',
+    self::TAG_DEAL => '處理中...',
+    self::TAG_FINISH => '已完成',
+    self::TAG_IMMEDIATE => '立即處理',
+    self::TAG_DEADLINE => '已到期'
+  ];
 
   public function __construct ($attrs = array (), $guardAttrs = true, $instantiatingViafind = false, $newRecord = true) {
     parent::__construct ($attrs, $guardAttrs, $instantiatingViafind, $newRecord);
