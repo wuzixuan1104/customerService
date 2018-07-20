@@ -35,8 +35,10 @@ class main extends Controller {
               FlexComponent::create()->setType('text')->setText('Footer text')])->format()
             )->setHero( FlexComponent::create()->setType('image')->setUrl('https://example.com/flex/images/image.jpg')->format()
             )->buildContent() );
+
     $res = $this->replyMessage('123', $res);
-    print_r($res);
+    echo json_encode($res);
+    // print_r($res);
     die;
 
 

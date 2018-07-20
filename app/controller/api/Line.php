@@ -65,9 +65,9 @@ class Line extends ApiController {
                   )->setHero( FlexComponent::create()->setType('image')->setUrl('https://example.com/flex/images/image.jpg')->format()
                 )->buildContent() );
 
-      
+          Log::info('1==');
           MyLineBot::bot()->replyMessage(config('line', 'channelToken'), $builder);
-
+          Log::info('2==');
           // print_r($builder);
           die;
 
