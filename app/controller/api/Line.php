@@ -51,9 +51,9 @@ class Line extends ApiController {
         case 'Unfollow':
           break;
         case 'Text':
-
+          Log::info('3==');
           Load::lib('FlexMessageBuilder.php');
-
+          Log::info('4==');
           $builder = new FlexMessageBuilder('altText',
                   BubbleBuilder::create()
                   ->setHeader( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
