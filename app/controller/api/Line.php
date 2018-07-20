@@ -6,6 +6,9 @@
  * @license     http://opensource.org/licenses/MIT  MIT License
  * @link        https://www.ioa.tw/
  */
+ use LINE\LINEBot\MessageBuilder\FlexMessageBuilder;
+ use LINE\LINEBot\MessageBuilder\BubbleBuilder;
+ use LINE\LINEBot\MessageBuilder\FlexComponent;
 
 class Line extends ApiController {
   static $cache;
@@ -15,11 +18,13 @@ class Line extends ApiController {
   }
 
   public function index() {
+
     Load::lib('MyLineBot.php');
     Load::lib('LineTool.php');
     // Load::sysFunc('file.php');
 
     $events = MyLineBot::events();
+
     foreach( $events as $event ) {
 
       if( !$source = Source::checkSourceExist($event) )
@@ -46,6 +51,24 @@ class Line extends ApiController {
         case 'Unfollow':
           break;
         case 'Text':
+
+          Load::lib('FlexMessageBuilder.php');
+
+          $builder = new FlexMessageBuilder('altText',
+                  BubbleBuilder::create()
+                  ->setHeader( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
+                    FlexComponent::create()->setType('text')->setText('Header text')])->format()
+                  )->setBody( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
+                    FlexComponent::create()->setType('text')->setText('Body text')])->format()
+                  )->setFooter( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
+                    FlexComponent::create()->setType('text')->setText('Footer text')])->format()
+                  )->setHero( FlexComponent::create()->setType('image')->setUrl('https://example.com/flex/images/image.jpg')->format()
+                  ));
+          MyLineBot::bot()->replyMessage('26MDcO3RcFJBXGFPLUVO8pa4XkmX15T5glmzDw5ywksAFdl7+unxTIqbhDTjsr00Xegw03qs26zy3LJFiggB7oBlria14k5qNSmurdVrroekXqH/Plpa1nI6QHOKlbZY5NspHwAfLacFJrRosbzsPAdB04t89/1O/w1cDnyilFU=', $builder);
+
+          // print_r($builder);
+          die;
+
           $pattern = 'hello';
           $pattern = !preg_match ('/\(\?P<k>.+\)/', $pattern) ? '/(?P<k>(' . $pattern . '))/i' : ('/(' . $pattern . ')/i');
           preg_match_all ($pattern, $log->text, $result);

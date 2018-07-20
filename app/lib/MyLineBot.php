@@ -325,7 +325,7 @@ class MyLineBotActionMsg {
     return is_string($label) && is_string($text) ? new MessageTemplateActionBuilder($label, $text) : null;
   }
   public function uri($label, $url) {
-    return is_string($label) && (isHttp($url) || isHttps($usrl)) ? new UriTemplateActionBuilder($label, $url) : null;
+    return is_string($label) ? new UriTemplateActionBuilder($label, $url) : null;
   }
   public function postback($label, $data, $text) {
     return is_string($label) && ($data = is_array($data) ? json_encode($data) : $data ) && !is_null($text) ? new PostbackTemplateActionBuilder($label, $data, $text) : null;
@@ -337,4 +337,125 @@ class MyLineBotActionMsg {
   public function imagemapUri($url, $x, $y, $width, $height) {
     return is_string($url) && is_numeric($x) && is_numeric($y) && is_numeric($width) && is_numeric($height) ? new ImagemapUriActionBuilder($url, new AreaBuilder($x, $y, $width, $height) ) : null;
   }
+}
+
+/*
+$component = FlexBubbleContainer::create()->setHeader(
+              FlexComponent::create()->setType('box')->layout('vertical')->setContent(
+                FlexComponent::create()->setType('box')->setLayout('horizontal')->setWeight('bold');
+              ) );
+
+*/
+class FlexComponent {
+  public $properties = [];
+  public $str = [];
+
+  private $type;
+  private $direction;
+
+  private $layout;
+  private $text;
+  private $url;
+  private $weight;
+  private $size;
+  private $margin;
+
+  public function __construct() {
+
+  }
+  public static function create() {
+    return new FlexComponent();
+  }
+
+  public function _setType($value) {
+    if(is_string($value)) $this->type = $value;
+  }
+
+  public function _setDirection($value) {
+    if(in_array($value, ['ltr', 'rtl'])) $this->direction = $value;
+  }
+
+  public function _setLayout($value) {
+    if(is_string($value)) $this->layout = $value;
+  }
+
+  public function _setUrl($value) {
+    if(is_string($value)) $this->url = $value;
+  }
+
+  public function _setText($value) {
+    if(is_string($value)) $this->text = $value;
+  }
+
+  public function _setWeight($value) {
+    if(is_string($value)) $this->weight = $value;
+  }
+
+  public function _setMargin($value) {
+    if(is_string($value)) $this->margin = $value;
+  }
+
+  public function _setSize($value) {
+    if(is_string($value)) $this->size = $value;
+  }
+
+  public function setContent(FlexComponent $components) {
+    if( empty($components->properties) ) return $this;
+    foreach($components->properties as $pro) {
+      $this->str['content'][$pro] = $components->$pro;
+    }
+    return $this;
+  }
+
+  public function format($value) {
+
+  }
+
+  public function __call($name, $args) {
+    method_exists ($this, '_' . $name) || gg ('FlexComponent 錯誤的使用');
+    call_user_func_array (array ($this, '_' . $name), $args);
+
+    array_push($this->properties, strtolower( str_replace('set', '', $name) ) );
+    return $this;
+  }
+
+
+
+
+}
+
+class FlexBubbleContainer {
+  public $header = null;
+  public $hero = null;
+  public $body = null;
+  public $footer = null;
+  public $styles = null;
+
+  public function __construct() {
+    parent::__construct();
+  }
+  public static function create() {
+    return new FlexBubbleContainer();
+  }
+
+  public function setHeader() {
+
+  }
+
+  public function setHero() {
+
+  }
+
+  public function setBody() {
+
+  }
+
+  public function setFooter() {
+
+  }
+
+  public function setStyle() {
+
+  }
+
 }

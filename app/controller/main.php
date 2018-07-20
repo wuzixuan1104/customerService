@@ -7,28 +7,38 @@
  * @link        https://www.ioa.tw/
  */
 
+
+use LINE\LINEBot\MessageBuilder\FlexMessageBuilder;
+use LINE\LINEBot\MessageBuilder\BubbleBuilder;
+use LINE\LINEBot\MessageBuilder\FlexComponent;
+
 class main extends Controller {
 
+  public function replyMessage($replyToken, LINE\LINEBot\MessageBuilder $messageBuilder)
+  {
+      return $this->httpClient->post($this->endpointBase . '/v2/bot/message/reply', [
+          'replyToken' => $replyToken,
+          'messages' => $messageBuilder->buildMessage(),
+      ]);
+  }
+
   public function index () {
-    Load::lib('TrelloApi.php');
-    $trello = TrelloApi::create();
+    Load::lib('FlexMessageBuilder.php');
 
-    $res = $trello->get('/1/cards/5b503292ffcda93c5b839b28');
-
-    // $param = array(
-    //   'name' => 'From: test' . ' ' . date('Y-m-d H:i:s'),
-    //   'desc' => 123 . "\r\n" . "---",
-    //   'pos' => 'top',
-    //   'due' => date( 'Y-m-d', strtotime('today + 1 week')),
-    //   'dueComplete' => true,
-    //   'idList' => '5b42cf2739596c211c1e176b',
-    //   'idMembers' => '591aaa419db460a704771400'
-    // );
-    //
-    // $res = $trello->post('/1/cards', $param);
+    $res = new FlexMessageBuilder('altText',
+            BubbleBuilder::create()
+            ->setHeader( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
+              FlexComponent::create()->setType('text')->setText('Header text')])->format()
+            )->setBody( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
+              FlexComponent::create()->setType('text')->setText('Body text')])->format()
+            )->setFooter( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
+              FlexComponent::create()->setType('text')->setText('Footer text')])->format()
+            )->setHero( FlexComponent::create()->setType('image')->setUrl('https://example.com/flex/images/image.jpg')->format()
+            ));
     // print_r($res);
+    // die;
+    $res = $this->replyMessage('123', $res);
 
-    // $res = $trello->setWebhook('5b4daf47c50ba749ccd0dbaf', 'hello');
     print_r($res);
     die;
 
