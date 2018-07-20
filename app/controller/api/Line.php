@@ -52,38 +52,41 @@ class Line extends ApiController {
           break;
         case 'Text':
 
-          // Load::lib('FlexMessageBuilder.php');
-          // $builder = new FlexMessageBuilder('altText',
-          //         BubbleBuilder::create()
-          //         ->setHeader( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
-          //           FlexComponent::create()->setType('text')->setText('Header text')])->format()
-          //         )->setBody( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
-          //           FlexComponent::create()->setType('text')->setText('Body text')])->format()
-          //         )->setFooter( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
-          //           FlexComponent::create()->setType('text')->setText('Footer text')])->format()
-          //         )->setHero( FlexComponent::create()->setType('image')->setUrl('https://example.com/flex/images/image.jpg')->format()
-          //       )->buildContent() );
-          // Log::info('a:' . json_encode($builder));
+          Load::lib('FlexMessageBuilder.php');
+          $builder = new FlexMessageBuilder('altText',
+                  BubbleBuilder::create()
+                  ->setHeader( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
+                    FlexComponent::create()->setType('text')->setText('Header text')])->format()
+                  )->setBody( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
+                    FlexComponent::create()->setType('text')->setText('Body text')])->format()
+                  )->setFooter( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
+                    FlexComponent::create()->setType('text')->setText('Footer text')])->format()
+                  )->setHero( FlexComponent::create()->setType('image')->setUrl('https://example.com/flex/images/image.jpg')->format()
+                )->buildContent() );
 
-          $builder = MyLineBotMsg::create()->template('這訊息要用手機的賴才看的到哦',
-              MyLineBotMsg::create()->templateCarousel( [
-                MyLineBotMsg::create()->templateCarouselColumn('標題', '哈哈哈哈哈', 'https://cdn.adpost.com.tw/adpost/production/uploads/adv_details/pic/00/00/00/00/00/00/06/5e/_29753e27ceb64b0f35b77aca7acf9a3e.jpg', [
-                  MyLineBotActionMsg::create()->datetimePicker('date', date('Y-m-d'), 'date', '', '', ''),
-                  // MyLineBotActionMsg::create()->message('label', 'test'),
-                  MyLineBotActionMsg::create()->uri("Google","http://www.google.com"),
-                  MyLineBotActionMsg::create()->postback('label', 'postback', 'postback'),
-                ]),
-                MyLineBotMsg::create()->templateCarouselColumn('標題', '哈哈哈哈哈', 'https://cdn.adpost.com.tw/adpost/production/uploads/adv_details/pic/00/00/00/00/00/00/06/5e/_29753e27ceb64b0f35b77aca7acf9a3e.jpg', [
-                  MyLineBotActionMsg::create()->datetimePicker('date', date('Y-m-d'), 'date', '', '', ''),
-                  MyLineBotActionMsg::create()->message('label', 'test'),
-                  // MyLineBotActionMsg::create()->uri("Google","http://www.google.com"),
-                  MyLineBotActionMsg::create()->postback('label', 'postback', 'postback'),
-                ]),
-              ])
-          );
+          Log::info('a:' . json_encode($builder));
+
+          // $builder = MyLineBotMsg::create()->template('這訊息要用手機的賴才看的到哦',
+          //     MyLineBotMsg::create()->templateCarousel( [
+          //       MyLineBotMsg::create()->templateCarouselColumn('標題', '哈哈哈哈哈', 'https://cdn.adpost.com.tw/adpost/production/uploads/adv_details/pic/00/00/00/00/00/00/06/5e/_29753e27ceb64b0f35b77aca7acf9a3e.jpg', [
+          //         MyLineBotActionMsg::create()->datetimePicker('date', date('Y-m-d'), 'date', '', '', ''),
+          //         // MyLineBotActionMsg::create()->message('label', 'test'),
+          //         MyLineBotActionMsg::create()->uri("Google","http://www.google.com"),
+          //         MyLineBotActionMsg::create()->postback('label', 'postback', 'postback'),
+          //       ]),
+          //       MyLineBotMsg::create()->templateCarouselColumn('標題', '哈哈哈哈哈', 'https://cdn.adpost.com.tw/adpost/production/uploads/adv_details/pic/00/00/00/00/00/00/06/5e/_29753e27ceb64b0f35b77aca7acf9a3e.jpg', [
+          //         MyLineBotActionMsg::create()->datetimePicker('date', date('Y-m-d'), 'date', '', '', ''),
+          //         MyLineBotActionMsg::create()->message('label', 'test'),
+          //         // MyLineBotActionMsg::create()->uri("Google","http://www.google.com"),
+          //         MyLineBotActionMsg::create()->postback('label', 'postback', 'postback'),
+          //       ]),
+          //     ])
+          // );
+
           // print_r($builder);
           // die;
-          MyLineBot::bot()->replyMessage($event->getReplyToken(), $builder->builder);
+          MyLineBot::bot()->replyMessage($event->getReplyToken(), $builder);
+          Log::info('end');
           // print_r($builder);
           die;
 
