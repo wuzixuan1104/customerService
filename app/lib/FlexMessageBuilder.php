@@ -18,7 +18,7 @@ class FlexMessageBuilder implements MessageBuilder {
       [
         'type' => $this->type,
         'altText' => $this->altText,
-        'content' => $this->contentBuilder,
+        'contents' => $this->contentBuilder,
       ]
     ];
   }
