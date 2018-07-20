@@ -51,9 +51,8 @@ class Line extends ApiController {
         case 'Unfollow':
           break;
         case 'Text':
-          Log::info('3==');
+
           Load::lib('FlexMessageBuilder.php');
-          Log::info('4==');
           $builder = new FlexMessageBuilder('altText',
                   BubbleBuilder::create()
                   ->setHeader( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
@@ -64,10 +63,8 @@ class Line extends ApiController {
                     FlexComponent::create()->setType('text')->setText('Footer text')])->format()
                   )->setHero( FlexComponent::create()->setType('image')->setUrl('https://example.com/flex/images/image.jpg')->format()
                 )->buildContent() );
-
-          Log::info('1==');
+          Log::info('a:' . json_encode($builder));
           MyLineBot::bot()->replyMessage(config('line', 'channelToken'), $builder);
-          Log::info('2==');
           // print_r($builder);
           die;
 

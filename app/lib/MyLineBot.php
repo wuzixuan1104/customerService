@@ -74,7 +74,7 @@ class MyLineBot extends LINEBot{
       return false;
 
     try {
-      Log::info( file_get_contents ("php://input") );
+      // Log::info( file_get_contents ("php://input") );
       return MyLineBot::bot()->parseEventRequest (file_get_contents ("php://input"), $_SERVER["HTTP_" . HTTPHeader::LINE_SIGNATURE]);
     } catch (Exception $e) {
       return $e;
