@@ -14,12 +14,12 @@ use LINE\LINEBot\MessageBuilder\FlexComponent;
 
 class main extends Controller {
 
-  public function replyMessage($replyToken, LINE\LINEBot\MessageBuilder $messageBuilder)
+  public function replyMessage($replyToken,  $messageBuilder)
   {
-      return $this->httpClient->post($this->endpointBase . '/v2/bot/message/reply', [
+      return [
           'replyToken' => $replyToken,
           'messages' => $messageBuilder->buildMessage(),
-      ]);
+      ];
   }
 
   public function index () {
@@ -34,13 +34,11 @@ class main extends Controller {
             )->setFooter( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
               FlexComponent::create()->setType('text')->setText('Footer text')])->format()
             )->setHero( FlexComponent::create()->setType('image')->setUrl('https://example.com/flex/images/image.jpg')->format()
-            ));
-    // print_r($res);
-    // die;
+            )->buildContent() );
     $res = $this->replyMessage('123', $res);
-
     print_r($res);
     die;
+
 
 
     $asset = Asset::create (2)

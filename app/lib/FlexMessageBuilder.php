@@ -3,10 +3,12 @@ namespace LINE\LINEBot\MessageBuilder;
 use LINE\LINEBot\MessageBuilder;
 
 class FlexMessageBuilder implements MessageBuilder {
+  private $type;
   private $altText;
   private $contentBuilder;
 
-  public function __construct($altText, ContentBuilder $contentBuilder) {
+  public function __construct($altText, array $contentBuilder) {
+    $this->type = 'flex';
     $this->altText = $altText;
     $this->contentBuilder = $contentBuilder;
   }
@@ -14,7 +16,7 @@ class FlexMessageBuilder implements MessageBuilder {
   public function buildMessage() {
     return [
       [
-        'type' => 'flex',
+        'type' => $this->type,
         'altText' => $this->altText,
         'content' => $this->contentBuilder,
       ]

@@ -63,8 +63,10 @@ class Line extends ApiController {
                   )->setFooter( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
                     FlexComponent::create()->setType('text')->setText('Footer text')])->format()
                   )->setHero( FlexComponent::create()->setType('image')->setUrl('https://example.com/flex/images/image.jpg')->format()
-                  ));
-          MyLineBot::bot()->replyMessage('26MDcO3RcFJBXGFPLUVO8pa4XkmX15T5glmzDw5ywksAFdl7+unxTIqbhDTjsr00Xegw03qs26zy3LJFiggB7oBlria14k5qNSmurdVrroekXqH/Plpa1nI6QHOKlbZY5NspHwAfLacFJrRosbzsPAdB04t89/1O/w1cDnyilFU=', $builder);
+                )->buildContent() );
+
+      
+          MyLineBot::bot()->replyMessage(config('line', 'channelToken'), $builder);
 
           // print_r($builder);
           die;
