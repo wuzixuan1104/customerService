@@ -131,7 +131,7 @@ class FlexComponent {
 
     foreach( $components as $component ) {
       if( empty($component) )
-        comtinue;
+        continue;
 
       foreach($component->properties as $pro) {
         $content[$pro] = $component->$pro;
