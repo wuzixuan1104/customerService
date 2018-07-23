@@ -463,12 +463,25 @@ class FlexComponent {
   private $contents = [];
   private $type;
   private $layout;
+  private $flex;
+  private $spacing;
   private $text;
   private $url;
+
   private $weight;
+  private $height;
   private $size;
+
   private $margin;
   private $backgroundColor;
+  private $style;
+  private $color;
+
+  private $align;
+  private $gravity;
+  private $aspectRatio;
+  private $aspectMode;
+
   private $separator;
   private $separatorColor;
 
@@ -476,6 +489,9 @@ class FlexComponent {
   private $body;
   private $footer;
   private $hero;
+  private $action;
+
+  private $wrap;
 
   public function __construct() {
 
@@ -486,15 +502,29 @@ class FlexComponent {
 
   public function _setType($value) { if(is_string($value)) $this->type = $value; }
   public function _setLayout($value) { if(is_string($value)) $this->layout = $value; }
+  public function _setFlex($value) { if(is_string($value)) $this->flex = $value; }
+  public function _setSpacing($value) { if(is_string($value)) $this->spacing = $value; }
   public function _setUrl($value) { if(is_string($value)) $this->url = $value; }
   public function _setText($value) { if(is_string($value)) $this->text = $value; }
   public function _setWeight($value) { if(is_string($value)) $this->weight = $value; }
+  public function _setHeight($value) { if(is_string($value)) $this->height = $value; }
   public function _setMargin($value) { if(is_string($value)) $this->margin = $value; }
   public function _setSize($value) { if(is_string($value)) $this->size = $value; }
   public function _setBackgroundColor($value) { if(is_string($value)) $this->backgroundColor = $value; }
+  public function _setStyle($value) { if(is_string($value)) $this->style = $value; }
+  public function _setColor($value) { if(is_string($value)) $this->color = $value; }
+  public function _setAlign($value) { if(is_string($value)) $this->align = $value; }
+  public function _setWrap($value) { if(is_string($value)) $this->wrap = $value; }
+  public function _setGravity($value) { if(is_string($value)) $this->gravity = $value; }
+  public function _setAspectRatio($value) { if(is_string($value)) $this->aspectRatio = $value; }
+  public function _setAspectMode($value) { if(is_string($value)) $this->aspectMode = $value; }
   public function _setSeparator($value) { if(is_bool($value)) $this->separator = $value; }
   public function _setSeparatorColor($value) { if(is_string($value)) $this->separatorColor = $value; }
 
+  public function _setAction($components) {
+    $this->action = $components;
+    return $this;
+  }
   public function _setHeader($components) {
     if( empty($components) ) return $this;
     foreach($components as $pro => $value) {
@@ -559,4 +589,19 @@ class FlexComponent {
     return $this;
   }
 
+}
+
+class FlexAction {
+  public static function postBack($label, $text, $data) {
+    return is_string($label) && is_string($text) && is_array($data) ? json_encode($data) : $data ? [ 'type' => 'postback', 'data' => $data, 'text' => $text ] : null;
+  }
+  public static function message($label, $text) {
+    return is_string($label) && is_string($text) ? [ 'type' => 'message', 'label' => $label, 'text' => $text ] : null;
+  }
+  public static function uri($label, $uri) {
+    return is_string($label) && is_string($uri) ? [ 'type' => 'uri', 'label' => $label, 'uri' => $uri ] : null;
+  }
+  public static function datetimepicker($label, $data, $mode, $initial = null, $max = null, $min = null) {
+    return is_string($label) && is_string($data) && in_array($mode, ['date', 'time', 'datetime']) ? ['type' => 'datetimepicker', 'label' => $label, 'data' => $data, 'mode' => $mode, 'initial' => $initial, 'max' => $max, 'min' => $min ] : null;
+  }
 }
