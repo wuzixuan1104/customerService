@@ -24,9 +24,6 @@ use LINE\LINEBot\MessageBuilder\StickerMessageBuilder;
 use LINE\LINEBot\MessageBuilder\LocationMessageBuilder;
 use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateMessageBuilder;
-// use LINE\LINEBot\MessageBuilder\FlexMessageBuilder;
-// use LINE\LINEBot\MessageBuilder\BubbleBuilder;
-// use LINE\LINEBot\MessageBuilder\FlexComponent;
 
 use LINE\LINEBot\MessageBuilder\Imagemap\BaseSizeBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder;
@@ -314,20 +311,20 @@ class MyLineBotMsg {
     return $this;
   }
 
-  public function flex($text, $builder) {
-    if( !is_string($text) || empty($builder) )
+  public function flex($builder, $text = '') {
+    if( empty($builder) )
       return $this;
 
-    $this->builder = new FlexMessageBuilder($text, $builder);
+    $this->builder = new FlexMessageBuilder($builder, $text);
     return $this;
   }
 
   public function flexBubbleBuilder() {
-    return BubbleBuilder::create();
+    return FlexBubbleBuilder::create();
   }
 
-  public function flexCarouselBuilder() {
-
+  public function flexCarouselBuilder(array $bubbleBuilder) {
+    return new FlexCarouselBuilder($bubbleBuilder);
   }
 
 }
@@ -362,23 +359,22 @@ class MyLineBotActionMsg {
 
 class FlexMessageBuilder implements MessageBuilder {
   private $type;
-  private $altText;
+  private $altText = '';
   private $contentBuilder;
 
-  public function __construct($altText, ContentBuilder $contentBuilder) {
+  public function __construct(ContentBuilder $contentBuilder, $altText = '') {
     $this->type = 'flex';
     $this->altText = $altText;
     $this->contentBuilder = $contentBuilder;
   }
 
   public function buildMessage() {
-    return [
-      [
-        'type' => $this->type,
-        'altText' => $this->altText,
-        'contents' => $this->contentBuilder->buildContent(),
-      ]
+    $res = [
+      'type' => $this->type,
+      'contents' => $this->contentBuilder->buildContent()
     ];
+    if( !empty($this->altText) ) $res['altText'] = $this->altText;
+    return [ $res ];
   }
 }
 
@@ -386,7 +382,7 @@ interface ContentBuilder {
   public function buildContent();
 }
 
-class BubbleBuilder implements ContentBuilder {
+class FlexBubbleBuilder implements ContentBuilder {
   private $header = null;
   private $body = null;
   private $footer = null;
@@ -399,7 +395,7 @@ class BubbleBuilder implements ContentBuilder {
   }
 
   public static function create() {
-    return new BubbleBuilder();
+    return new FlexBubbleBuilder();
   }
 
   public function setHeader($component) {
@@ -437,6 +433,26 @@ class BubbleBuilder implements ContentBuilder {
     !empty($this->styles) && $content['styles'] = $this->styles;
 
     return $content;
+  }
+}
+
+class FlexCarouselBuilder implements ContentBuilder {
+  private $bubbleContents = [];
+
+  public function __construct(array $bubbleContents) {
+    $this->bubbleContents = $bubbleContents;
+  }
+
+  public function buildContent() {
+    if( empty($this->bubbleContents) )
+      return $this;
+    foreach( $this->bubbleContents as $bubble ) {
+      $contents[] = $bubble->buildContent();
+    }
+    return [
+      'type' => 'carousel',
+      'contents' => $contents
+    ];
   }
 }
 

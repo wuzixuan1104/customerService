@@ -49,9 +49,24 @@ class Line extends ApiController {
           break;
         case 'Text':
 
-          $builder = MyLineBotMsg::create()->flex('test',
+          // $builder = MyLineBotMsg::create()->flex(
+          //             MyLineBotMsg::create()->flexBubbleBuilder()
+          //             ->setHeader( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
+          //               FlexComponent::create()->setType('text')->setText('Header text')])
+          //             )->setBody( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
+          //               FlexComponent::create()->setType('text')->setText('Body text')])
+          //             )->setFooter( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
+          //               FlexComponent::create()->setType('text')->setText('Footer text')])
+          //             )->setHero( FlexComponent::create()->setType('image')->setUrl('https://example.com/flex/images/image.jpg')
+          //             )->setStyles( FlexComponent::create()
+          //               ->setHeader( FlexComponent::create()->setBackgroundColor('#00ffff') )
+          //               ->setHero( FlexComponent::create()->setSeparator(true)->setSeparatorColor('#000000') )
+          //               ->setFooter( FlexComponent::create()->setBackgroundColor('#00ffff')->setSeparator(true)->setSeparatorColor('#000000') )
+          //             ), 'test')->reply($event->getReplyToken());
+
+          $builder = MyLineBotMsg::create()->flex( MyLineBotMsg::create()->flexCarouselBuilder([
                       MyLineBotMsg::create()->flexBubbleBuilder()
-                      ->setHeader( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
+                       ->setHeader( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
                         FlexComponent::create()->setType('text')->setText('Header text')])
                       )->setBody( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
                         FlexComponent::create()->setType('text')->setText('Body text')])
@@ -62,8 +77,23 @@ class Line extends ApiController {
                         ->setHeader( FlexComponent::create()->setBackgroundColor('#00ffff') )
                         ->setHero( FlexComponent::create()->setSeparator(true)->setSeparatorColor('#000000') )
                         ->setFooter( FlexComponent::create()->setBackgroundColor('#00ffff')->setSeparator(true)->setSeparatorColor('#000000') )
-                      ))->reply($event->getReplyToken());
+                      ),
 
+                      MyLineBotMsg::create()->flexBubbleBuilder()
+                       ->setHeader( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
+                        FlexComponent::create()->setType('text')->setText('Header text')])
+                      )->setBody( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
+                        FlexComponent::create()->setType('text')->setText('Body text')])
+                      )->setFooter( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
+                        FlexComponent::create()->setType('text')->setText('Footer text')])
+                      )->setHero( FlexComponent::create()->setType('image')->setUrl('https://example.com/flex/images/image.jpg')
+                      )->setStyles( FlexComponent::create()
+                        ->setHeader( FlexComponent::create()->setBackgroundColor('#00ffff') )
+                        ->setHero( FlexComponent::create()->setSeparator(true)->setSeparatorColor('#000000') )
+                        ->setFooter( FlexComponent::create()->setBackgroundColor('#00ffff')->setSeparator(true)->setSeparatorColor('#000000') )
+                      )
+                    ]))->reply($event->getReplyToken());
+                    // ->reply($event->getReplyToken());
 
           print_r($builder);
           die;
