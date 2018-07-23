@@ -51,20 +51,33 @@ class Line extends ApiController {
 
 
 
-          $builder = MyLineBotMsg::create()->flex( 'test',
-                      MyLineBotMsg::create()->flexBubbleBuilder()
-                       ->setHeader( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
-                        FlexComponent::create()->setType('text')->setText('Header text')])
-                      )->setBody( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
-                        FlexComponent::create()->setType('button')->setAction( FlexAction::postback('buy', 'action=123', 'Buy') )->setStyle('primary')->setColor('#0000ff') ])
-                      )->setFooter( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
-                        FlexComponent::create()->setType('text')->setText('Footer text')])
-                      )->setHero( FlexComponent::create()->setType('image')->setUrl('https://example.com/flex/images/image.jpg')
-                      )->setStyles( FlexComponent::create()
-                        ->setHeader( FlexComponent::create()->setBackgroundColor('#00ffff') )
-                        ->setHero( FlexComponent::create()->setSeparator(true)->setSeparatorColor('#000000') )
-                        ->setFooter( FlexComponent::create()->setBackgroundColor('#00ffff')->setSeparator(true)->setSeparatorColor('#000000') )
-                      )
+          $builder = MyLineBotMsg::create()->flex( 'test', MyLineBotMsg::create()->flexBubbleBuilder()
+                      ->setBody( FlexComponent::create()->setType('box')->setLayout('vertical')->setSpacing('md')->setContents([
+                        FlexComponent::create()->setType('text')->setText('客服評分表')->setWeight("bold")->setSize('lg'),
+                        FlexComponent::create()->setType('separator'),
+                        FlexComponent::create()->setType('box')->setLayout('horizontal')->setSpacing('md')->setContents([
+                          FlexComponent::create()->setType('box')->setLayout('vertical')->setFlex(5)->setContents([
+                            FlexComponent::create()->setType('box')->setLayout('baseline')->setContents([
+                              FlexComponent::create()->setType('text')->setText('Q1'),
+                            ])
+                          ]),
+                          FlexComponent::create()->setType('separator'),
+                          FlexComponent::create()->setType('button')->setFlex(3)->setHeight('sm')->setGravity('center')->setStyle('secondary')->setAction( FlexAction::postback('click', 'data=123', 'A1') )
+                        ]),
+                        FlexComponent::create()->setType('separator'),
+                        FlexComponent::create()->setType('box')->setLayout('horizontal')->setSpacing('md')->setContents([
+                          FlexComponent::create()->setType('box')->setLayout('vertical')->setFlex(5)->setContents([
+                            FlexComponent::create()->setType('box')->setLayout('baseline')->setContents([
+                              FlexComponent::create()->setType('text')->setText('Q1'),
+                            ])
+                          ]),
+                          FlexComponent::create()->setType('separator'),
+                          FlexComponent::create()->setType('button')->setFlex(3)->setHeight('sm')->setGravity('center')->setStyle('secondary')->setAction( FlexAction::postback('click', 'data=123', 'A1') )
+                        ]),
+                      ]))
+                      ->setFooter( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
+                        FlexComponent::create()->setType('button')->setAction( FlexAction::postback('Table', 'data=123', 'A1')->setStyle('primary') )
+                      ]) )
                     )->reply($event->getReplyToken());
 
           print_r($builder);
