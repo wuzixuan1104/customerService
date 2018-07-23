@@ -593,7 +593,7 @@ class FlexComponent {
 
 class FlexAction {
   public static function postBack($label, $text, $data) {
-    return is_string($label) && is_string($text) && is_array($data) ? json_encode($data) : $data ? [ 'type' => 'postback', 'data' => $data, 'text' => $text ] : null;
+    return is_string($label) && is_string($text) && is_array($data) ? json_encode($data) : $data ? [ 'type' => 'postback', 'label' => $label, 'data' => $data, 'text' => $text ] : null;
   }
   public static function message($label, $text) {
     return is_string($label) && is_string($text) ? [ 'type' => 'message', 'label' => $label, 'text' => $text ] : null;
