@@ -53,33 +53,27 @@ class Line extends ApiController {
         case 'Text':
           Load::lib('FlexMessageBuilder.php');
 
-          // $builder = new FlexMessageBuilder('altText',
-          //         BubbleBuilder::create()
-          //         ->setHeader( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
-          //           FlexComponent::create()->setType('text')->setText('Header text')])->format()
-          //         )->setBody( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
-          //           FlexComponent::create()->setType('text')->setText('Body text')])->format()
-          //         )->setFooter( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
-          //           FlexComponent::create()->setType('text')->setText('Footer text')])->format()
-          //         )->setHero( FlexComponent::create()->setType('image')->setUrl('https://example.com/flex/images/image.jpg')->format()
-          //       )->buildContent() );
-
           $builder = MyLineBotMsg::create()->flex('test',
-                      MyLineBotMsg::create()->bubbleBuilder()
+                      MyLineBotMsg::create()->flexBubbleBuilder()
                       ->setHeader( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
-                        FlexComponent::create()->setType('text')->setText('Header text')])->format()
+                        FlexComponent::create()->setType('text')->setText('Header text')])
                       )->setBody( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
-                        FlexComponent::create()->setType('text')->setText('Body text')])->format()
+                        FlexComponent::create()->setType('text')->setText('Body text')])
                       )->setFooter( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
-                        FlexComponent::create()->setType('text')->setText('Footer text')])->format()
-                      )->setHero( FlexComponent::create()->setType('image')->setUrl('https://example.com/flex/images/image.jpg')->format()
-                    )->buildContent() )->reply($event->getReplyToken());
+                        FlexComponent::create()->setType('text')->setText('Footer text')])
+                      )->setHero( FlexComponent::create()->setType('image')->setUrl('https://example.com/flex/images/image.jpg')
+                      )->setStyles( FlexComponent::create()
+                        ->setHeader( FlexComponent::create()->setBackgroundColor('#00ffff') )
+                        ->setHero( FlexComponent::create()->setSeparator(true)->setSeparatorColor('#000000') )
+                        ->setFooter( FlexComponent::create()->setBackgroundColor('#00ffff')->setSeparator(true)->setSeparatorColor('#000000') )
+                      )->buildContent())->reply($event->getReplyToken());
 
-          // print_R($builder);
-          // die;
-          // MyLineBot::bot()->replyMessage($event->getReplyToken(), $builder);
-          // Log::info('end');
-          // print_r($builder);
+          // $builder = MyLineBotMsg::create('test', BubbleBuilder::create()
+          //             ->setStyles( FlexComponent::create()
+          //               ->setHeader( FlexComponent::create()->setBackgroundColor('#00ffff')->format() )
+          //               ->setBody( FlexComponent::create()->setSeparator(true)->setSeparatorColor('#000000')->format() )
+          // ));
+          print_r($builder);
           die;
 
           $pattern = 'hello';
