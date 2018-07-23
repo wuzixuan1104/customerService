@@ -7,7 +7,7 @@ class FlexMessageBuilder implements MessageBuilder {
   private $altText;
   private $contentBuilder;
 
-  public function __construct($altText, array $contentBuilder) {
+  public function __construct($altText, ContentBuilder $contentBuilder) {
     $this->type = 'flex';
     $this->altText = $altText;
     $this->contentBuilder = $contentBuilder;
@@ -18,7 +18,7 @@ class FlexMessageBuilder implements MessageBuilder {
       [
         'type' => $this->type,
         'altText' => $this->altText,
-        'contents' => $this->contentBuilder,
+        'contents' => $this->contentBuilder->buildContent(),
       ]
     ];
   }
@@ -101,7 +101,6 @@ class FlexComponent {
   private $body;
   private $footer;
   private $hero;
-  private $comment;
 
   public function __construct() {
 
@@ -128,13 +127,6 @@ class FlexComponent {
     }
     return $this;
   }
-  public function _setComment($components) {
-    if( empty($components) ) return $this;
-    foreach($components as $pro => $value) {
-      $this->comment[$pro] = $value;
-    }
-    return $this;
-  }
   public function _setBody($components) {
     if( empty($components) ) return $this;
     foreach($components as $pro => $value) {
@@ -157,29 +149,28 @@ class FlexComponent {
     return $this;
   }
   public function _setContents(array $components) {
-    if( empty($components) ) return $this;
+    if( empty($components) )
+      return $this;
 
     foreach( $components as $component ) {
       if( empty($component) )
         continue;
-
-      foreach($component->properties as $pro) {
+      foreach($component->properties as $pro)
         $content[$pro] = $component->$pro;
-      }
-      $this->contents = $content;
-      // $this->format['contents'][] = $content;
+      $this->contents[] = $content;
     }
     return $this;
   }
 
   public function getFormat() {
-    if( empty($this) ) return $this;
+    if( empty($this) )
+      return $this;
+
     foreach($this->properties as $pro) {
-      if( is_array( ($spro = $this->$pro) )  && isset($spro['properties']) ) {
-        foreach($spro['properties'] as $subPro) {
+      if( is_array( ($spro = $this->$pro) )  && isset($spro['properties']) )
+        foreach($spro['properties'] as $subPro)
           $res[$pro][$subPro] = $spro[$subPro];
-        }
-      } else
+      else
         $res[$pro] = $this->$pro;
     }
     return $res;

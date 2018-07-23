@@ -6,9 +6,6 @@
  * @license     http://opensource.org/licenses/MIT  MIT License
  * @link        https://www.ioa.tw/
  */
- use LINE\LINEBot\MessageBuilder\FlexMessageBuilder;
- use LINE\LINEBot\MessageBuilder\BubbleBuilder;
- use LINE\LINEBot\MessageBuilder\FlexComponent;
 
 class Line extends ApiController {
   static $cache;
@@ -51,7 +48,6 @@ class Line extends ApiController {
         case 'Unfollow':
           break;
         case 'Text':
-          Load::lib('FlexMessageBuilder.php');
 
           $builder = MyLineBotMsg::create()->flex('test',
                       MyLineBotMsg::create()->flexBubbleBuilder()
@@ -66,13 +62,9 @@ class Line extends ApiController {
                         ->setHeader( FlexComponent::create()->setBackgroundColor('#00ffff') )
                         ->setHero( FlexComponent::create()->setSeparator(true)->setSeparatorColor('#000000') )
                         ->setFooter( FlexComponent::create()->setBackgroundColor('#00ffff')->setSeparator(true)->setSeparatorColor('#000000') )
-                      )->buildContent())->reply($event->getReplyToken());
+                      ))->reply($event->getReplyToken());
 
-          // $builder = MyLineBotMsg::create('test', BubbleBuilder::create()
-          //             ->setStyles( FlexComponent::create()
-          //               ->setHeader( FlexComponent::create()->setBackgroundColor('#00ffff')->format() )
-          //               ->setBody( FlexComponent::create()->setSeparator(true)->setSeparatorColor('#000000')->format() )
-          // ));
+
           print_r($builder);
           die;
 
