@@ -64,7 +64,7 @@ class Line extends ApiController {
           //               ->setFooter( FlexComponent::create()->setBackgroundColor('#00ffff')->setSeparator(true)->setSeparatorColor('#000000') )
           //             ), 'test')->reply($event->getReplyToken());
 
-          $builder = MyLineBotMsg::create()->flex( MyLineBotMsg::create()->flexCarouselBuilder([
+          $builder = MyLineBotMsg::create()->flex( 'test', MyLineBotMsg::create()->flexCarouselBuilder([
                       MyLineBotMsg::create()->flexBubbleBuilder()
                        ->setHeader( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
                         FlexComponent::create()->setType('text')->setText('Header text')])

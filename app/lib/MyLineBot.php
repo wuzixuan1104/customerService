@@ -311,11 +311,11 @@ class MyLineBotMsg {
     return $this;
   }
 
-  public function flex($builder, $text = '') {
+  public function flex($text, $builder) {
     if( empty($builder) )
       return $this;
 
-    $this->builder = new FlexMessageBuilder($builder, $text);
+    $this->builder = new FlexMessageBuilder($text, $builder);
     return $this;
   }
 
@@ -362,19 +362,20 @@ class FlexMessageBuilder implements MessageBuilder {
   private $altText = '';
   private $contentBuilder;
 
-  public function __construct(ContentBuilder $contentBuilder, $altText = '') {
+  public function __construct($altText, ContentBuilder $contentBuilder) {
     $this->type = 'flex';
     $this->altText = $altText;
     $this->contentBuilder = $contentBuilder;
   }
 
   public function buildMessage() {
-    $res = [
-      'type' => $this->type,
-      'contents' => $this->contentBuilder->buildContent()
+    return [
+      [
+        'type' => $this->type,
+        'altText' => $this->altText,
+        'contents' => $this->contentBuilder->buildContent()
+      ]
     ];
-    if( !empty($this->altText) ) $res['altText'] = $this->altText;
-    return [ $res ];
   }
 }
 
