@@ -420,16 +420,15 @@ class FlexBubbleBuilder implements ContentBuilder {
     return $this;
   }
   public function buildContent() {
-    if( empty($this->header) || empty($this->body) || empty($this->footer) )
+    if( empty($this->header) && empty($this->body) && empty($this->footer) )
       gg('Bubble 建立Content錯誤');
 
     $content = [
       'type' => 'bubble',
-      'header' => $this->header,
-      'body' => $this->body,
-      'footer' => $this->footer,
     ];
-
+    !empty($this->header) && $content['header'] = $this->header;
+    !empty($this->body) && $content['body'] = $this->body;
+    !empty($this->footer) && $content['footer'] = $this->footer;
     !empty($this->hero) && $content['hero'] = $this->hero;
     !empty($this->styles) && $content['styles'] = $this->styles;
 
@@ -560,8 +559,10 @@ class FlexComponent {
     foreach( $components as $component ) {
       if( empty($component) )
         continue;
+      $content = [];
       foreach($component->properties as $pro)
         $content[$pro] = $component->$pro;
+
       $this->contents[] = $content;
     }
     return $this;
