@@ -23,20 +23,9 @@ class main extends Controller {
   }
 
   public function index () {
-    Load::lib('FlexMessageBuilder.php');
+    Load::lib('FlexFormat.php');
 
-    $res = new FlexMessageBuilder('altText',
-            BubbleBuilder::create()
-            ->setHeader( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
-              FlexComponent::create()->setType('text')->setText('Header text')])->format()
-            )->setBody( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
-              FlexComponent::create()->setType('text')->setText('Body text')])->format()
-            )->setFooter( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
-              FlexComponent::create()->setType('text')->setText('Footer text')])->format()
-            )->setHero( FlexComponent::create()->setType('image')->setUrl('https://example.com/flex/images/image.jpg')->format()
-            )->buildContent() );
 
-    $res = $this->replyMessage('123', $res);
     echo json_encode($res);
     // print_r($res);
     die;
