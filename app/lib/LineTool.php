@@ -38,10 +38,10 @@ class LineTool {
       ]);
     }
 
-      return MyLineBotMsg::create()->flex('選擇問題類別', MyLineBotMsg::create()->flexBubbleBuilder()
-        ->setBody( FlexComponent::create()->setType('box')->setLayout('vertical')->setSpacing('md')->setContents( array_merge([
-          FlexComponent::create()->setType('text')->setText('問題類別')->setWeight("bold")->setSize('lg'),
-        ], $arr))));
+      // return MyLineBotMsg::create()->flex('選擇問題類別', MyLineBotMsg::create()->flexBubbleBuilder()
+      //   ->setBody( FlexComponent::create()->setType('box')->setLayout('vertical')->setSpacing('md')->setContents( array_merge([
+      //     FlexComponent::create()->setType('text')->setText('問題類別')->setWeight("bold")->setSize('lg'),
+      //   ], $arr))));
 
     // foreach( array_chunk( $lists, 3 ) as $key => $list ) {
     //   $actionArr = [];
@@ -57,11 +57,11 @@ class LineTool {
     // }
     //
 
-    // $multiArr = [ MyLineBotMsg::create ()->text ('感謝您使用客服信箱，請填寫以下程序，待客服人員回覆:)') ];
-    // $multiArr = array_merge( $multiArr, [ MyLineBotMsg::create()->flex('選擇問題類別', MyLineBotMsg::create()->flexBubbleBuilder()
-    //   ->setBody( FlexComponent::create()->setType('box')->setLayout('vertical')->setSpacing('md')->setContents( array_merge([
-    //     FlexComponent::create()->setType('text')->setText('問題類別')->setWeight("bold")->setSize('lg'),
-    //   ], $arr)))) ]);
+    $multiArr = [ MyLineBotMsg::create ()->text ('感謝您使用客服信箱，請填寫以下程序，待客服人員回覆:)') ];
+    $multiArr = array_merge( $multiArr, [ MyLineBotMsg::create()->flex('選擇問題類別', MyLineBotMsg::create()->flexBubbleBuilder()
+      ->setBody( FlexComponent::create()->setType('box')->setLayout('vertical')->setSpacing('md')->setContents( array_merge([
+        FlexComponent::create()->setType('text')->setText('問題類別')->setWeight("bold")->setSize('lg'),
+      ], $arr)))) ]);
 
     // print_r($multiArr);
     // die;
