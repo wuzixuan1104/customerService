@@ -23,26 +23,47 @@ class LineTool {
     if( !$lists = TList::find('all') )
       return false;
 
-    foreach( array_chunk( $lists, 3 ) as $key => $list ) {
-      $actionArr = [];
-      foreach( $list as $vlist )
-        $actionArr[] = MyLineBotActionMsg::create()->postback( $vlist->name, array('lib' => 'LineTool', 'method' => 'getList', 'param' => array('list_id' => $vlist->key_id) ), $vlist->name);
+    $arr = [];
 
-      //檢查是否每項為3個
-      if( ($listSub = 3 - count($list)) != 0 )
-        for( $i = 0; $i < $listSub; $i++ )
-          $actionArr[] = MyLineBotActionMsg::create()->postback( '-', array(), '-');
+    foreach( $lists as $vlist ) {
+      $arr[] = FlexComponent::create()->setType('separator');
+      $arr[] = FlexComponent::create()->setType('box')->setLayout('horizontal')->setSpacing('md')->setContents([
+        FlexComponent::create()->setType('box')->setLayout('vertical')->setFlex(7)->setContents([
+          FlexComponent::create()->setType('box')->setLayout('baseline')->setContents([
+            FlexComponent::create()->setType('text')->setText($vlist->name),
+          ])
+        ]),
+        FlexComponent::create()->setType('separator'),
+        FlexComponent::create()->setType('button')->setFlex(3)->setHeight('sm')->setGravity('center')->setStyle('primary')->setAction( FlexAction::postback( '選擇', array('lib' => 'LineTool', 'method' => 'getList', 'param' => array('list_id' => $vlist->key_id) ), $vlist->name ) )
+      ]);
 
-      $columnArr[] = MyLineBotMsg::create()->templateCarouselColumn('請選擇問題類別', '-', null, $actionArr);
     }
 
-    $multiArr = [ MyLineBotMsg::create ()->text ('感謝您使用客服信箱，請填寫以下程序，待客服人員回覆:)') ];
-    $multiArr = array_merge( $multiArr, array_map( function($column) {
-      return  MyLineBotMsg::create()->template('這訊息要用手機的賴才看的到哦',
-        MyLineBotMsg::create()->templateCarousel( $column )
-      );
-    }, array_chunk($columnArr, 10) ));
+      // $a = MyLineBotMsg::create()->flex('選擇問題類別', MyLineBotMsg::create()->flexBubbleBuilder()
+      //   ->setBody( FlexComponent::create()->setType('box')->setLayout('vertical')->setSpacing('md')->setContents( array_merge([
+      //     FlexComponent::create()->setType('text')->setText('問題類別')->setWeight("bold")->setSize('lg'),
+      //   ], $arr))));
 
+    // foreach( array_chunk( $lists, 3 ) as $key => $list ) {
+    //   $actionArr = [];
+    //   foreach( $list as $vlist )
+    //     $actionArr[] = MyLineBotActionMsg::create()->postback( $vlist->name, array('lib' => 'LineTool', 'method' => 'getList', 'param' => array('list_id' => $vlist->key_id) ), $vlist->name);
+    //
+    //   //檢查是否每項為3個
+    //   if( ($listSub = 3 - count($list)) != 0 )
+    //     for( $i = 0; $i < $listSub; $i++ )
+    //       $actionArr[] = MyLineBotActionMsg::create()->postback( '-', array(), '-');
+    //
+    //   $columnArr[] = MyLineBotMsg::create()->templateCarouselColumn('請選擇問題類別', '-', null, $actionArr);
+    // }
+    //
+    $multiArr = [ MyLineBotMsg::create ()->text ('感謝您使用客服信箱，請填寫以下程序，待客服人員回覆:)') ];
+    $multiArr = array_merge( $multiArr, [ MyLineBotMsg::create()->flex('選擇問題類別', MyLineBotMsg::create()->flexBubbleBuilder()
+      ->setBody( FlexComponent::create()->setType('box')->setLayout('vertical')->setSpacing('md')->setContents( array_merge([
+        FlexComponent::create()->setType('text')->setText('問題類別')->setWeight("bold")->setSize('lg'),
+      ], $arr)))) ]);
+    // print_r($multiArr);
+    // die;
     return MyLineBotMsg::create()->multi ($multiArr);
   }
 

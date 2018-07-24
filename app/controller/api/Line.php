@@ -49,15 +49,18 @@ class Line extends ApiController {
           break;
         case 'Text':
 
-
-
+        if ( $msg = LineTool::start() )
+          $msg->reply($event->getReplyToken());
+        die;
+          $qa = [''];
 
           $builder = MyLineBotMsg::create()->flex('test', MyLineBotMsg::create()->flexBubbleBuilder()
                       ->setBody( FlexComponent::create()->setType('box')->setLayout('vertical')->setSpacing('md')->setContents([
                         FlexComponent::create()->setType('text')->setText('客服評分表')->setWeight("bold")->setSize('lg'),
+
                         FlexComponent::create()->setType('separator'),
                         FlexComponent::create()->setType('box')->setLayout('horizontal')->setSpacing('md')->setContents([
-                          FlexComponent::create()->setType('box')->setLayout('vertical')->setFlex(5)->setContents([
+                          FlexComponent::create()->setType('box')->setLayout('vertical')->setFlex(7)->setContents([
                             FlexComponent::create()->setType('box')->setLayout('baseline')->setContents([
                               FlexComponent::create()->setType('text')->setText('Q1'),
                             ])
@@ -65,9 +68,10 @@ class Line extends ApiController {
                           FlexComponent::create()->setType('separator'),
                           FlexComponent::create()->setType('button')->setFlex(3)->setHeight('sm')->setGravity('center')->setStyle('secondary')->setAction( FlexAction::postback('click', 'data=123', 'A1') )
                         ]),
+
                         FlexComponent::create()->setType('separator'),
                         FlexComponent::create()->setType('box')->setLayout('horizontal')->setSpacing('md')->setContents([
-                          FlexComponent::create()->setType('box')->setLayout('vertical')->setFlex(5)->setContents([
+                          FlexComponent::create()->setType('box')->setLayout('vertical')->setFlex(7)->setContents([
                             FlexComponent::create()->setType('box')->setLayout('baseline')->setContents([
                               FlexComponent::create()->setType('text')->setText('Q2'),
                             ])
@@ -76,6 +80,7 @@ class Line extends ApiController {
                           FlexComponent::create()->setType('button')->setFlex(3)->setHeight('sm')->setGravity('center')->setStyle('secondary')->setAction( FlexAction::postback('click', 'data=123', 'A1') )
                         ]),
                       ]))
+
                       ->setFooter( FlexComponent::create()->setType('box')->setLayout('vertical')->setContents([
                         FlexComponent::create()->setType('button')->setAction( FlexAction::postback('Table', 'data=123', 'A1') )->setStyle('primary')
                       ]) ))->reply($event->getReplyToken());

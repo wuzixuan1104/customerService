@@ -501,7 +501,7 @@ class FlexComponent {
 
   public function _setType($value) { if(is_string($value)) $this->type = $value; }
   public function _setLayout($value) { if(is_string($value)) $this->layout = $value; }
-  public function _setFlex($value) { if(is_string($value)) $this->flex = $value; }
+  public function _setFlex($value) { if(is_numeric($value)) $this->flex = $value; }
   public function _setSpacing($value) { if(is_string($value)) $this->spacing = $value; }
   public function _setUrl($value) { if(is_string($value)) $this->url = $value; }
   public function _setText($value) { if(is_string($value)) $this->text = $value; }
