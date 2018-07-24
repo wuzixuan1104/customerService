@@ -34,17 +34,20 @@ class Flex {
 
   }
 }
-
 class FlexComponent {
+  protected $attrs = [];
+  public function toArray() {
+    if (!$this->attrs)
+      return $this;
 
+  }
 }
-
-class FlexBox extends FlexComponent{
-  public $contents;
-  public $layout;
-  public $flex;
-  public $margin;
-  protected $spacing;
+class FlexBox {
+  private $contents;
+  private $layout;
+  private $flex;
+  private $margin;
+  private $spacing;
 
   public function __construct(array $contents) {
     parent::__construct();
@@ -75,86 +78,143 @@ class FlexBox extends FlexComponent{
   }
 }
 class FlexButton {
-  public function __construct() {
+  private $action;
+  private $flex;
+  private $margin;
+  private $height;
+  private $style;
+  private $color;
+  private $gravity;
 
+  public function __construct($style) {
+    $this->setStyle($style);
+  }
+  public static function create($style) {
+    return new FlexButton($style);
   }
   public function setAction() {
 
   }
-  public function setFlex() {
-
+  public function setFlex($value) {
+    if(is_string($value)) $this->flex = $value;
+    return $this;
   }
-  public function setMargin() {
-
+  public function setMargin($value) {
+    if(is_string($value)) $this->margin = $value;
+    return $this;
   }
-  public function setHeight() {
-
+  public function setHeight($value) {
+    if(is_string($value)) $this->height = $value;
+    return $this;
   }
-  public function setStyle() {
-
+  public function setStyle($value) {
+    if(is_string($value)) $this->style = $value;
+    return $this;
   }
-  public function setColor() {
-
+  public function setColor($value) {
+    if(is_string($value)) $this->color = $value;
+    return $this;
   }
-  public function setGravity() {
-
+  public function setGravity($value) {
+    if(is_string($value)) $this->gravity = $value;
+    return $this;
   }
 }
 class FlexIcon {
-  public function __construct() {
+  private $url;
+  private $margin;
+  private $size;
+  private $aspectRatio;
 
+  public function __construct($url) {
+    $this->setUrl($url);
   }
-  public function setUrl() {
-
+  public static function create($url) {
+    return new FlexIcon($url);
   }
-  public function setMargin() {
-
+  public function setUrl($value) {
+    if(is_string($value)) $this->url = $value;
+    return $this;
   }
-  public function setSize() {
-
+  public function setMargin($value) {
+    if(is_string($value)) $this->margin = $value;
+    return $this;
   }
-  public function setAspectRatio() {
-
+  public function setSize($value) {
+    if(is_string($value)) $this->size = $value;
+    return $this;
+  }
+  public function setAspectRatio($value) {
+    if(is_string($value)) $this->aspectRatio = $value;
+    return $this;
   }
 }
 class FlexImage {
-  public function __construct() {
+  private $url;
+  private $flex;
+  private $margin;
+  private $align;
+  private $gravity;
+  private $size;
+  private $aspectRatio;
+  private $aspectMode;
+  private $backgroundColor;
 
+  public function __construct($url) {
+    $this->setUrl($url);
   }
-  public function setUrl() {
-
+  public static function create($url) {
+    return new FlexImage($url);
   }
-  public function setFlex() {
-
+  public function setUrl($value) {
+    if(is_string($value)) $this->url = $value;
+    return $this;
   }
-  public function setMargin() {
-
+  public function setFlex($value) {
+    if(is_numeric($value)) $this->flex = $value;
+    return $this;
   }
-  public function setAlign() {
-
+  public function setMargin($value) {
+    if(is_string($value)) $this->margin = $value;
+    return $this;
   }
-  public function setGravity() {
-
+  public function setAlign($value) {
+    if(is_string($value)) $this->align = $value;
+    return $this;
   }
-  public function setSize() {
-
+  public function setGravity($value) {
+    if(is_string($value)) $this->gravity = $value;
+    return $this;
   }
-  public function setAspectRatio() {
-
+  public function setSize($value) {
+    if(is_string($value)) $this->size = $value;
+    return $this;
   }
-  public function setAspectMode() {
-
+  public function setAspectRatio($value) {
+    if(is_string($value)) $this->aspectRatio = $value;
+    return $this;
   }
-  public function setBackgroundColor() {
-
+  public function setAspectMode($value) {
+    if(is_string($value)) $this->aspectMode = $value;
+    return $this;
+  }
+  public function setBackgroundColor($value) {
+    if(is_string($value)) $this->backgroundColor = $value;
+    return $this;
   }
   public function setAction() {
 
   }
 }
 class FlexSeparator {
+  private $margin;
+  private $color;
+
   public function __construct() {
 
+  }
+  public static function create() {
+    return new FlexSeparator();
   }
   public function setMargin() {
 
@@ -164,17 +224,64 @@ class FlexSeparator {
   }
 }
 class FlexSpacer {
-  public function __construct() {
-
+  public function __construct($size) {
+    $this->setSize($size);
   }
-  public function setSize() {}
+  public static function create($size) {
+    return new FlexSpacer($size);
+  }
+  public function setSize($value) {
+    if(is_string($value)) $this->size = $value;
+    return $this;
+  }
 }
-class FlexText {
+class FlexText extends FlexComponent {
 
-  public function __construct() {
+  public function __construct($text) {
+    parent::__construct();
+    $this->setText($text);
+  }
+  public static function create($text) {
+    return new FlexText($text);
+  }
+  public function setText($value) {
+    if(is_string($value)) $this->attrs['text'] = $value;
+    return $this;
+  }
+  public function setFlex($value) {
+    if(is_numeric($value)) $this->attrs['flex'] = $value;
+    return $this;
+  }
+  public function setMargin($value) {
+    if(is_string($value)) $this->attrs['margin'] = $value;
+    return $this;
+  }
+  public function setSize($value) {
+    if(is_string($value)) $this->attrs['size'] = $value;
+    return $this;
+  }
+  public function setAlign($value) {
+    if(is_string($value)) $this->attrs['align'] = $value;
+    return $this;
+  }
+  public function setGravity($value) {
+    if(is_string($value)) $this->attrs['gravity'] = $value;
+    return $this;
+  }
+  public function setWrap($value) {
+    if(is_string($value)) $this->attrs['wrap'] = $value;
+    return $this;
+  }
+  public function setWeight($value) {
+    if(is_string($value)) $this->attrs['weight'] = $value;
+    return $this;
+  }
+  public function setColor($value) {
+    if(is_string($value)) $this->attrs['color'] = $value;
+    return $this;
+  }
+  public function setAction($value) {
 
   }
-  public function setText() {
 
-  }
 }

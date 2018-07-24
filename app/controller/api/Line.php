@@ -48,6 +48,17 @@ class Line extends ApiController {
         case 'Unfollow':
           break;
         case 'Text':
+
+        Load::lib('FlexFormat.php');
+
+        $a = FlexText::create('Title')->setSize('xl')->setWeight('bold');
+        echo $a;
+        die;
+        FlexBox::create([ FlexText::create('Title')->setSize('xl')->setWeight('bold') ])->setLayout('vertical');
+
+
+
+
           $pattern = 'hello';
           $pattern = !preg_match ('/\(\?P<k>.+\)/', $pattern) ? '/(?P<k>(' . $pattern . '))/i' : ('/(' . $pattern . ')/i');
           preg_match_all ($pattern, $log->text, $result);

@@ -24,7 +24,12 @@ class main extends Controller {
 
   public function index () {
     Load::lib('FlexFormat.php');
+    $res = Flex::header( FlexComponent::create()->setType('text')->setText('Title')->setSize('xl')->setWeight('bold') );
 
+    $a = FlexText::create('Title')->setSize('xl')->setWeight('bold');
+    print_R($a);
+    die;
+    FlexBox::create([ FlexText::create('Title')->setSize('xl')->setWeight('bold') ])->setLayout('vertical');
 
     echo json_encode($res);
     // print_r($res);

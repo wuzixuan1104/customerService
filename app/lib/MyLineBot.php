@@ -400,7 +400,7 @@ class FlexBubbleBuilder implements ContentBuilder {
   }
 
   public function setHeader($component) {
-    $this->header = $component->getFormat();
+    $this->headers = $component->getFormat(); //[]
     return $this;
   }
   public function setBody($component) {
@@ -420,6 +420,7 @@ class FlexBubbleBuilder implements ContentBuilder {
     return $this;
   }
   public function buildContent() {
+
     if( empty($this->header) && empty($this->body) && empty($this->footer) )
       gg('Bubble 建立Content錯誤');
 
