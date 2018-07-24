@@ -34,15 +34,14 @@ class LineTool {
           ])
         ]),
         FlexComponent::create()->setType('separator'),
-        FlexComponent::create()->setType('button')->setFlex(3)->setHeight('sm')->setGravity('center')->setStyle('primary')->setAction( FlexAction::postback( '選擇', array('lib' => 'LineTool', 'method' => 'getList', 'param' => array('list_id' => $vlist->key_id) ), $vlist->name ) )
+        FlexComponent::create()->setType('button')->setFlex(3)->setHeight('sm')->setGravity('center')->setStyle('primary')->setAction( FlexAction::postback( '選擇', $vlist->name, json_encode(array('lib' => 'LineTool', 'method' => 'getList', 'param' => array('list_id' => $vlist->key_id) ) ) ) )
       ]);
-
     }
 
-      // $a = MyLineBotMsg::create()->flex('選擇問題類別', MyLineBotMsg::create()->flexBubbleBuilder()
-      //   ->setBody( FlexComponent::create()->setType('box')->setLayout('vertical')->setSpacing('md')->setContents( array_merge([
-      //     FlexComponent::create()->setType('text')->setText('問題類別')->setWeight("bold")->setSize('lg'),
-      //   ], $arr))));
+      return MyLineBotMsg::create()->flex('選擇問題類別', MyLineBotMsg::create()->flexBubbleBuilder()
+        ->setBody( FlexComponent::create()->setType('box')->setLayout('vertical')->setSpacing('md')->setContents( array_merge([
+          FlexComponent::create()->setType('text')->setText('問題類別')->setWeight("bold")->setSize('lg'),
+        ], $arr))));
 
     // foreach( array_chunk( $lists, 3 ) as $key => $list ) {
     //   $actionArr = [];
@@ -57,11 +56,13 @@ class LineTool {
     //   $columnArr[] = MyLineBotMsg::create()->templateCarouselColumn('請選擇問題類別', '-', null, $actionArr);
     // }
     //
-    $multiArr = [ MyLineBotMsg::create ()->text ('感謝您使用客服信箱，請填寫以下程序，待客服人員回覆:)') ];
-    $multiArr = array_merge( $multiArr, [ MyLineBotMsg::create()->flex('選擇問題類別', MyLineBotMsg::create()->flexBubbleBuilder()
-      ->setBody( FlexComponent::create()->setType('box')->setLayout('vertical')->setSpacing('md')->setContents( array_merge([
-        FlexComponent::create()->setType('text')->setText('問題類別')->setWeight("bold")->setSize('lg'),
-      ], $arr)))) ]);
+
+    // $multiArr = [ MyLineBotMsg::create ()->text ('感謝您使用客服信箱，請填寫以下程序，待客服人員回覆:)') ];
+    // $multiArr = array_merge( $multiArr, [ MyLineBotMsg::create()->flex('選擇問題類別', MyLineBotMsg::create()->flexBubbleBuilder()
+    //   ->setBody( FlexComponent::create()->setType('box')->setLayout('vertical')->setSpacing('md')->setContents( array_merge([
+    //     FlexComponent::create()->setType('text')->setText('問題類別')->setWeight("bold")->setSize('lg'),
+    //   ], $arr)))) ]);
+
     // print_r($multiArr);
     // die;
     return MyLineBotMsg::create()->multi ($multiArr);
