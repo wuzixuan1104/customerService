@@ -12,31 +12,47 @@ use LINE\LINEBot\MessageBuilder\FlexMessageBuilder;
 use LINE\LINEBot\MessageBuilder\BubbleBuilder;
 use LINE\LINEBot\MessageBuilder\FlexComponent;
 
+class a {
+
+}
 class main extends Controller {
 
-  public function replyMessage($replyToken,  $messageBuilder)
-  {
-      return [
-          'replyToken' => $replyToken,
-          'messages' => $messageBuilder->buildMessage(),
-      ];
-  }
-
   public function index () {
-    Load::lib('FlexFormat.php');
-    $res = Flex::header( FlexComponent::create()->setType('text')->setText('Title')->setSize('xl')->setWeight('bold') );
+    $a = '';
+    $b = '0';
+    $c = '1';
+    $d = '[]';
+    $e = [0];
+    $f =['0'];
+    $j1 = null;
+    $j2 = [];
 
-    $a = FlexText::create('Title')->setSize('xl')->setWeight('bold');
-    print_R($a);
+    echo '\'\': ';
+    var_dump(($a) === null ? true : false);
+    echo '\'0\': ';
+    var_dump(($b) === null ? true : false);
+    echo '\'1\': ';
+    var_dump(($c) === null ? true : false);
+    echo '\'[]\': ';
+    var_dump(($d) === null ? true : false);
+    echo '[0]: ';
+    var_dump(($e) === null ? true : false);
+    echo '[\'0\']: ';
+    var_dump(($f) === null ? true : false);
+    echo '$j1 = null: ';
+    var_dump(($j1['a']) === null ? true : false);
+    echo '$j2 = []: ';
+    // var_dump(($j2['a']) === null ? true : false);
     die;
-    FlexBox::create([ FlexText::create('Title')->setSize('xl')->setWeight('bold') ])->setLayout('vertical');
+    echo 'closure: ';
+    var_dump((new a()) === null) . "\r\n";
+    $a = [];
+    echo $a['b'];
 
-    echo json_encode($res);
-    // print_r($res);
+    $a = null;
+    echo $a['b'];
+
     die;
-
-
-
     $asset = Asset::create (2)
                   // ->addCSS ('/assets/css/icon-site.css')
                   // ->addCSS ('/assets/css/site/layout.css')

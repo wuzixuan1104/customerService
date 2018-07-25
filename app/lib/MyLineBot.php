@@ -400,7 +400,7 @@ class FlexBubbleBuilder implements ContentBuilder {
   }
 
   public function setHeader($component) {
-    $this->headers = $component->getFormat(); //[]
+    $this->header = $component->getFormat(); //[]
     return $this;
   }
   public function setBody($component) {
