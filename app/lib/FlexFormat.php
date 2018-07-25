@@ -1,74 +1,51 @@
 <?php
-// Load::lib('MyLineBot.php');
-/*
-Flex::bubble([
-  'header' => FlexBox::create([ FlexText::create('Title')->setSize('xl')->setWeight('bold') ])->setLayout('vertical'),
-  'hero' => FlexImage::create('https://sitthi.me:3  807/static/fifa.jpg')->setSize('full')->setAspectRatio(20:13)->setAspectMode('cover'),
-  'body' =>
-    FlexBox::create([
-      FlexBox::create([ FlexText::create('LIVE!!')->setSize('lg')->setColor('#555555')->setWeight('bold')->setAlign('center') ])->setLayout('vertical')->setSpacing('md'),
-      FlexButton::create('primary')->setAction( FlexAction::postback() ),
-      FlexSeparator::create()->setMargin('lg'),
-      FlexBox::create([
-        FlexBox::create([
-          FlexButton::create('primary')->setAction( FlexAction::postback() ),
-          FlexButton::create('primary')->setAction( FlexAction::postback() ),
-        ])->setLayout('horizontal')->setSpacing('sm'),
-        FlexBox::create([
-          FlexButton::create('primary')->setAction( FlexAction::postback() ),
-          FlexButton::create('primary')->setAction( FlexAction::postback() ),
-        ])->setLayout('horizontal')->setSpacing('sm'),
-      ])->setLayout('vertical')->setMargin('lg')->setSpacing('sm'),
-    ]),
-  'footer' => FlexBox::create([ FlexButton::create('secondary')->setAction( FlexAction::postback()->setMargin('sm') ) ])
-]);
-*/
 interface FlexContentBuilder {
-  public function build();
-}
-
-function objsRecursiveToArray($objs) {
-    return is_array($objs) ? array_map(function($obj) {
-      return is_object($obj) ? array_map('objsRecursiveToArray', $obj->attrs()) : $obj;
-    }, $objs) : $objs;
+  public function build($objs);
 }
 
 class FlexBubble implements FlexContentBuilder {
   public $flexAttrs = [];
   public function __construct(array $objs) {
     $this->flexAttrs['type'] = 'bubble';
-    $this->setFlexAttrs($objs);
+    $this->build($objs);
   }
   public static function create(array $objs) {
     return new FlexBubble($objs);
   }
-
-  public function setFlexAttrs(array $objs) {
-    !$objs && gg('bubble 傳入參數需為陣列');
-    $objs = objsRecursiveToArray($objs);
-    print_R($objs);
-    die;
-    return $this;
-  }
-
   public static function objsRecursiveToArray($objs) {
     return is_array($objs) ? array_map(function($obj) {
-      print_r($obj);die;
-      return is_object($obj) ? array_map('objsRecursiveToArray', $obj->attrs()) : $obj;
+      return is_object($obj) ? array_map('self::objsRecursiveToArray', $obj->attrs()) : $obj;
     }, $objs) : $objs;
   }
-
-  public function build() {
+  public function build($objs) {
+    !$objs && gg('bubble 傳入參數需為陣列');
+    $this->flexAttrs = array_merge($this->flexAttrs, self::objsRecursiveToArray($objs));
+    return $this;
+  }
+  public function attrs() {
     return $this->flexAttrs;
   }
 }
 
 class FlexCarousel implements FlexContentBuilder {
   public $flexAttrs = [];
-  public function __construct() {
+  public function __construct(array $bubbles) {
+    $this->flexAttrs['type'] = 'carousel';
+    $this->build($bubbles);
   }
-  public static function create() {}
-  public function build() {}
+  public static function create(array $bubbles) {
+    return new FlexCarousel($bubbles);
+  }
+  public function build($bubbles) {
+    !$bubbles && gg('Carousel 傳入Bubble參數需為陣列');
+    foreach($bubbles as $bubble) {
+      $this->flexAttrs['contents'][] = $bubble->flexAttrs;
+    }
+    return $this;
+  }
+  public function attrs() {
+    return $this->flexAttrs;
+  }
 }
 
 abstract class FlexComponents {
@@ -296,7 +273,8 @@ class FlexText extends FlexComponents {
     return $this;
   }
   public function setAction($value) {
-
+    $this->attrs['action'] = $value;
+    return $this;
   }
 
 }

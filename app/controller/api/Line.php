@@ -21,7 +21,7 @@ class Line extends ApiController {
     // Load::sysFunc('file.php');
 
     $events = MyLineBot::events();
-
+    var_dump($events);die;
     foreach( $events as $event ) {
 
       if( !$source = Source::checkSourceExist($event) )
@@ -73,7 +73,8 @@ class Line extends ApiController {
           'footer' => FlexBox::create([ FlexButton::create('secondary')->setAction( FlexAction::postback('a', '123', 'e') )->setMargin('sm') ])->setLayout('vertical')
 
         ]);
-
+        print_R($a);
+        die;
         echo json_encode($a);
         die;
         FlexBox::create([ FlexText::create('Title')->setSize('xl')->setWeight('bold') ])->setLayout('vertical');

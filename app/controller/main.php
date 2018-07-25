@@ -8,51 +8,63 @@
  */
 
 
-use LINE\LINEBot\MessageBuilder\FlexMessageBuilder;
-use LINE\LINEBot\MessageBuilder\BubbleBuilder;
-use LINE\LINEBot\MessageBuilder\FlexComponent;
 
-class a {
-
-}
 class main extends Controller {
 
   public function index () {
-    $a = '';
-    $b = '0';
-    $c = '1';
-    $d = '[]';
-    $e = [0];
-    $f =['0'];
-    $j1 = null;
-    $j2 = [];
+    Load::lib('MyLineBot.php');
+    Load::lib('FlexFormat.php');
 
-    echo '\'\': ';
-    var_dump(($a) === null ? true : false);
-    echo '\'0\': ';
-    var_dump(($b) === null ? true : false);
-    echo '\'1\': ';
-    var_dump(($c) === null ? true : false);
-    echo '\'[]\': ';
-    var_dump(($d) === null ? true : false);
-    echo '[0]: ';
-    var_dump(($e) === null ? true : false);
-    echo '[\'0\']: ';
-    var_dump(($f) === null ? true : false);
-    echo '$j1 = null: ';
-    var_dump(($j1['a']) === null ? true : false);
-    echo '$j2 = []: ';
-    // var_dump(($j2['a']) === null ? true : false);
+    $a = FlexCarousel::create([
+    FlexBubble::create([
+      'header' => FlexBox::create([ FlexText::create('Title')->setSize('xl')->setWeight('bold') ])->setLayout('vertical'),
+      'hero' => FlexImage::create('https://sitthi.me:3807/static/fifa.jpg')->setSize('full')->setAspectRatio('20:13')->setAspectMode('cover'),
+      'body' =>
+        FlexBox::create([
+          FlexBox::create([ FlexText::create('LIVE!!')->setSize('lg')->setColor('#555555')->setWeight('bold')->setAlign('center') ])->setLayout('vertical')->setSpacing('md'),
+          FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
+          FlexSeparator::create()->setMargin('lg'),
+          FlexBox::create([
+            FlexBox::create([
+              FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
+              FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
+            ])->setLayout('horizontal')->setSpacing('sm'),
+            FlexBox::create([
+              FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
+              FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
+            ])->setLayout('horizontal')->setSpacing('sm'),
+          ])->setLayout('vertical')->setMargin('lg')->setSpacing('sm'),
+        ])->setLayout('vertical'),
+      'footer' => FlexBox::create([ FlexButton::create('secondary')->setAction( FlexAction::postback('a', '123', 'e') )->setMargin('sm') ])->setLayout('vertical')
+
+    ]),
+
+    FlexBubble::create([
+      'header' => FlexBox::create([ FlexText::create('Title')->setSize('xl')->setWeight('bold') ])->setLayout('vertical'),
+      'hero' => FlexImage::create('https://sitthi.me:3807/static/fifa.jpg')->setSize('full')->setAspectRatio('20:13')->setAspectMode('cover'),
+      'body' =>
+        FlexBox::create([
+          FlexBox::create([ FlexText::create('LIVE!!')->setSize('lg')->setColor('#555555')->setWeight('bold')->setAlign('center') ])->setLayout('vertical')->setSpacing('md'),
+          FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
+          FlexSeparator::create()->setMargin('lg'),
+          FlexBox::create([
+            FlexBox::create([
+              FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
+              FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
+            ])->setLayout('horizontal')->setSpacing('sm'),
+            FlexBox::create([
+              FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
+              FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
+            ])->setLayout('horizontal')->setSpacing('sm'),
+          ])->setLayout('vertical')->setMargin('lg')->setSpacing('sm'),
+        ])->setLayout('vertical'),
+      'footer' => FlexBox::create([ FlexButton::create('secondary')->setAction( FlexAction::postback('a', '123', 'e') )->setMargin('sm') ])->setLayout('vertical')
+
+    ]),
+  ]);
+    print_R($a);
     die;
-    echo 'closure: ';
-    var_dump((new a()) === null) . "\r\n";
-    $a = [];
-    echo $a['b'];
 
-    $a = null;
-    echo $a['b'];
-
-    die;
     $asset = Asset::create (2)
                   // ->addCSS ('/assets/css/icon-site.css')
                   // ->addCSS ('/assets/css/site/layout.css')
