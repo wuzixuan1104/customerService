@@ -47,6 +47,20 @@ class Line extends ApiController {
         case 'Unfollow':
           break;
         case 'Text':
+          $a = FlexBubble::create([
+            'header' => FlexBox::create([FlexText::create('Header')]),
+            'body' => FlexBox::create([FlexText::create('Body')]),
+            'footer' => FlexBox::create([FlexText::create('Footer')]),
+            // 'styles' => FlexStyles::create()
+            //               ->setHeader([FlexBlock::create()->setBackgroundColor('#fffff')->setSeparator(true)])
+                          // ->setBody([FlexBlock::create()->setBackgroundColor('#fffff')])
+          ]);
+          $a = FlexStyles::create()
+                          ->setHeader([FlexBlock::create()->setBackgroundColor('#fffff')->setSeparator(true)]);
+                          // ->setBody([FlexBlock::create()->setBackgroundColor('#fffff')]);
+          print_r($a);
+          die;
+
           $pattern = 'hello';
           $pattern = !preg_match ('/\(\?P<k>.+\)/', $pattern) ? '/(?P<k>(' . $pattern . '))/i' : ('/(' . $pattern . ')/i');
           preg_match_all ($pattern, $log->text, $result);

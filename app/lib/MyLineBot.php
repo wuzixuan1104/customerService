@@ -435,6 +435,49 @@ abstract class FlexComponents {
     return $this->attrs;
   }
 }
+//FlexStyles::create()->setHeader()
+class FlexStyles extends FlexComponents {
+  public function __construct() {
+    parent::__construct();
+  }
+  public static function create() {
+    return new FlexStyles();
+  }
+  public function setHeader(array $values) {
+    $this->attrs['header'] = $values;
+  }
+  public function setBody(array $values) {
+    $this->attrs['body'] = $values;
+  }
+  public function setFooter(array $values) {
+    $this->attrs['footer'] = $values;
+  }
+  public function setHero(array $values) {
+    $this->attrs['hero'] = $values;
+  }
+}
+
+class FlexBlock extends FlexComponents {
+  public function __construct() {
+    parent::__construct();
+  }
+  public static function create() {
+    return new FlexBlock();
+  }
+  public function setBackgroundColor($value) {
+    if(is_string($value)) $this->attrs['backgroundColor'] = $value;
+    return $this;
+  }
+  public function setSeparator($value) {
+    if(is_string($value)) $this->attrs['separator'] = $value;
+    return $this;
+  }
+  public function setSeparatorColor($value) {
+    if(is_string($value)) $this->attrs['separatorColor'] = $value;
+    return $this;
+  }
+}
+
 class FlexBox extends FlexComponents{
   public function __construct(array $contents) {
     parent::__construct();
