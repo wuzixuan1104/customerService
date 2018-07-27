@@ -18,10 +18,9 @@ class Line extends ApiController {
 
     Load::lib('MyLineBot.php');
     Load::lib('LineTool.php');
-    // Load::sysFunc('file.php');
 
     $events = MyLineBot::events();
-    var_dump($events);die;
+
     foreach( $events as $event ) {
 
       if( !$source = Source::checkSourceExist($event) )
@@ -48,40 +47,6 @@ class Line extends ApiController {
         case 'Unfollow':
           break;
         case 'Text':
-
-        Load::lib('FlexFormat.php');
-
-        $a = FlexBubble::create([
-          'header' => FlexBox::create([ FlexText::create('Title')->setSize('xl')->setWeight('bold') ])->setLayout('vertical'),
-          'hero' => FlexImage::create('https://sitthi.me:3807/static/fifa.jpg')->setSize('full')->setAspectRatio('20:13')->setAspectMode('cover'),
-          'body' =>
-            FlexBox::create([
-              FlexBox::create([ FlexText::create('LIVE!!')->setSize('lg')->setColor('#555555')->setWeight('bold')->setAlign('center') ])->setLayout('vertical')->setSpacing('md'),
-              FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
-              FlexSeparator::create()->setMargin('lg'),
-              FlexBox::create([
-                FlexBox::create([
-                  FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
-                  FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
-                ])->setLayout('horizontal')->setSpacing('sm'),
-                FlexBox::create([
-                  FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
-                  FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
-                ])->setLayout('horizontal')->setSpacing('sm'),
-              ])->setLayout('vertical')->setMargin('lg')->setSpacing('sm'),
-            ])->setLayout('vertical'),
-          'footer' => FlexBox::create([ FlexButton::create('secondary')->setAction( FlexAction::postback('a', '123', 'e') )->setMargin('sm') ])->setLayout('vertical')
-
-        ]);
-        print_R($a);
-        die;
-        echo json_encode($a);
-        die;
-        FlexBox::create([ FlexText::create('Title')->setSize('xl')->setWeight('bold') ])->setLayout('vertical');
-
-
-
-
           $pattern = 'hello';
           $pattern = !preg_match ('/\(\?P<k>.+\)/', $pattern) ? '/(?P<k>(' . $pattern . '))/i' : ('/(' . $pattern . ')/i');
           preg_match_all ($pattern, $log->text, $result);
