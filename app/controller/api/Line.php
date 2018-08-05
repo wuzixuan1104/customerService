@@ -47,10 +47,17 @@ class Line extends ApiController {
         case 'Unfollow':
           break;
         case 'Text':
-
-          MyLineBotMsg::create()->flex('test', FlexBubble::create([
+        
+          $pattern = 'hello';
+          $pattern = !preg_match ('/\(\?P<k>.+\)/', $pattern) ? '/(?P<k>(' . $pattern . '))/i' : ('/(' . $pattern . ')/i');
+          preg_match_all ($pattern, $log->text, $result);
+          //傳送hello時跳出開始menu
+          if ($result['k'] && $msg = LineTool::start() )
+            $msg->reply($event->getReplyToken());
+          else {
+            MyLineBotMsg::create()->flex('test', FlexBubble::create([
             'header' => FlexBox::create([
-                          FlexText::create('客服評分表')->setSize('xl')->setWeight('bold'), 
+                          FlexText::create('客服評分表')->setSize('lg')->setWeight('bold'), 
                           FlexText::create('(請點選1~10分)')])->setLayout('horizontal'),
 
             'body' => FlexBox::create([
@@ -68,9 +75,9 @@ class Line extends ApiController {
                           ])->setLayout('horizontal')->setSpacing('sm'),
                           
                           FlexBox::create([
-                            FlexButton::create('primary')->setAction(FlexAction::postBack('4', '123', '123') ), 
-                            FlexButton::create('primary')->setAction(FlexAction::postBack('5', '123', '123') ), 
-                            FlexButton::create('primary')->setAction(FlexAction::postBack('6', '123', '123') ) 
+                            FlexButton::create('primary')->setAction(FlexAction::postBack('7', '123', '123') ), 
+                            FlexButton::create('primary')->setAction(FlexAction::postBack('8', '123', '123') ), 
+                            FlexButton::create('primary')->setAction(FlexAction::postBack('9', '123', '123') ) 
                           ])->setLayout('horizontal')->setSpacing('sm'),
 
                           FlexBox::create([
@@ -85,15 +92,7 @@ class Line extends ApiController {
             'footer' => FlexBox::create([
                           FlexButton::create('secondary')->setAction(FlexAction::postBack('意見回饋', '123', '123'))->setMargin('sm')])->setLayout('vertical')
           ]))->reply($event->getReplyToken());
-
-          die;
-
-          $pattern = 'hello';
-          $pattern = !preg_match ('/\(\?P<k>.+\)/', $pattern) ? '/(?P<k>(' . $pattern . '))/i' : ('/(' . $pattern . ')/i');
-          preg_match_all ($pattern, $log->text, $result);
-          //傳送hello時跳出開始menu
-          if ($result['k'] && $msg = LineTool::start() )
-            $msg->reply($event->getReplyToken());
+          }
 
           //檢查Source process是否非空，是則新增進去
           if( !empty($source->process) )
