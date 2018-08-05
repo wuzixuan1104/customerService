@@ -15,24 +15,24 @@ class cli extends Controller {
     $trello = TrelloApi::create();
 
     //board 目前先指定其中一版
-    // if( !$board = Board::create( array('key_id' => $this->boardId, 'name' => 'EC客服信箱', 'code' => 'lVs4BU5d') ) )
-    //   return false;
-    //
-    // //list
-    // $lists = $trello->get('/1/boards/' . $this->boardId . '/lists');
-    // if( empty($lists) )
-    //   return false;
-    //
-    // $transactionLists = function ($lists, $board, &$listIds) {
-    //   $listIds = '';
-    //   foreach($lists as $list) {
-    //     if( !$obj = TList::create(['board_id' => $board->id, 'key_id' => $list['id'], 'name' => $list['name']] ) )
-    //       return false;
-    //     $listIds .= $obj->id . ',';
-    //   }
-    //   $listIds = rtrim($listIds, ',');
-    //   return true;
-    // };
+    if( !$board = Board::create( array('key_id' => $this->boardId, 'name' => 'EC客服信箱', 'code' => 'lVs4BU5d') ) )
+      return false;
+    
+    //list
+    $lists = $trello->get('/1/boards/' . $this->boardId . '/lists');
+    if( empty($lists) )
+      return false;
+    
+    $transactionLists = function ($lists, $board, &$listIds) {
+      $listIds = '';
+      foreach($lists as $list) {
+        if( !$obj = TList::create(['board_id' => $board->id, 'key_id' => $list['id'], 'name' => $list['name']] ) )
+          return false;
+        $listIds .= $obj->id . ',';
+      }
+      $listIds = rtrim($listIds, ',');
+      return true;
+    };
 
     //label
     $labels = $trello->get('/1/boards/' . $this->boardId . '/?labels=all&label_fields=color');

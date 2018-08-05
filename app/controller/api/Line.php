@@ -47,18 +47,45 @@ class Line extends ApiController {
         case 'Unfollow':
           break;
         case 'Text':
-          $a = FlexBubble::create([
-            'header' => FlexBox::create([FlexText::create('Header')]),
-            'body' => FlexBox::create([FlexText::create('Body')]),
-            'footer' => FlexBox::create([FlexText::create('Footer')]),
-            // 'styles' => FlexStyles::create()
-            //               ->setHeader([FlexBlock::create()->setBackgroundColor('#fffff')->setSeparator(true)])
-                          // ->setBody([FlexBlock::create()->setBackgroundColor('#fffff')])
-          ]);
-          $a = FlexStyles::create()
-                          ->setHeader([FlexBlock::create()->setBackgroundColor('#fffff')->setSeparator(true)]);
-                          // ->setBody([FlexBlock::create()->setBackgroundColor('#fffff')]);
-          print_r($a);
+
+          $a = MyLineBotMsg::create()->flex('test', FlexBubble::create([
+            'header' => FlexBox::create([
+                          FlexText::create('客服評分表')->setSize('xl')->setWeight('bold'), 
+                          FlexText::create('(請點選1~10分)')])->setLayout('horizontal'),
+
+            'body' => FlexBox::create([
+                        FlexBox::create([ 
+                          FlexBox::create([
+                            FlexButton::create('primary')->setAction(FlexAction::postBack('1', '123', '123') ), 
+                            FlexButton::create('primary')->setAction(FlexAction::postBack('2', '123', '123') ), 
+                            FlexButton::create('primary')->setAction(FlexAction::postBack('3', '123', '123') ) 
+                          ])->setLayout('horizontal')->setSpacing('sm'),
+
+                          FlexBox::create([
+                            FlexButton::create('primary')->setAction(FlexAction::postBack('4', '123', '123') ), 
+                            FlexButton::create('primary')->setAction(FlexAction::postBack('5', '123', '123') ), 
+                            FlexButton::create('primary')->setAction(FlexAction::postBack('6', '123', '123') ) 
+                          ])->setLayout('horizontal')->setSpacing('sm'),
+                          
+                          FlexBox::create([
+                            FlexButton::create('primary')->setAction(FlexAction::postBack('4', '123', '123') ), 
+                            FlexButton::create('primary')->setAction(FlexAction::postBack('5', '123', '123') ), 
+                            FlexButton::create('primary')->setAction(FlexAction::postBack('6', '123', '123') ) 
+                          ])->setLayout('horizontal')->setSpacing('sm'),
+
+                          FlexBox::create([
+                            FlexButton::create('primary')->setAction(FlexAction::postBack('10', '123', '123') ) 
+                          ])->setLayout('horizontal')->setSpacing('sm'),
+
+                          FlexSeparator::create()->setMargin('lg')
+
+                        ])->setLayout('vertical')->setMargin('lg')->setSpacing('sm')
+                      ])->setLayout('vertical'),
+
+            'footer' => FlexBox::create([
+                          FlexButton::create('secondary')->setAction(FlexAction::postBack('意見回饋', '123', '123'))->setMargin('sm')])->setLayout('vertical')
+          ]))->reply($event->getReplyToken());
+
           die;
 
           $pattern = 'hello';

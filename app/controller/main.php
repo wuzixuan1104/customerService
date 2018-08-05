@@ -13,7 +13,6 @@ class main extends Controller {
 
   public function index () {
     Load::lib('MyLineBot.php');
-    Load::lib('FlexFormat.php');
 
     $a = FlexCarousel::create([
     FlexBubble::create([
