@@ -48,7 +48,7 @@ class Line extends ApiController {
           break;
         case 'Text':
 
-          $a = MyLineBotMsg::create()->flex('test', FlexBubble::create([
+          MyLineBotMsg::create()->flex('test', FlexBubble::create([
             'header' => FlexBox::create([
                           FlexText::create('客服評分表')->setSize('xl')->setWeight('bold'), 
                           FlexText::create('(請點選1~10分)')])->setLayout('horizontal'),
