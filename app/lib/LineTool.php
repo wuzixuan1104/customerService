@@ -106,12 +106,16 @@ class LineTool {
     if( !$params['card_id'] || !$params['servicer_id'] || !$params['score'])
       return false;
 
+    Log::info('getScore');
+
     if(!$opinion = Opinion::find('one', array('where' => array('card_id = ?', $params['card_id']) )) )
       if(!$opinion = Opinion::create( array_merge($params, array('content' => '') ) ) )
         return false;
     else {
       $opinion->score = $params['score'];
       $opinion->save(); 
+
+    Log::info('getScore2');
     }
     
     return MyLineBotMsg::create()->text('感謝您的評分！');
