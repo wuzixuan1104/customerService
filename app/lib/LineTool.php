@@ -82,7 +82,7 @@ class LineTool {
     foreach(array_chunk(range(1, 10), 3) as $gValue) {
       $tmp = [];
       foreach($gValue as $v) 
-        $tmp[] = FlexButton::create('primary')->setAction(FlexAction::postBack((string)$v, $v . '分', json_encode(array('lib' => 'LineTool', 'method' => 'getScore', 'param' => array('card_id' => $cardId, 'servicer_id' => $servicerId, 'value' => $v))  ) ) );
+        $tmp[] = FlexButton::create('primary')->setAction(FlexAction::postBack((string)$v, $v . '分', json_encode(array('lib' => 'LineTool', 'method' => 'getScore', 'param' => array('card_id' => $cardId, 'servicer_id' => $servicerId, 'score' => $v))  ) ) );
       $buttons[] = FlexBox::create($tmp)->setLayout('horizontal')->setSpacing('sm');
     }
     array_push($buttons, FlexSeparator::create()->setMargin('lg'));
@@ -103,14 +103,14 @@ class LineTool {
   }
 
   public function getScore($params, $source) {
-    if( !$params['card_id'] || !$params['servicer_id'] || !$params['value'])
+    if( !$params['card_id'] || !$params['servicer_id'] || !$params['score'])
       return false;
 
     if(!$opinion = Opinion::find('one', array('where' => array('card_id = ?', $params['card_id']) )) )
       if(!$opinion = Opinion::create( array_merge($params, array('content' => '') ) ) )
         return false;
     else {
-      $opinion->value = $params['value'];
+      $opinion->score = $params['score'];
       $opinion->save(); 
     }
     
