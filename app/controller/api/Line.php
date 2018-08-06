@@ -20,7 +20,7 @@ class Line extends ApiController {
     Load::lib('LineTool.php');
 
     $events = MyLineBot::events();
-
+  
     foreach( $events as $event ) {
 
       if( !$source = Source::checkSourceExist($event) )
