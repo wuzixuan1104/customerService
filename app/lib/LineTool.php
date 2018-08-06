@@ -85,7 +85,6 @@ class LineTool {
         $tmp[] = FlexButton::create('primary')->setAction(FlexAction::postBack((string)$v, $v . '分', json_encode(array('lib' => 'LineTool', 'method' => 'getScore', 'param' => array('card_id' => $cardId, 'servicer_id' => $servicerId, 'score' => $v))  ) ) );
       $buttons[] = FlexBox::create($tmp)->setLayout('horizontal')->setSpacing('sm');
     }
-    array_push($buttons, FlexSeparator::create()->setMargin('lg'));
 
     return MyLineBotMsg::create ()->multi ([
       MyLineBotMsg::create ()->text ('您的問題已處理完畢！煩請填寫客服評分表:)'),
@@ -95,9 +94,7 @@ class LineTool {
                       FlexText::create('(請點選1~10分)')])->setLayout('horizontal'),
         'body'    => FlexBox::create([
                       FlexBox::create($buttons)->setLayout('vertical')->setMargin('lg')->setSpacing('sm')
-                     ])->setLayout('vertical'),
-        'footer'  => FlexBox::create([
-                      FlexButton::create('secondary')->setAction(FlexAction::postBack('意見回饋', '123', '123'))->setMargin('sm')])->setLayout('vertical')
+                     ])->setLayout('vertical')
       ]))
     ]);
   }
