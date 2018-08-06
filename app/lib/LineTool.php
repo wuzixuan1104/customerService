@@ -75,7 +75,7 @@ class LineTool {
 
   //評分表
   public static function sendScoreForm($cardId, $servicerId) {
-    if(!$cardId || $servicerId)
+    if(!$cardId || !$servicerId)
       return false;
 
     $buttons = [];

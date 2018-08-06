@@ -77,9 +77,10 @@ class Trello extends ApiController {
 
         $card->save();
 
+        $card->status = Card::STATUS_FINISH;
+
         if($card->status == Card::STATUS_FINISH) {
           Load::lib('LineTool.php');
-
           if(!$sid = $card->source->sid)
             return false;
 
@@ -91,7 +92,7 @@ class Trello extends ApiController {
           $webhook->response = $response->getHTTPStatus() . ' ' . $response->getRawBody();
           $webhook->save();
         }
-
+       
         //label標籤 將舊的刪除 添加新的
         if( $oriStatus != $card->status && $labels = Label::find('all', array( 'select' => 'key_id, tag', 'where' => array('tag IN (?)', array($oriStatus, $card->status) ) ) ) ) {
           Load::lib('TrelloApi.php');
