@@ -74,12 +74,15 @@ class LineTool {
   }
 
   //評分表
-  public static function sendScoreForm() {
+  public static function sendScoreForm($cardId, $servicerId) {
+    if(!$cardId || $servicerId)
+      return false;
+
     $buttons = [];
     foreach(array_chunk(range(1, 10), 3) as $gValue) {
       $tmp = [];
       foreach($gValue as $v) 
-        $tmp[] = FlexButton::create('primary')->setAction(FlexAction::postBack((string)$v, '123', '123') );
+        $tmp[] = FlexButton::create('primary')->setAction(FlexAction::postBack($v, json_encode(array('lib' => 'LineTool', 'method' => 'getScore', 'param' => array('card_id' => $cardId, 'servicer_id' => $servicerId, 'value' => $v) ) ), $v . '分') );
       $buttons[] = FlexBox::create($tmp)->setLayout('horizontal')->setSpacing('sm');
     }
     array_push($buttons, FlexSeparator::create()->setMargin('lg'));
@@ -97,5 +100,20 @@ class LineTool {
                       FlexButton::create('secondary')->setAction(FlexAction::postBack('意見回饋', '123', '123'))->setMargin('sm')])->setLayout('vertical')
       ]))
     ]);
+  }
+
+  public function getScore($params, $source) {
+    if( !$params['cardId'] || !$params['servicer_id'] || !$params['value'])
+      return false;
+
+    if(!$opinion = Opinion::find('one', array('where' => array('card_id = ?', $params['card_id']) )) )
+      if(!$opinion = Opinion::create( array_merge($params, array('content' => '') ) ) )
+        return false;
+    else {
+      $opinion->value = $params['value'];
+      $opinion->save(); 
+    }
+    
+    return MyLineBotMsg::create()->text('感謝您的評分！');
   }
 }

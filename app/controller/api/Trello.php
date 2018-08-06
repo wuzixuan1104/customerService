@@ -68,6 +68,7 @@ class Trello extends ApiController {
         $statusTexts = array_flip(Card::$statusTexts);
 
         $oriStatus = $card->status;
+
         //是否變更 trello傳來的狀態 與 Card Status
         if( $statusTexts[$item['name']] == Card::STATUS_DEAL && $card->status != Card::STATUS_FINISH)
           $card->status = ($item['state'] == 'complete') ? Card::STATUS_DEAL : Card::STATUS_YET;
@@ -83,7 +84,8 @@ class Trello extends ApiController {
             return false;
 
           $bot = MyLineBot::create();
-          $msg = LineTool::sendScoreForm();
+          if(!$msg = LineTool::sendScoreForm($card->id, $servicer->id))
+            return false;
 
           $response = $bot->pushMessage($sid, $msg->builder);
           $webhook->response = $response->getHTTPStatus() . ' ' . $response->getRawBody();
