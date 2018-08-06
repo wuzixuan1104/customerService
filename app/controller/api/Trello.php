@@ -13,7 +13,7 @@ class Trello extends ApiController {
   }
 
   public function callback() {
-    Log::info(file_get_contents('php://input'));
+    // Log::info(file_get_contents('php://input'));
     $data = json_decode(file_get_contents('php://input'), true);
 
     if( !isset($data['action']['type']) || !isset(Webhook::$typeTexts[$data['action']['type']]) )
