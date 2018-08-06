@@ -13,9 +13,7 @@ class Trello extends ApiController {
   }
 
   public function callback() {
-    // Log::info('======================================');
-    // Log::info(file_get_contents('php://input'));
-    // die;
+    Log::info(file_get_contents('php://input'));
     $data = json_decode(file_get_contents('php://input'), true);
 
     if( !isset($data['action']['type']) || !isset(Webhook::$typeTexts[$data['action']['type']]) )
@@ -77,6 +75,20 @@ class Trello extends ApiController {
           $card->status = ($item['state'] == 'complete') ? Card::STATUS_FINISH : Card::STATUS_DEAL;
 
         $card->save();
+
+        if($card->status == Card::STATUS_FINISH) {
+          Load::lib('LineTool.php');
+
+          if(!$sid = $card->source->sid)
+            return false;
+
+          $bot = MyLineBot::create();
+          $msg = LineTool::sendScoreForm();
+
+          $response = $bot->pushMessage($sid, $msg->builder);
+          $webhook->response = $response->getHTTPStatus() . ' ' . $response->getRawBody();
+          $webhook->save();
+        }
 
         //label標籤 將舊的刪除 添加新的
         if( $oriStatus != $card->status && $labels = Label::find('all', array( 'select' => 'key_id, tag', 'where' => array('tag IN (?)', array($oriStatus, $card->status) ) ) ) ) {
