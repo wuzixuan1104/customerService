@@ -50,7 +50,7 @@ class Line extends ApiController {
           $pattern = 'hello';
           $pattern = !preg_match ('/\(\?P<k>.+\)/', $pattern) ? '/(?P<k>(' . $pattern . '))/i' : ('/(' . $pattern . ')/i');
           preg_match_all ($pattern, $log->text, $result);
-          
+
           //傳送hello時跳出開始menu
           if ($result['k'] && $msg = LineTool::start() )
             $msg->reply($event->getReplyToken());
@@ -74,6 +74,8 @@ class Line extends ApiController {
               'footer'  => FlexBox::create([
                             FlexButton::create('secondary')->setAction(FlexAction::postBack('意見回饋', '123', '123'))->setMargin('sm')])->setLayout('vertical')
             ]))->reply($event->getReplyToken());
+            
+            Log::info('test123');
           }
 
           //檢查Source process是否非空，是則新增進去
