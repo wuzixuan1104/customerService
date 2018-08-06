@@ -82,7 +82,7 @@ class LineTool {
     foreach(array_chunk(range(1, 10), 3) as $gValue) {
       $tmp = [];
       foreach($gValue as $v) 
-        $tmp[] = FlexButton::create('primary')->setAction(FlexAction::postBack($v, json_encode(array('lib' => 'LineTool', 'method' => 'getScore', 'param' => array('card_id' => $cardId, 'servicer_id' => $servicerId, 'value' => $v) ) ), $v . '分') );
+        $tmp[] = FlexButton::create('primary')->setAction(FlexAction::postBack((string)$v, json_encode(array('lib' => 'LineTool', 'method' => 'getScore', 'param' => array('card_id' => $cardId, 'servicer_id' => $servicerId, 'value' => $v) ) ), $v . '分') );
       $buttons[] = FlexBox::create($tmp)->setLayout('horizontal')->setSpacing('sm');
     }
     array_push($buttons, FlexSeparator::create()->setMargin('lg'));
