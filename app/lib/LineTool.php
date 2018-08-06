@@ -103,7 +103,7 @@ class LineTool {
   }
 
   public function getScore($params, $source) {
-    if( !$params['cardId'] || !$params['servicer_id'] || !$params['value'])
+    if( !$params['card_id'] || !$params['servicer_id'] || !$params['value'])
       return false;
 
     if(!$opinion = Opinion::find('one', array('where' => array('card_id = ?', $params['card_id']) )) )
