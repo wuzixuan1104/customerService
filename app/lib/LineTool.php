@@ -27,10 +27,10 @@ class LineTool {
       $arr[] = FlexSeparator::create();
       $arr[] = FlexBox::create([
                   FlexBox::create([
-                    FlexBox::create([ FlexText::create('檢舉配送品質') ])->setLayout('baseline')
+                    FlexBox::create([ FlexText::create($list->name) ])->setLayout('baseline')
                   ])->setLayout('vertical')->setFlex(7),
                   FlexSeparator::create(),
-                  FlexButton::create('primary')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction( FlexAction::postback( '選擇', '123', json_encode(array('lib' => 'LineTool', 'method' => 'getList', 'param' => array('list_id' => '123') ) ) ) )
+                  FlexButton::create('primary')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction( FlexAction::postback( '選擇', $list->name, json_encode(array('lib' => 'LineTool', 'method' => 'getList', 'param' => array('list_id' => $list->key_id) ) ) ) )
                ])->setLayout('horizontal')->setSpacing('md');
     }
     $multis = [];
