@@ -10,6 +10,7 @@
 use LINE\LINEBot;
 use LINE\LINEBot\Constant;
 use LINE\LINEBot\Constant\HTTPHeader;
+use LINE\LINEBot\Constant\Meta;
 use LINE\LINEBot\HTTPClient;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\Exception\InvalidEventRequestException;
@@ -40,6 +41,11 @@ use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
 use LINE\LINEBot\ImagemapActionBuilder\AreaBuilder;
 use LINE\LINEBot\ImagemapActionBuilder\ImagemapMessageActionBuilder;
 use LINE\LINEBot\ImagemapActionBuilder\ImagemapUriActionBuilder;
+
+use LINE\LINEBot\RichMenuBuilder;
+use LINE\LINEBot\RichMenuBuilder\RichMenuSizeBuilder;
+use LINE\LINEBot\RichMenuBuilder\RichMenuAreaBuilder;
+use LINE\LINEBot\RichMenuBuilder\RichMenuAreaBoundsBuilder;
 
 use LINE\LINEBot\Event\MessageEvent\TextMessage;
 use LINE\LINEBot\Event\MessageEvent\VideoMessage;
@@ -714,5 +720,57 @@ class FlexAction {
   }
   public static function datetimepicker($label, $data, $mode, $initial = null, $max = null, $min = null) {
     return is_string($label) && is_string($data) && in_array($mode, ['date', 'time', 'datetime']) ? ['type' => 'datetimepicker', 'label' => $label, 'data' => $data, 'mode' => $mode, 'initial' => $initial, 'max' => $max, 'min' => $min ] : null;
+  }
+}
+
+class RichMenu {
+  //now: richmenu-95d20f35f7471d13d440cb36caddb7d3
+  public static function create($richMenuBuilder) {
+    return ($res = MyLineBot::bot()->createRichMenu($richMenuBuilder)) && $res->isSucceeded() ? $res->getJSONDecodedBody()['richMenuId'] : false;
+  }
+  public static function delete($richMenuId) {
+    return ($res = MyLineBot::bot()->deleteRichMenu($richMenuId)) && $res->isSucceeded() ? true : false;
+  }
+  public static function getMenuId($userId) {
+    return ($res = MyLineBot::bot()->getRichMenuId($userId)) && $res->isSucceeded() ? $res->getJSONDecodedBody() : false;
+  }
+  public static function linkToUser($userId, $richMenuId) {
+    return ($res = MyLineBot::bot()->linkRichMenu($userId, $richMenuId)) && $res->isSucceeded() ? true : false;
+  }
+  public static function unlinkToUser($userId) {
+    return ($res = MyLineBot::bot()->unlinkRichMenu($userId)) && $res->isSucceeded() ? true : false;
+  }
+  public static function downloadImage($richMenuId) {
+    return ($res = MyLineBot::bot()->downloadRichMenuImage($richMenuId)) && $res->isSucceeded() ? true : false;
+  }
+  public static function uploadImage($richMenuId, $imagePath, $contentType) {
+    return ($res = MyLineBot::bot()->uploadRichMenuImage($richMenuId, $imagePath, $contentType)) && $res->isSucceeded() ? true : false;
+  }
+  public static function getMenuList() {
+    return ($res = MyLineBot::bot()->getRichMenuList()) && $res->isSucceeded() ? $res->getJSONDecodedBody() : [];
+  }
+
+}
+
+class BuildRichMenu {
+  public static function create($sizeBuilder, $selected, $name, $chartBarText, $areaBuilders) {
+    return new RichMenuBuilder($sizeBuilder, $selected, $name, $chartBarText, $areaBuilders);
+  }
+  /**
+   * @param int $height Height of the rich menu. Possible values: 1686, 843.
+   * @param int $width Width of the rich menu. Must be 2500.
+   */
+  public static function size($height, $width = 2500) {
+    return new RichMenuSizeBuilder($height, $width);
+  }
+  /**
+   * @param RichMenuAreaBoundsBuilder $boundsBuilder 
+   * @param MyLineBotActionMsg $actionBuilder
+   */
+  public static function area($boundsBuilder, $actionBuilder) {
+    return new RichMenuAreaBuilder($boundsBuilder, $actionBuilder);
+  }
+  public static function areaBound($x, $y, $width, $height) {
+    return new RichMenuAreaBoundsBuilder($x, $y, $width, $height);
   }
 }

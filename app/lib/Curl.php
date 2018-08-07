@@ -6,7 +6,7 @@ class Curl{
   public $ch;
   public $url;
   public $options;
-  public $params;
+  public $params = null;
   public $contentType = null;
 
   public function __construct($url, $qryStr) {
@@ -101,14 +101,14 @@ class Curl{
   }
 
   public function custom($method) {
-    if( !in_array($method, ['POST', 'GET', 'PUT', 'DELETE']) || empty($this->params) )
+    if( !in_array($method, ['POST', 'GET', 'PUT', 'DELETE']) )
       return $this;
 
     $this->setOpt(CURLOPT_CUSTOMREQUEST, $method);
 
     if(is_array($this->params))
       $this->setOpt(CURLOPT_POSTFIELDS, http_build_query($this->params) );
-    else
+    elseif($this->params !== null)
       $this->setOpt(CURLOPT_POSTFIELDS, $this->params );
 
     $res = curl_exec($this->ch);

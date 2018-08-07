@@ -112,4 +112,16 @@ class LineTool {
     }
     return MyLineBotMsg::create()->text('感謝您的評分！');
   }
+
+  public static function menu() {
+
+  }
+
+  public static function qa() {
+
+  }
+
+  public static function contact() {
+    
+  }
 }
