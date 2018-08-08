@@ -53,7 +53,7 @@ class Line extends ApiController {
                 'header' => FlexBox::create([ FlexText::create('正在進行中的QA')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2') ])->setSpacing('xs')->setLayout('horizontal'),
                 'body' => FlexBox::create([
                   
-                    FlexText::create('付款問題')->setColor('#12776e'),
+                    FlexText::create('付款問題')->setColor('#12776e')->setWeight('bold'),
                     FlexSeparator::create(),
 
                     FlexBox::create([
@@ -76,7 +76,7 @@ class Line extends ApiController {
                     ])->setLayout('horizontal')->setSpacing('md'),
                     FlexSeparator::create(),
 
-                    FlexText::create('發票問題')->setColor('#12776e'),
+                    FlexText::create('發票問題')->setColor('#12776e')->setWeight('bold'),
                     FlexSeparator::create(),
 
                     FlexBox::create([
