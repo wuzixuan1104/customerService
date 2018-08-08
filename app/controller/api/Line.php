@@ -103,13 +103,37 @@ class Line extends ApiController {
                   FlexSeparator::create()->setMargin('xxl'),
                   FlexBox::create([
                     FlexButton::create('primary')->setColor('#fbd785')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('檢視先前的對話紀錄', '查看對話紀錄', '123')),
-                    FlexButton::create('primary')->setColor('#f97172')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('輸入對話後按此送出', '送出對話', '123'))
+                    FlexButton::create('primary')->setColor('#f97172')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('回覆訊息後按此送出', '送出訊息', '123'))
                   ])->setLayout('vertical')->setMargin('xxl')->setSpacing('sm')
                 ])->setLayout('vertical'),
                 'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
               ]));
               break;
             case 3:
+              $msg = MyLineBotMsg::create()->flex('檢視問題內容', FlexBubble::create([
+                'header' => FlexBox::create([FlexText::create('Q1.我的問題是xxxxxxxxxxxxxxxxxxxx')->setWeight('bold')->setSize('md')->setColor('#e8f6f2')])->setSpacing('xs')->setLayout('horizontal'),
+                'body' => FlexBox::create([
+                    FlexText::create('最近更新時間：2018-08-08 13:45:23')->setColor('#aaaaaa')->setSize('xxs')->setAlign('start'),
+                    FlexText::create('貨到缺件反應啦啦啦阿拉啦啦啦')->setSize('xs'),
+                    FlexSeparator::create()->setMargin('xxl'),
+
+                    FlexText::create('Re: 2018-07-19 17:23:39')->setSize('xs')->setWeight('bold'),
+                    FlexText::create('沒問題的啦啦啦阿拉啦啦啦')->setSize('xs'),
+                    FlexSeparator::create()->setMargin('xxl'),
+
+                    FlexText::create('貨到缺件反應啦啦啦阿拉啦啦啦')->setSize('xs'),
+                    FlexText::create('貨到缺件反應啦啦啦阿拉啦啦啦')->setSize('xs'),
+                    FlexSeparator::create()->setMargin('xxl'),
+
+                    FlexText::create('Re: 2018-07-19 17:23:39')->setSize('xs')->setWeight('bold'),
+                    FlexText::create('沒問題的啦啦啦阿拉啦啦啦')->setSize('xs'),
+
+                    FlexSeparator::create()->setMargin('xxl'),
+                    FlexButton::create('primary')->setColor('#f97172')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('回覆訊息後按此送出', '送出訊息', '123'))
+                 
+                  ])->setLayout('vertical')->setSpacing('md'),
+                'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
+              ]));
               break;
           }
          
