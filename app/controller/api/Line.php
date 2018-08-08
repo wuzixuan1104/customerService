@@ -59,7 +59,7 @@ class Line extends ApiController {
                         FlexBox::create([
                           FlexText::create('Q1. 我有個問題問題問題問題？？'),
                           FlexBox::create([
-                            FlexText::create('處理中')->setSize('xxs')->setAlign('start')->setColor('#f37370'),
+                            FlexText::create('處理中...')->setSize('xxs')->setAlign('start')->setColor('#f37370'),
                             FlexText::create('2018-08-08')->setSize('xxs')->setAlign('end')->setColor('#f37370')
                           ])->setLayout('horizontal')->setMargin('lg')
                         ])->setLayout('vertical')
@@ -74,7 +74,7 @@ class Line extends ApiController {
                         FlexBox::create([
                           FlexText::create('Q1. 我有個問題問題問題問題？？'),
                           FlexBox::create([
-                            FlexText::create('處理中')->setSize('xxs')->setAlign('start')->setColor('#f37370'),
+                            FlexText::create('處理中..')->setSize('xxs')->setAlign('start')->setColor('#f37370'),
                             FlexText::create('2018-08-08')->setSize('xxs')->setAlign('end')->setColor('#f37370')
                           ])->setLayout('horizontal')->setMargin('lg')
                         ])->setLayout('vertical')
