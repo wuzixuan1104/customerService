@@ -49,8 +49,8 @@ class Line extends ApiController {
         case 'Text':
           switch($log->text) {
             case 1:
-              $msg = MyLineBotMsg::create()->flex('正在進行中的QA', FlexBubble::create([
-                'header' => FlexBox::create([ FlexText::create('正在進行中的QA')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2') ])->setSpacing('xs')->setLayout('horizontal'),
+              $msg = MyLineBotMsg::create()->flex('問題列表 - 正在進行中', FlexBubble::create([
+                'header' => FlexBox::create([ FlexText::create('問題列表 - 正在進行中')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2') ])->setSpacing('xs')->setLayout('horizontal'),
                 'body' => FlexBox::create([
                   
                     FlexText::create('付款問題')->setColor('#12776e')->setWeight('bold'),
@@ -96,11 +96,23 @@ class Line extends ApiController {
        
               break;
             case 2:
+              $msg = MyLineBotMsg::create()->flex('已切換問題', FlexBubble::create([
+                'header' => FlexBox::create([FlexText::create('已切換問題')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2')])->setSpacing('xs')->setLayout('horizontal'),
+                'body' => FlexBox::create([
+                  FlexText::create('Q: 我的問題有好多好多？')->setWeight('bold')->setColor('#307671'),
+                  FlexSeparator::create()->setMargin('xxl'),
+                  FlexBox::create([
+                    FlexButton::create('primary')->setColor('#fbd785')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('檢視先前的對話紀錄', '查看對話紀錄', '123')),
+                    FlexButton::create('primary')->setColor('#f97172')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('輸入對話後按此送出', '送出對話', '123'))
+                  ])->setLayout('vertical')->setMargin('xxl')->setSpacing('sm')
+                ])->setLayout('vertical'),
+                'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
+              ]));
               break;
             case 3:
               break;
           }
-
+         
           $msg->reply($event->getReplyToken());
 
           die;
