@@ -449,37 +449,49 @@ class FlexStyles extends FlexComponents {
   public static function create() {
     return new FlexStyles();
   }
-  public function setHeader(array $values) {
-    $this->attrs['header'] = $values;
+  /*
+
+    array(
+      0 => array(
+        'a' => 1
+      ),
+      1 => array(
+        'b' => 2
+      )
+    )
+  */
+  public function setHeader($value) {
+    $this->attrs['header'] = $value->attrs();
+    return $this;
   }
-  public function setBody(array $values) {
-    $this->attrs['body'] = $values;
+  public function setBody($value) {
+    $this->attrs['body'] = $value->attrs();
+    return $this;
   }
-  public function setFooter(array $values) {
-    $this->attrs['footer'] = $values;
+  public function setFooter($value) {
+    $this->attrs['footer'] = $value->attrs();
+    return $this;
   }
-  public function setHero(array $values) {
-    $this->attrs['hero'] = $values;
+  public function setHero($values) {
+    $this->attrs['hero'] = $value->attrs();
+    return $this;
   }
 }
 
 class FlexBlock extends FlexComponents {
-  public function __construct() {
-    parent::__construct();
-  }
   public static function create() {
-    return new FlexBlock();
+    return new FlexBlock;
   }
   public function setBackgroundColor($value) {
-    if(is_string($value)) $this->attrs['backgroundColor'] = $value;
+    $this->attrs['backgroundColor'] = $value;
     return $this;
   }
   public function setSeparator($value) {
-    if(is_string($value)) $this->attrs['separator'] = $value;
+    $this->attrs['separator'] = $value;
     return $this;
   }
   public function setSeparatorColor($value) {
-    if(is_string($value)) $this->attrs['separatorColor'] = $value;
+    $this->attrs['separatorColor'] = $value;
     return $this;
   }
 }
