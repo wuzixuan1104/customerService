@@ -52,56 +52,43 @@ class Line extends ApiController {
               $msg = MyLineBotMsg::create()->flex('正在進行中的QA', FlexBubble::create([
                 'header' => FlexBox::create([ FlexText::create('正在進行中的QA')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2') ])->setSpacing('xs')->setLayout('horizontal'),
                 'body' => FlexBox::create([
+                  
                     FlexText::create('付款問題')->setColor('#12776e'),
                     FlexSeparator::create(),
+
                     FlexBox::create([
-                      FlexBox::create([
-                        FlexBox::create([
-                          FlexText::create('Q1. 我有個問題問題問題問題？？'),
-                          FlexBox::create([
-                            FlexText::create('處理中...')->setSize('xxs')->setAlign('start')->setColor('#f37370'),
-                            FlexText::create('2018-08-08')->setSize('xxs')->setAlign('end')->setColor('#bbbbbb')
-                          ])->setLayout('horizontal')->setMargin('lg')
-                        ])->setLayout('vertical')
-                      ])->setLayout('vertical')->setFlex(7),
+                      FlexBox::create([FlexBox::create([
+                        FlexText::create('Q1. 我有個問題問題問題問題？？'),
+                        FlexBox::create([FlexText::create('處理中...')->setSize('xxs')->setAlign('start')->setColor('#f37370'), FlexText::create('2018-08-08')->setSize('xxs')->setAlign('end')->setColor('#bbbbbb')])->setLayout('horizontal')->setMargin('lg')
+                      ])->setLayout('vertical')])->setLayout('vertical')->setFlex(7),
                       FlexSeparator::create(),
                       FlexButton::create('primary')->setColor('#f37370')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('切換', '您已按了切換', '123'))
                     ])->setLayout('horizontal')->setSpacing('md'),
                     FlexSeparator::create(),
 
                     FlexBox::create([
-                      FlexBox::create([
-                        FlexBox::create([
-                          FlexText::create('Q1. 我有個問題問題問題問題？？'),
-                          FlexBox::create([
-                            FlexText::create('處理中...')->setSize('xxs')->setAlign('start')->setColor('#f37370'),
-                            FlexText::create('2018-08-08')->setSize('xxs')->setAlign('end')->setColor('#bbbbbb')
-                          ])->setLayout('horizontal')->setMargin('lg')
-                        ])->setLayout('vertical')
-                      ])->setLayout('vertical')->setFlex(7),
+                      FlexBox::create([FlexBox::create([
+                        FlexText::create('Q2. 我有個問題問題問題問題？？'),
+                        FlexBox::create([ FlexText::create('處理中...')->setSize('xxs')->setAlign('start')->setColor('#f37370'), FlexText::create('2018-08-08')->setSize('xxs')->setAlign('end')->setColor('#bbbbbb')])->setLayout('horizontal')->setMargin('lg')
+                      ])->setLayout('vertical')])->setLayout('vertical')->setFlex(7),
                       FlexSeparator::create(),
                       FlexButton::create('primary')->setColor('#f37370')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('切換', '您已按了切換', '123'))
                     ])->setLayout('horizontal')->setSpacing('md'),
-
                     FlexSeparator::create(),
 
                     FlexText::create('發票問題')->setColor('#12776e'),
                     FlexSeparator::create(),
 
                     FlexBox::create([
-                      FlexBox::create([
-                        FlexBox::create([
-                          FlexText::create('Q3. 我有個問題問題問題問題？？'),
-                          FlexBox::create([
-                            FlexText::create('待處理')->setSize('xxs')->setAlign('start')->setColor('#bbbbbb'),
-                            FlexText::create('2018-08-08')->setSize('xxs')->setAlign('end')->setColor('#bbbbbb')
-                          ])->setLayout('horizontal')->setMargin('lg')
-                        ])->setLayout('vertical')
+                      FlexBox::create([FlexBox::create([
+                        FlexText::create('Q3. 我有個問題問題問題問題？？'),
+                        FlexBox::create([FlexText::create('待處理')->setSize('xxs')->setAlign('start')->setColor('#bbbbbb'), FlexText::create('2018-08-08')->setSize('xxs')->setAlign('end')->setColor('#bbbbbb')])->setLayout('horizontal')->setMargin('lg')])->setLayout('vertical')
                       ])->setLayout('vertical')->setFlex(7),
                       FlexSeparator::create(),
                       FlexButton::create('primary')->setColor('#f37370')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('切換', '您已按了切換', '123'))
                     ])->setLayout('horizontal')->setSpacing('md'),
                     FlexSeparator::create(),
+
                   ])->setLayout('vertical')->setSpacing('md')->setMargin('sm'),
                 'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
               ])); 
