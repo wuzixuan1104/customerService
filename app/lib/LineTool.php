@@ -118,15 +118,73 @@ class LineTool {
   }
 
   public static function qa() {
-    if(!$source = func_get_args()[1] || !$cards = Card::find('all', array('where' => array('source_id = ? AND created_at >= date_sub(now(), interval 1 month)', $source->id)))) 
+
+    if(!$source = func_get_args()[1])
       return false;
+  
+    if(!$cards = Card::find('all', array('order' => 'created_at DESC', 'where' => array('source_id = ? AND status != ? AND created_at >= date_sub(now(), interval 1 month)', $source->id, Card::STATUS_FINISH))))
+      return false;
+    $format = [];
 
+    foreach($cards as $card) {
+      echo 123;
+      var_dump($card->list);
+      // die;
+      // if(!$card->list)
+      //   continue;
 
+      // print_r($card->list);
+      // die;
+      // $format[$card->list->name][] = $card;
+    }
+    // echo 123;
+    // print_r($cards);
 
-    echo 'source_id:' . $source->id;
     die;
    
+     $msg = MyLineBotMsg::create()->flex('問題列表 - 正在進行中', FlexBubble::create([
+                'header' => FlexBox::create([ FlexText::create('問題列表 - 正在進行中')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2') ])->setSpacing('xs')->setLayout('horizontal'),
+                'body' => FlexBox::create([
+                  
+                    FlexText::create('付款問題')->setColor('#12776e')->setWeight('bold'),
+                    FlexSeparator::create(),
 
+                    FlexBox::create([
+                      FlexBox::create([FlexBox::create([
+                        FlexText::create('Q1. 我有個問題問題問題問題？？'),
+                        FlexBox::create([FlexText::create('處理中...')->setSize('xxs')->setAlign('start')->setColor('#f37370'), FlexText::create('2018-08-08')->setSize('xxs')->setAlign('end')->setColor('#bbbbbb')])->setLayout('horizontal')->setMargin('lg')
+                      ])->setLayout('vertical')])->setLayout('vertical')->setFlex(7),
+                      FlexSeparator::create(),
+                      FlexButton::create('primary')->setColor('#f37370')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('切換', '您已按了切換', '123'))
+                    ])->setLayout('horizontal')->setSpacing('md'),
+                    FlexSeparator::create(),
+
+                    FlexBox::create([
+                      FlexBox::create([FlexBox::create([
+                        FlexText::create('Q2. 我有個問題問題問題問題？？'),
+                        FlexBox::create([ FlexText::create('處理中...')->setSize('xxs')->setAlign('start')->setColor('#f37370'), FlexText::create('2018-08-08')->setSize('xxs')->setAlign('end')->setColor('#bbbbbb')])->setLayout('horizontal')->setMargin('lg')
+                      ])->setLayout('vertical')])->setLayout('vertical')->setFlex(7),
+                      FlexSeparator::create(),
+                      FlexButton::create('primary')->setColor('#f37370')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('切換', '您已按了切換', '123'))
+                    ])->setLayout('horizontal')->setSpacing('md'),
+                    FlexSeparator::create(),
+
+                    FlexText::create('發票問題')->setColor('#12776e')->setWeight('bold'),
+                    FlexSeparator::create(),
+
+                    FlexBox::create([
+                      FlexBox::create([FlexBox::create([
+                        FlexText::create('Q3. 我有個問題問題問題問題？？'),
+                        FlexBox::create([FlexText::create('待處理')->setSize('xxs')->setAlign('start')->setColor('#bbbbbb'), FlexText::create('2018-08-08')->setSize('xxs')->setAlign('end')->setColor('#bbbbbb')])->setLayout('horizontal')->setMargin('lg')])->setLayout('vertical')
+                      ])->setLayout('vertical')->setFlex(7),
+                      FlexSeparator::create(),
+                      FlexButton::create('primary')->setColor('#f37370')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('切換', '您已按了切換', '123'))
+                    ])->setLayout('horizontal')->setSpacing('md'),
+                    FlexSeparator::create(),
+
+                  ])->setLayout('vertical')->setSpacing('md')->setMargin('sm'),
+                'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
+              ])); 
   }
 
   public static function contact() {

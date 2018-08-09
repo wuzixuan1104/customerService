@@ -47,101 +47,101 @@ class Line extends ApiController {
         case 'Unfollow':
           break;
         case 'Text':
-          print_r(RichMenu::getMenuList());
-          die;
-          switch($log->text) {
-            case 1:
-              $msg = MyLineBotMsg::create()->flex('問題列表 - 正在進行中', FlexBubble::create([
-                'header' => FlexBox::create([ FlexText::create('問題列表 - 正在進行中')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2') ])->setSpacing('xs')->setLayout('horizontal'),
-                'body' => FlexBox::create([
+          // print_r(RichMenu::getMenuList());
+          // die;
+          // switch($log->text) {
+          //   case 1:
+          //     $msg = MyLineBotMsg::create()->flex('問題列表 - 正在進行中', FlexBubble::create([
+          //       'header' => FlexBox::create([ FlexText::create('問題列表 - 正在進行中')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2') ])->setSpacing('xs')->setLayout('horizontal'),
+          //       'body' => FlexBox::create([
                   
-                    FlexText::create('付款問題')->setColor('#12776e')->setWeight('bold'),
-                    FlexSeparator::create(),
+          //           FlexText::create('付款問題')->setColor('#12776e')->setWeight('bold'),
+          //           FlexSeparator::create(),
 
-                    FlexBox::create([
-                      FlexBox::create([FlexBox::create([
-                        FlexText::create('Q1. 我有個問題問題問題問題？？'),
-                        FlexBox::create([FlexText::create('處理中...')->setSize('xxs')->setAlign('start')->setColor('#f37370'), FlexText::create('2018-08-08')->setSize('xxs')->setAlign('end')->setColor('#bbbbbb')])->setLayout('horizontal')->setMargin('lg')
-                      ])->setLayout('vertical')])->setLayout('vertical')->setFlex(7),
-                      FlexSeparator::create(),
-                      FlexButton::create('primary')->setColor('#f37370')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('切換', '您已按了切換', '123'))
-                    ])->setLayout('horizontal')->setSpacing('md'),
-                    FlexSeparator::create(),
+          //           FlexBox::create([
+          //             FlexBox::create([FlexBox::create([
+          //               FlexText::create('Q1. 我有個問題問題問題問題？？'),
+          //               FlexBox::create([FlexText::create('處理中...')->setSize('xxs')->setAlign('start')->setColor('#f37370'), FlexText::create('2018-08-08')->setSize('xxs')->setAlign('end')->setColor('#bbbbbb')])->setLayout('horizontal')->setMargin('lg')
+          //             ])->setLayout('vertical')])->setLayout('vertical')->setFlex(7),
+          //             FlexSeparator::create(),
+          //             FlexButton::create('primary')->setColor('#f37370')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('切換', '您已按了切換', '123'))
+          //           ])->setLayout('horizontal')->setSpacing('md'),
+          //           FlexSeparator::create(),
 
-                    FlexBox::create([
-                      FlexBox::create([FlexBox::create([
-                        FlexText::create('Q2. 我有個問題問題問題問題？？'),
-                        FlexBox::create([ FlexText::create('處理中...')->setSize('xxs')->setAlign('start')->setColor('#f37370'), FlexText::create('2018-08-08')->setSize('xxs')->setAlign('end')->setColor('#bbbbbb')])->setLayout('horizontal')->setMargin('lg')
-                      ])->setLayout('vertical')])->setLayout('vertical')->setFlex(7),
-                      FlexSeparator::create(),
-                      FlexButton::create('primary')->setColor('#f37370')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('切換', '您已按了切換', '123'))
-                    ])->setLayout('horizontal')->setSpacing('md'),
-                    FlexSeparator::create(),
+          //           FlexBox::create([
+          //             FlexBox::create([FlexBox::create([
+          //               FlexText::create('Q2. 我有個問題問題問題問題？？'),
+          //               FlexBox::create([ FlexText::create('處理中...')->setSize('xxs')->setAlign('start')->setColor('#f37370'), FlexText::create('2018-08-08')->setSize('xxs')->setAlign('end')->setColor('#bbbbbb')])->setLayout('horizontal')->setMargin('lg')
+          //             ])->setLayout('vertical')])->setLayout('vertical')->setFlex(7),
+          //             FlexSeparator::create(),
+          //             FlexButton::create('primary')->setColor('#f37370')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('切換', '您已按了切換', '123'))
+          //           ])->setLayout('horizontal')->setSpacing('md'),
+          //           FlexSeparator::create(),
 
-                    FlexText::create('發票問題')->setColor('#12776e')->setWeight('bold'),
-                    FlexSeparator::create(),
+          //           FlexText::create('發票問題')->setColor('#12776e')->setWeight('bold'),
+          //           FlexSeparator::create(),
 
-                    FlexBox::create([
-                      FlexBox::create([FlexBox::create([
-                        FlexText::create('Q3. 我有個問題問題問題問題？？'),
-                        FlexBox::create([FlexText::create('待處理')->setSize('xxs')->setAlign('start')->setColor('#bbbbbb'), FlexText::create('2018-08-08')->setSize('xxs')->setAlign('end')->setColor('#bbbbbb')])->setLayout('horizontal')->setMargin('lg')])->setLayout('vertical')
-                      ])->setLayout('vertical')->setFlex(7),
-                      FlexSeparator::create(),
-                      FlexButton::create('primary')->setColor('#f37370')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('切換', '您已按了切換', '123'))
-                    ])->setLayout('horizontal')->setSpacing('md'),
-                    FlexSeparator::create(),
+          //           FlexBox::create([
+          //             FlexBox::create([FlexBox::create([
+          //               FlexText::create('Q3. 我有個問題問題問題問題？？'),
+          //               FlexBox::create([FlexText::create('待處理')->setSize('xxs')->setAlign('start')->setColor('#bbbbbb'), FlexText::create('2018-08-08')->setSize('xxs')->setAlign('end')->setColor('#bbbbbb')])->setLayout('horizontal')->setMargin('lg')])->setLayout('vertical')
+          //             ])->setLayout('vertical')->setFlex(7),
+          //             FlexSeparator::create(),
+          //             FlexButton::create('primary')->setColor('#f37370')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('切換', '您已按了切換', '123'))
+          //           ])->setLayout('horizontal')->setSpacing('md'),
+          //           FlexSeparator::create(),
 
-                  ])->setLayout('vertical')->setSpacing('md')->setMargin('sm'),
-                'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
-              ])); 
+          //         ])->setLayout('vertical')->setSpacing('md')->setMargin('sm'),
+          //       'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
+          //     ])); 
 
        
-              break;
-            case 2:
-              $msg = MyLineBotMsg::create()->flex('已切換問題', FlexBubble::create([
-                'header' => FlexBox::create([FlexText::create('已切換問題')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2')])->setSpacing('xs')->setLayout('horizontal'),
-                'body' => FlexBox::create([
-                  FlexText::create('Q: 我的問題有好多好多？')->setWeight('bold')->setColor('#307671'),
-                  FlexSeparator::create()->setMargin('xxl'),
-                  FlexBox::create([
-                    FlexButton::create('primary')->setColor('#fbd785')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('檢視先前的對話紀錄', '查看對話紀錄', '123')),
-                    FlexButton::create('primary')->setColor('#f97172')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('回覆訊息後按此送出', '送出訊息', '123'))
-                  ])->setLayout('vertical')->setMargin('xxl')->setSpacing('sm')
-                ])->setLayout('vertical'),
-                'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
-              ]));
-              break;
-            case 3:
-              $msg = MyLineBotMsg::create()->flex('檢視問題內容', FlexBubble::create([
-                'header' => FlexBox::create([FlexText::create('Q1.我的問題是xxxxxxxxxxxxxxxxxxxx')->setWeight('bold')->setSize('md')->setColor('#e8f6f2')])->setSpacing('xs')->setLayout('horizontal'),
-                'body' => FlexBox::create([
-                    FlexText::create('最近更新時間：2018-08-08 13:45:23')->setColor('#aaaaaa')->setSize('xxs')->setAlign('start'),
-                    FlexText::create('貨到缺件反應啦啦啦阿拉啦啦啦')->setSize('xs'),
-                    FlexSeparator::create()->setMargin('xxl'),
+          //     break;
+          //   case 2:
+          //     $msg = MyLineBotMsg::create()->flex('已切換問題', FlexBubble::create([
+          //       'header' => FlexBox::create([FlexText::create('已切換問題')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2')])->setSpacing('xs')->setLayout('horizontal'),
+          //       'body' => FlexBox::create([
+          //         FlexText::create('Q: 我的問題有好多好多？')->setWeight('bold')->setColor('#307671'),
+          //         FlexSeparator::create()->setMargin('xxl'),
+          //         FlexBox::create([
+          //           FlexButton::create('primary')->setColor('#fbd785')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('檢視先前的對話紀錄', '查看對話紀錄', '123')),
+          //           FlexButton::create('primary')->setColor('#f97172')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('回覆訊息後按此送出', '送出訊息', '123'))
+          //         ])->setLayout('vertical')->setMargin('xxl')->setSpacing('sm')
+          //       ])->setLayout('vertical'),
+          //       'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
+          //     ]));
+          //     break;
+          //   case 3:
+          //     $msg = MyLineBotMsg::create()->flex('檢視問題內容', FlexBubble::create([
+          //       'header' => FlexBox::create([FlexText::create('Q1.我的問題是xxxxxxxxxxxxxxxxxxxx')->setWeight('bold')->setSize('md')->setColor('#e8f6f2')])->setSpacing('xs')->setLayout('horizontal'),
+          //       'body' => FlexBox::create([
+          //           FlexText::create('最近更新時間：2018-08-08 13:45:23')->setColor('#aaaaaa')->setSize('xxs')->setAlign('start'),
+          //           FlexText::create('貨到缺件反應啦啦啦阿拉啦啦啦')->setSize('xs'),
+          //           FlexSeparator::create()->setMargin('xxl'),
 
-                    FlexText::create('Re: 2018-07-19 17:23:39')->setSize('xs')->setWeight('bold'),
-                    FlexText::create('沒問題的啦啦啦阿拉啦啦啦')->setSize('xs'),
-                    FlexSeparator::create()->setMargin('xxl'),
+          //           FlexText::create('Re: 2018-07-19 17:23:39')->setSize('xs')->setWeight('bold'),
+          //           FlexText::create('沒問題的啦啦啦阿拉啦啦啦')->setSize('xs'),
+          //           FlexSeparator::create()->setMargin('xxl'),
 
-                    FlexText::create('貨到缺件反應啦啦啦阿拉啦啦啦')->setSize('xs'),
-                    FlexText::create('貨到缺件反應啦啦啦阿拉啦啦啦')->setSize('xs'),
-                    FlexSeparator::create()->setMargin('xxl'),
+          //           FlexText::create('貨到缺件反應啦啦啦阿拉啦啦啦')->setSize('xs'),
+          //           FlexText::create('貨到缺件反應啦啦啦阿拉啦啦啦')->setSize('xs'),
+          //           FlexSeparator::create()->setMargin('xxl'),
 
-                    FlexText::create('Re: 2018-07-19 17:23:39')->setSize('xs')->setWeight('bold'),
-                    FlexText::create('沒問題的啦啦啦阿拉啦啦啦')->setSize('xs'),
+          //           FlexText::create('Re: 2018-07-19 17:23:39')->setSize('xs')->setWeight('bold'),
+          //           FlexText::create('沒問題的啦啦啦阿拉啦啦啦')->setSize('xs'),
 
-                    FlexSeparator::create()->setMargin('xxl'),
-                    FlexButton::create('primary')->setColor('#f97172')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('回覆訊息後按此送出', '送出訊息', '123'))
+          //           FlexSeparator::create()->setMargin('xxl'),
+          //           FlexButton::create('primary')->setColor('#f97172')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('回覆訊息後按此送出', '送出訊息', '123'))
                  
-                  ])->setLayout('vertical')->setSpacing('md'),
-                'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
-              ]));
-              break;
-          }
+          //         ])->setLayout('vertical')->setSpacing('md'),
+          //       'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
+          //     ]));
+          //     break;
+          // }
          
-          $msg->reply($event->getReplyToken());
+          // $msg->reply($event->getReplyToken());
 
-          die;
+          // die;
           $pattern = 'hello';
           $pattern = !preg_match ('/\(\?P<k>.+\)/', $pattern) ? '/(?P<k>(' . $pattern . '))/i' : ('/(' . $pattern . ')/i');
           preg_match_all ($pattern, $log->text, $result);

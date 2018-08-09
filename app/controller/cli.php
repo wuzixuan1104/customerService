@@ -49,15 +49,15 @@ class cli extends Controller {
     };
 
 
-    // if ($error = TList::getTransactionError ($transactionLists, $lists, $board, $listIds))
-    //   exit('新增lists資料表錯誤');
+    if ($error = TList::getTransactionError ($transactionLists, $lists, $board, $listIds))
+      exit('新增lists資料表錯誤');
 
     if ($error = Label::getTransactionError ($transactionLabels, $labels))
       exit('新增labels資料表錯誤');
 
-    // //servers
-    // if( !Servicer::create( array('list_ids' => $listIds, 'key_id' => '591aaa419db460a704771400') ) )
-    //   exit('新增操作者錯誤');
+    //servers
+    if( !Servicer::create( array('list_ids' => $listIds, 'key_id' => '591aaa419db460a704771400') ) )
+      exit('新增操作者錯誤');
 
     echo 'success';
   }

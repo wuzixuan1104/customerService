@@ -14,6 +14,7 @@ class TList extends Model {
   );
 
   static $has_many = array (
+    array('card', 'class_name' => 'Card')
   );
 
   static $belongs_to = array (

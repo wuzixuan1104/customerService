@@ -17,8 +17,8 @@ class Card extends Model {
   );
 
   static $belongs_to = array (
-    array('source', 'class_name' => 'Source'),
-    array('list', 'class_name' => 'TList'),
+    array('list', 'class_name' => 'TList', 'foreign_key' => 'list_id'),
+    array('source', 'class_name' => 'Source')
   );
 
   const STATUS_NEW = 'new';
