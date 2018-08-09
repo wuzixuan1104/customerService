@@ -114,14 +114,22 @@ class LineTool {
   }
 
   public static function menu() {
-
+    
   }
 
   public static function qa() {
+    if(!$source = func_get_args()[1] || !$cards = Card::find('all', array('where' => array('source_id = ? AND created_at >= date_sub(now(), interval 1 month)', $source->id)))) 
+      return false;
+
+
+
+    echo 'source_id:' . $source->id;
+    die;
+   
 
   }
 
   public static function contact() {
-    
+
   }
 }
