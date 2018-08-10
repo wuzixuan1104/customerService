@@ -47,8 +47,10 @@ class Line extends ApiController {
         case 'Unfollow':
           break;
         case 'Text':
-          print_r(RichMenu::getMenuList());
-          die;
+          // print_r(RichMenu::getMenuList());
+          // die;
+
+          Log::info(json_encode(RichMenu::getMenuList()));
           // switch($log->text) {
           //   case 1:
           //     $msg = MyLineBotMsg::create()->flex('問題列表 - 正在進行中', FlexBubble::create([
