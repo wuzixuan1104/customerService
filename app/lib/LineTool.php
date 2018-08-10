@@ -131,14 +131,19 @@ class LineTool {
    
     $flexes = $bubbles = [];
     $cnt = 0;
+
+    $f = [];
+    $b = [];
     foreach($format as $formatTypes => $contents) {
       if(count($bubbles) > 4)
           break;
+
 
       $flexes[] = FlexText::create($formatTypes)->setColor('#12776e')->setWeight('bold');
       $flexes[] = FlexSeparator::create();
       $cnt ++;
 
+      $f[] = $formatTypes;
       foreach($contents as $content) {
         if(count($bubbles) > 4)
           break;
@@ -152,8 +157,10 @@ class LineTool {
                       FlexButton::create('primary')->setColor('#f37370')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('切換', '您已按了切換', json_encode(array('lib' => 'LineTool', 'method' => 'getScore', 'param' => array('card_id' => $content->id) )  ) ))
                     ])->setLayout('horizontal')->setSpacing('md');
         $flexes[] = FlexSeparator::create();
-
+        $f[] = 'Q.' .  $content->name;
         if((++$cnt) % 5 == 0) {
+          $b[] = $f;
+          $f = [];
           $bubbles[] = FlexBubble::create([
                           'header' => FlexBox::create([ FlexText::create('問題列表 - 正在進行中')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2') ])->setSpacing('xs')->setLayout('horizontal'),
                           'body' => FlexBox::create($flexes)->setLayout('vertical')->setSpacing('md')->setMargin('sm'),
@@ -163,7 +170,9 @@ class LineTool {
         }
       }
     }
-
+    if($f) {
+      $b[] = $f;
+    }
     if($flexes) {
       $bubbles[] = FlexBubble::create([
                       'header' => FlexBox::create([ FlexText::create('問題列表 - 正在進行中')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2') ])->setSpacing('xs')->setLayout('horizontal'),
@@ -171,7 +180,8 @@ class LineTool {
                       'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
                     ]);
     }
-   
+    Log::info(json_encode($b));
+    die;
     return MyLineBotMsg::create()->flex('問題列表 - 正在進行中', FlexCarousel::create($bubbles)); 
 
   }
