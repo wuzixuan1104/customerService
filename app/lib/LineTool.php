@@ -173,6 +173,7 @@ class LineTool {
     }
    
     return MyLineBotMsg::create()->flex('問題列表 - 正在進行中', FlexCarousel::create($bubbles)); 
+
   }
 
   public static function contact() {
