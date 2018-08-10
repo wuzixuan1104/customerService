@@ -47,7 +47,8 @@ class Line extends ApiController {
         case 'Unfollow':
           break;
         case 'Text':
-        
+          print_r(RichMenu::getMenuList());
+          die;
           // switch($log->text) {
           //   case 1:
           //     $msg = MyLineBotMsg::create()->flex('問題列表 - 正在進行中', FlexBubble::create([
@@ -183,6 +184,7 @@ class Line extends ApiController {
 
         case 'Postback':
           $data = json_decode( $log->data, true );
+          Log::info($log->data);
           if ( !( isset( $data['lib'], $data['method'] ) && ( isset( self::$cache['lib'][$data['lib']] ) ? true : ( Load::lib($data['lib'] . '.php') ? self::$cache['lib'][$data['lib']] = true : true ) )
                && method_exists($lib = $data['lib'], $method = $data['method']) && $msg = $lib::$method( $data['param'], $source ) ) )
             return false;
