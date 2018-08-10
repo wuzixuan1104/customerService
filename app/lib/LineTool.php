@@ -122,7 +122,7 @@ class LineTool {
       return false;
 
     if(!$cards = Card::find('all', array('where' => array('source_id = ? AND created_at >= date_sub(now(), interval 1 month)', $source->id))))
-      return false;
+      return MyLineBotMsg::create()->text('尚無進行中的問題');
 
     array_map(function($card) use (&$format) {
       !$card->list ? null : $format[$card->list->name][] = $card;
