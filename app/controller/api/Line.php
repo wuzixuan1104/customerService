@@ -50,10 +50,6 @@ class Line extends ApiController {
           // print_r(RichMenu::getMenuList());
           // die;
 
-          MyLineBotMsg::create()->text('123')->reply($event->getReplyToken());
-          Log::info(json_encode(RichMenu::getMenuList()));
-          die;
-
           // switch($log->text) {
           //   case 1:
           //     $msg = MyLineBotMsg::create()->flex('問題列表 - 正在進行中', FlexBubble::create([

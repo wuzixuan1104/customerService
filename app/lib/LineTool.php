@@ -152,25 +152,27 @@ class LineTool {
                     ])->setLayout('horizontal')->setSpacing('md');
         $flexes[] = FlexSeparator::create();
 
-        if((++$cnt) >= 5) {
-          $bubbles[] = FlexBubble::create([
-                          'header' => FlexBox::create([ FlexText::create('問題列表 - 正在進行中')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2') ])->setSpacing('xs')->setLayout('horizontal'),
-                          'body' => FlexBox::create($flexes)->setLayout('vertical')->setSpacing('md')->setMargin('sm'),
-                          'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
-                        ]);
-          $flexes = [];
-          $cnt = 0;
-        }
+        (++$cnt) >= 5 && $bubbles[] = FlexBubble::create(['header' => FlexBox::create([ FlexText::create('問題列表 - 正在進行中')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2') ])->setSpacing('xs')->setLayout('horizontal'), 'body' => FlexBox::create($flexes)->setLayout('vertical')->setSpacing('md')->setMargin('sm'), 'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))]) && $flexes = [] && $cnt = 0;
+        // if((++$cnt) >= 5) {
+        //   $bubbles[] = FlexBubble::create([
+        //                   'header' => FlexBox::create([ FlexText::create('問題列表 - 正在進行中')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2') ])->setSpacing('xs')->setLayout('horizontal'),
+        //                   'body' => FlexBox::create($flexes)->setLayout('vertical')->setSpacing('md')->setMargin('sm'),
+        //                   'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
+        //                 ]);
+        //   $flexes = [];
+        //   $cnt = 0;
+        // }
       }
     }
 
-    if($flexes) {
-      $bubbles[] = FlexBubble::create([
-                      'header' => FlexBox::create([ FlexText::create('問題列表 - 正在進行中')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2') ])->setSpacing('xs')->setLayout('horizontal'),
-                      'body' => FlexBox::create($flexes)->setLayout('vertical')->setSpacing('md')->setMargin('sm'),
-                      'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
-                    ]);
-    }
+    $flexes && $bubbles[] = FlexBubble::create(['header' => FlexBox::create([ FlexText::create('問題列表 - 正在進行中')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2') ])->setSpacing('xs')->setLayout('horizontal'), 'body' => FlexBox::create($flexes)->setLayout('vertical')->setSpacing('md')->setMargin('sm'), 'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))]);
+    // if($flexes) {
+    //   $bubbles[] = FlexBubble::create([
+    //                   'header' => FlexBox::create([ FlexText::create('問題列表 - 正在進行中')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2') ])->setSpacing('xs')->setLayout('horizontal'),
+    //                   'body' => FlexBox::create($flexes)->setLayout('vertical')->setSpacing('md')->setMargin('sm'),
+    //                   'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
+    //                 ]);
+    // }
 
     return MyLineBotMsg::create()->flex('問題列表 - 正在進行中', FlexCarousel::create($bubbles)); 
 
