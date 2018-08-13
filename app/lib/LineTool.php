@@ -205,11 +205,8 @@ class RichmenuEvent {
       !$card->list ? null : $format[$card->list->name][] = $card;
     }, $cards);
     
-   
     $flexes = $bubbles = [];
     $cnt = 0;
-
- 
     foreach($format as $formatTypes => $contents) {
       if(count($bubbles) > 4)
           break;
@@ -224,7 +221,7 @@ class RichmenuEvent {
                         'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))]);
         $flexes = [];
       }
-
+      $cnt++;
 
       foreach($contents as $content) {
         if(count($bubbles) > 4)
@@ -239,17 +236,19 @@ class RichmenuEvent {
                       FlexButton::create('primary')->setColor('#f37370')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('切換', '您已按了切換', json_encode(array('lib' => 'LineTool', 'method' => 'getScore', 'param' => array('card_id' => $content->id) )  ) ))
                     ])->setLayout('horizontal')->setSpacing('md');
         $flexes[] = FlexSeparator::create();
-        if((++$cnt) % 5 == 0) {
+
+        if((++$cnt) >= 5) {
           $bubbles[] = FlexBubble::create([
                           'header' => FlexBox::create([ FlexText::create('問題列表 - 正在進行中')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2') ])->setSpacing('xs')->setLayout('horizontal'),
                           'body' => FlexBox::create($flexes)->setLayout('vertical')->setSpacing('md')->setMargin('sm'),
                           'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
                         ]);
           $flexes = [];
+          $cnt = 0;
         }
       }
     }
-  
+
     if($flexes) {
       $bubbles[] = FlexBubble::create([
                       'header' => FlexBox::create([ FlexText::create('問題列表 - 正在進行中')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2') ])->setSpacing('xs')->setLayout('horizontal'),
