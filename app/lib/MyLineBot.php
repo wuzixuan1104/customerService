@@ -441,7 +441,7 @@ abstract class FlexComponents {
     return $this->attrs;
   }
 }
-//FlexStyles::create()->setHeader()
+
 class FlexStyles extends FlexComponents {
   public function __construct() {
     parent::__construct();
@@ -449,17 +449,6 @@ class FlexStyles extends FlexComponents {
   public static function create() {
     return new FlexStyles();
   }
-  /*
-
-    array(
-      0 => array(
-        'a' => 1
-      ),
-      1 => array(
-        'b' => 2
-      )
-    )
-  */
   public function setHeader($value) {
     $this->attrs['header'] = $value->attrs();
     return $this;
@@ -732,6 +721,33 @@ class FlexAction {
   }
   public static function datetimepicker($label, $data, $mode, $initial = null, $max = null, $min = null) {
     return is_string($label) && is_string($data) && in_array($mode, ['date', 'time', 'datetime']) ? ['type' => 'datetimepicker', 'label' => $label, 'data' => $data, 'mode' => $mode, 'initial' => $initial, 'max' => $max, 'min' => $min ] : null;
+  }
+}
+
+class RichMenuGenerator {
+  public static function create() {
+
+    if($lists = RichMenu::getMenuList() && isset($lists['richmenus'])) 
+      foreach($lists['richmenus'] as $list) 
+        if(!RichMenu::delete($list['richMenuId']))
+          return false;
+
+    if(!$richMenuId = RichMenu::create(BuildRichMenu::create(
+                  BuildRichMenu::size(843), false, '客服系統', '更多',
+                  [ 
+                    BuildRichMenu::area(BuildRichMenu::areaBound(0, 0, 833, 843), MyLineBotActionMsg::create()->postback('您已點擊正在進行中的問題', json_encode( ['lib' => 'LineTool', 'class' => 'RichmenuEvent', 'method' => 'qa', 'param' => [] ]), '您已點擊正在進行中的問題')),
+                    BuildRichMenu::area(BuildRichMenu::areaBound(834, 0, 833, 843), MyLineBotActionMsg::create()->postback('您已點擊首頁', json_encode( ['lib' => 'LineTool', 'class' => 'RichmenuEvent', 'method' => 'menu', 'param' => [] ]), '您已點擊首頁')),
+                    BuildRichMenu::area(BuildRichMenu::areaBound(1668, 0, 833, 843), MyLineBotActionMsg::create()->postback('您已點擊意見回饋', json_encode( ['lib' => 'LineTool', 'class' => 'RichmenuEvent', 'method' => 'contact', 'param' => [] ]), '您已點擊意見回饋')),
+                  ]
+    )))
+      return false;
+
+    if(!$img = RichMenu::uploadImage($richMenuId, '/Users/wu-tzu-hsuan/www/customerService/assets/img/menu_v1.png', 'image/png'))
+      return false;
+
+    if($unlink = RichMenu::unlinkToUser('Uef2e17250863e4724e74578bd34ed333') && !RichMenu::linkToUser('Uef2e17250863e4724e74578bd34ed333', $richMenuId))
+      return false;
+    return true;
   }
 }
 
