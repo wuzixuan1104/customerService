@@ -47,12 +47,8 @@ class Line extends ApiController {
         case 'Unfollow':
           break;
         case 'Text':
-          // print_r(RichMenu::getMenuList());
-          // die;
-
-          MyLineBotMsg::create()->text('123')->reply($event->getReplyToken());
-          Log::info(json_encode(RichMenu::getMenuList()));
-          die;
+          
+          //richmenu-4d6db4bbd05c639c197df865945ee2fb
 
           // switch($log->text) {
           //   case 1:
@@ -189,8 +185,13 @@ class Line extends ApiController {
 
         case 'Postback':
           $data = json_decode( $log->data, true );
-          Log::info($log->data);
-          if ( !( isset( $data['lib'], $data['method'] ) && ( isset( self::$cache['lib'][$data['lib']] ) ? true : ( Load::lib($data['lib'] . '.php') ? self::$cache['lib'][$data['lib']] = true : true ) )
+          //暫時修正
+          if( isset($data['class']) ) {
+            if( !( isset( $data['lib'], $data['method'] ) && ( isset( self::$cache['lib'][$data['lib']] ) ? true : ( Load::lib($data['lib'] . '.php') ? self::$cache['lib'][$data['lib']] = true : true ) )
+              && method_exists($class = $data['class'], $method = $data['method']) && $msg = $class::$method( $data['param'], $source ) ) )
+              return false;
+          }
+          else if ( !( isset( $data['lib'], $data['method'] ) && ( isset( self::$cache['lib'][$data['lib']] ) ? true : ( Load::lib($data['lib'] . '.php') ? self::$cache['lib'][$data['lib']] = true : true ) )
                && method_exists($lib = $data['lib'], $method = $data['method']) && $msg = $lib::$method( $data['param'], $source ) ) )
             return false;
 
