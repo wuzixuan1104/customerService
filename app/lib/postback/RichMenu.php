@@ -66,10 +66,6 @@ class Qa {
                       'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))]);
     }
 
-    $process = json_decode($source->process, true);
-    $source->process = '';
-    $source->save();
-    
     return MyLineBotMsg::create()->flex('問題列表 - 正在進行中', FlexCarousel::create($bubbles)); 
   }
 
@@ -82,7 +78,7 @@ class Qa {
       return false;
   
     //切換卡片流程
-    ($source = $data[1]) && ($source->card_id = $cardId) && $source->save();
+    ($source = $data[1]) && ($source->card_id = $cardId) && ($source->process = $source->process = json_encode( array('idCard' => $source->card->key_id, 'idList' => $source->card->list->key_id, 'content' => '', 'date' => date('Y-m-d'))) ) && $source->save();
 
     return MyLineBotMsg::create()->flex('已切換問題', FlexBubble::create([
             'header' => FlexBox::create([FlexText::create('已切換問題')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2')])->setSpacing('xs')->setLayout('horizontal'),

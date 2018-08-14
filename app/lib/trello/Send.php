@@ -26,7 +26,7 @@ class Send {
 
     if( !$trello->put('/1/cards/' . $source->card->key_id, array( 'desc' => $oriCard['desc'] . "\r\n### Re: " . date('Y-m-d H:i:s') . "\r\n" . $process['content'] . "\r\n" . "---" )) )
       return MyLineBotMsg::create()->text('送出失敗');
-
+    Log::info('t');
     return MyLineBotMsg::create()->text('已將信件送出給客服系統，請耐心等待回覆！');
   }
 }
