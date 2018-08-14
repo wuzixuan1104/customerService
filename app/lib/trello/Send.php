@@ -11,10 +11,10 @@ Load::lib('TrelloApi.php');
 
 class Send {
   public static function reply() {
-    $data = func_get_arg();
+    $data = func_get_args();
     if(!(($source = $data[1]) && ($source->card->key_id)))
       return false;
-    
+
     $process = json_decode($source->process, true);
     $source->process = '';
     $source->save();
