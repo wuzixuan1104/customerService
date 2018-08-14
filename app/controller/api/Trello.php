@@ -46,7 +46,6 @@ class Trello extends ApiController {
         if( !$history = History::create(['card_id = ?', $card->id, 'servicer_id' => $servicer->id, 'content' => $data['action']['data']['text']]) )
           return false;
 
-
         if(!$sid = $card->source->sid)
           return false;
 

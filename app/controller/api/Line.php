@@ -48,10 +48,10 @@ class Line extends ApiController {
           break;
         case 'Text':
 
-          print_R(RichMenu::getMenuList());
-          die;
-          print_R(RichMenuGenerator::create());
-          die;
+          // print_R(RichMenu::getMenuList());
+          // die;
+          // print_R(RichMenuGenerator::create());
+          // die;
 
           // switch($log->text) {
           //   case 1:
