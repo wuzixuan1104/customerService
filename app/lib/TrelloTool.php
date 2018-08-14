@@ -77,8 +77,12 @@ class TrelloTool {
     if( !$card = Card::create($param) )
       return MyLineBotMsg::create()->text('資料庫處理失敗');
 
+    if( !$history = History::create(['card_id' => $card->id, 'servicer_id' => 0, 'content' => $process['content']]))
+      return MyLineBotMsg::create()->text('資料庫處理失敗');
+
     //將source的idCard做更新
     $source->process = '';
+    $source->card_id = $card->id;
     $source->save();
 
     return MyLineBotMsg::create()->text('已將信件送出給客服系統，請耐心等待回覆！');

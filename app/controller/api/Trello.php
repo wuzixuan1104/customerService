@@ -43,6 +43,10 @@ class Trello extends ApiController {
         $card->source->process = json_encode( array('idCard' => $card->key_id, 'idList' => $card->list->key_id, 'content' => '', 'date' => date('Y-m-d')) );
         $card->source->save();
 
+        if( !$history = History::create(['card_id = ?', $card->id, 'servicer_id' => $servicer->id, 'content' => $data['action']['data']['text']]) )
+          return false;
+
+
         if(!$sid = $card->source->sid)
           return false;
 

@@ -77,6 +77,8 @@ class Qa {
     if(!Card::find('one', ['where' => ['id = ?', $cardId]]))
       return false;
 
+    //切換卡片流程
+
     return MyLineBotMsg::create()->flex('已切換問題', FlexBubble::create([
             'header' => FlexBox::create([FlexText::create('已切換問題')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2')])->setSpacing('xs')->setLayout('horizontal'),
             'body' => FlexBox::create([
