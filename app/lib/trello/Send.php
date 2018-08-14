@@ -16,7 +16,8 @@ class Send {
       return false;
 
     $process = json_decode($source->process, true);
-    $source->process = '';
+
+    $source->process = json_encode( array('idCard' => $source->card->key_id, 'idList' => $source->card->list->key_id, 'content' => '', 'date' => date('Y-m-d')) );
     $source->save();
 
     $trello = TrelloApi::create();

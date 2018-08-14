@@ -66,6 +66,10 @@ class Qa {
                       'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))]);
     }
 
+    $process = json_decode($source->process, true);
+    $source->process = '';
+    $source->save();
+    
     return MyLineBotMsg::create()->flex('問題列表 - 正在進行中', FlexCarousel::create($bubbles)); 
   }
 
