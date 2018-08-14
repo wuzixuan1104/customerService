@@ -99,7 +99,7 @@ class Qa {
     if(!(($cardId = $data[0]['card_id']) && ($title = $data[0]['title'])) ) 
       return false;
 
-    if(!$histories = History::find('all', ['where' => ['card_id = ?', $cardId], 'order' => 'created_at ASC']))
+    if(!$histories = History::find('all', ['where' => ['card_id = ?', $cardId]]))
       return false;
 
     $flexes = [];
