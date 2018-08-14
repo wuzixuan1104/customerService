@@ -87,7 +87,7 @@ class Qa {
               FlexSeparator::create()->setMargin('xxl'),
               FlexBox::create([
                 FlexButton::create('primary')->setColor('#fbd785')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('檢視先前的對話紀錄', '查看對話紀錄', json_encode(['lib' => 'postback/RichMenu', 'class' => 'Qa', 'method' => 'dialogRecord', 'param' => ['card_id' => $cardId, 'title' => $title]]))),
-                FlexButton::create('primary')->setColor('#f97172')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('回覆訊息後按此送出', '送出訊息', json_encode(['lib' => 'trello/Send', 'class' => 'Trello', 'method' => 'reply', 'param' => [])))
+                FlexButton::create('primary')->setColor('#f97172')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('回覆訊息後按此送出', '送出訊息', json_encode(['lib' => 'trello/Send', 'class' => 'Trello', 'method' => 'reply', 'param' => []])))
               ])->setLayout('vertical')->setMargin('xxl')->setSpacing('sm')
             ])->setLayout('vertical'),
             'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
