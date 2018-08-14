@@ -17,6 +17,7 @@ class Source extends Model {
   );
 
   static $belongs_to = array (
+    array('card', 'class_name' => 'Card')
   );
 
   const TYPE_USER    = 'user';
