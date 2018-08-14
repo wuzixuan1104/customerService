@@ -17,8 +17,10 @@ class Send {
 
     $process = json_decode($source->process, true);
 
-    $source->process = json_encode( array('idCard' => $source->card->key_id, 'idList' => $source->card->list->key_id, 'content' => '', 'date' => date('Y-m-d')) );
-    $source->save();
+    ($source->process = json_encode( array('idCard' => $source->card->key_id, 'idList' => $source->card->list->key_id, 'content' => '', 'date' => date('Y-m-d')) )) && $source->save();
+
+    if( !$history = History::create(['card_id' => $source->card_id, 'servicer_id' => 0, 'content' => $process['content']]) )
+          return false;
 
     $trello = TrelloApi::create();
     if( !$oriCard = $trello->get('/1/cards/' . $source->card->key_id) )
@@ -26,7 +28,7 @@ class Send {
 
     if( !$trello->put('/1/cards/' . $source->card->key_id, array( 'desc' => $oriCard['desc'] . "\r\n### Re: " . date('Y-m-d H:i:s') . "\r\n" . $process['content'] . "\r\n" . "---" )) )
       return MyLineBotMsg::create()->text('送出失敗');
-    Log::info('t');
+
     return MyLineBotMsg::create()->text('已將信件送出給客服系統，請耐心等待回覆！');
   }
 }
