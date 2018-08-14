@@ -11,7 +11,6 @@ Load::lib('TrelloApi.php');
 
 class Send {
   public static function reply() {
-    Log::info('reply');
     $data = func_get_args();
     if(!(($source = $data[1]) && ($source->card->key_id)))
       return false;

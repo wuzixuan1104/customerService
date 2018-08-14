@@ -108,9 +108,15 @@ class Qa {
       if($history->servicer_id) {
         $flexes[] = FlexText::create('Re: ' . $history->created_at->format('Y-m-d H:i:s'))->setSize('xs')->setWeight('bold');
       }
-      $flexes[] = FlexText::create($history->content)->setSize('xs');
+      if(!($history && $contents = explode("\r\n", $history->content)))
+        break;
+
+      foreach($contents as $content) 
+        $flexes[] = FlexText::create($content)->setSize('xs');
+      
       $flexes[] = FlexSeparator::create()->setMargin('xxl');
     }
+  
     $flexes[] = FlexButton::create('primary')->setColor('#f97172')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('回覆訊息後按此送出', '您按了送出訊息', json_encode(['lib' => 'trello/Send', 'class' => 'Send', 'method' => 'reply', 'param' => []])));
     
     return MyLineBotMsg::create()->flex('檢視問題內容', FlexBubble::create([
