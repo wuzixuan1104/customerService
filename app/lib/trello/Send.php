@@ -11,6 +11,7 @@ Load::lib('TrelloApi.php');
 
 class Send {
   public static function reply() {
+    Log::info('reply');
     $data = func_get_args();
     if(!(($source = $data[1]) && ($source->card->key_id)))
       return false;
@@ -19,7 +20,7 @@ class Send {
 
     ($source->process = json_encode( array('idCard' => $source->card->key_id, 'idList' => $source->card->list->key_id, 'content' => '', 'date' => date('Y-m-d')) )) && $source->save();
 
-    if( !$history = History::create(['card_id' => $source->card_id, 'servicer_id' => 0, 'content' => $process['content']]) )
+    if(!History::create(['card_id' => $source->card_id, 'servicer_id' => 0, 'content' => $process['content']]) )
           return false;
 
     $trello = TrelloApi::create();
