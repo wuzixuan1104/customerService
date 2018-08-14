@@ -735,9 +735,9 @@ class RichMenuGenerator {
     if(!$richMenuId = RichMenu::create(BuildRichMenu::create(
                   BuildRichMenu::size(843), false, '客服系統', '更多',
                   [ 
-                    BuildRichMenu::area(BuildRichMenu::areaBound(0, 0, 833, 843), MyLineBotActionMsg::create()->postback('您已點擊正在進行中的問題', json_encode( ['lib' => 'LineTool', 'class' => 'RichmenuEvent', 'method' => 'qa', 'param' => [] ]), '您已點擊正在進行中的問題')),
-                    BuildRichMenu::area(BuildRichMenu::areaBound(834, 0, 833, 843), MyLineBotActionMsg::create()->postback('您已點擊首頁', json_encode( ['lib' => 'LineTool', 'class' => 'RichmenuEvent', 'method' => 'menu', 'param' => [] ]), '您已點擊首頁')),
-                    BuildRichMenu::area(BuildRichMenu::areaBound(1668, 0, 833, 843), MyLineBotActionMsg::create()->postback('您已點擊意見回饋', json_encode( ['lib' => 'LineTool', 'class' => 'RichmenuEvent', 'method' => 'contact', 'param' => [] ]), '您已點擊意見回饋')),
+                    BuildRichMenu::area(BuildRichMenu::areaBound(0, 0, 833, 843), MyLineBotActionMsg::create()->postback('您已點擊正在進行中的問題', json_encode( ['lib' => 'postback/RichMenu', 'class' => 'Qa', 'method' => 'create', 'param' => [] ]), '您已點擊正在進行中的問題')),
+                    BuildRichMenu::area(BuildRichMenu::areaBound(834, 0, 833, 843), MyLineBotActionMsg::create()->postback('您已點擊首頁', json_encode( ['lib' => 'postback/RichMenu', 'class' => 'Menu', 'method' => 'create', 'param' => [] ]), '您已點擊首頁')),
+                    BuildRichMenu::area(BuildRichMenu::areaBound(1668, 0, 833, 843), MyLineBotActionMsg::create()->postback('您已點擊意見回饋', json_encode( ['lib' => 'postback/RichMenu', 'class' => 'Contact', 'method' => 'create', 'param' => [] ]), '您已點擊意見回饋')),
                   ]
     )))
       return false;
