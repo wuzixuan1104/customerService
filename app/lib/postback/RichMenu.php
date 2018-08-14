@@ -76,7 +76,7 @@ class Qa {
 
     if(!Card::find('one', ['where' => ['id = ?', $cardId]]))
       return false;
-
+  
     //切換卡片流程
 
     return MyLineBotMsg::create()->flex('已切換問題', FlexBubble::create([
@@ -85,7 +85,7 @@ class Qa {
               FlexText::create($title)->setWeight('bold')->setColor('#307671'),
               FlexSeparator::create()->setMargin('xxl'),
               FlexBox::create([
-                FlexButton::create('primary')->setColor('#fbd785')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('檢視先前的對話紀錄', '查看對話紀錄', json_encode(['lib' => 'postback/RichMenu', 'class' => 'Qa', 'method' => 'dialogRecord', 'param' => ['card_id' => $cardId]]))),
+                FlexButton::create('primary')->setColor('#fbd785')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('檢視先前的對話紀錄', '查看對話紀錄', json_encode(['lib' => 'postback/RichMenu', 'class' => 'Qa', 'method' => 'dialogRecord', 'param' => ['card_id' => $cardId, 'title' => $title]]))),
                 FlexButton::create('primary')->setColor('#f97172')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('回覆訊息後按此送出', '送出訊息', json_encode(['lib' => 'postback/RichMenu', 'class' => 'Qa', 'method' => 'dialogRecord', 'param' => ['card_id' => $cardId]])))
               ])->setLayout('vertical')->setMargin('xxl')->setSpacing('sm')
             ])->setLayout('vertical'),
@@ -94,7 +94,51 @@ class Qa {
   }
 
   public static function dialogRecord() {
+    $data = func_get_args();
+    if(!(($cardId = $data[0]['card_id']) && ($title = $data[0]['title'])) ) 
+      return false;
 
+    if(!$histories = History::find('all', ['where' => ['card_id = ?', $cardId], 'order' => 'created_at DESC']))
+      return false;
+
+    $flexes = [];
+    $flexes[] = FlexText::create('最近更新時間：'. $histories[0]->created_at->format('Y-m-d H:i:s'))->setColor('#aaaaaa')->setSize('xxs')->setAlign('start');
+    foreach($histories as $history) {
+      if($history->servicer_id) {
+        $flexes[] = FlexText::create('Re: ' . $history->created_at->format('Y-m-d H:i:s'))->setSize('xs')->setWeight('bold');
+      }
+      $flexes[] = FlexText::create('沒問題的啦啦啦阿拉啦啦啦')->setSize('xs');
+      $flexes[] = FlexSeparator::create()->setMargin('xxl');
+    }
+    $flexes[] = FlexButton::create('primary')->setColor('#f97172')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('回覆訊息後按此送出', '您按了送出訊息', json_encode(['lib' => 'trello/Send', 'class' => 'Trello', 'method' => 'reply', 'param' => ['card_id' => '']])));
+    
+    return MyLineBotMsg::create()->flex('檢視問題內容', FlexBubble::create([
+                'header' => FlexBox::create([FlexText::create($title)->setWeight('bold')->setSize('md')->setColor('#e8f6f2')])->setSpacing('xs')->setLayout('horizontal'),
+                'body' => FlexBox::create($flexes
+                    // FlexText::create('最近更新時間：2018-08-08 13:45:23')->setColor('#aaaaaa')->setSize('xxs')->setAlign('start'),
+                
+                //     FlexText::create('貨到缺件反應啦啦啦阿拉啦啦啦')->setSize('xs'),
+                //     FlexSeparator::create()->setMargin('xxl'),
+
+                //     FlexText::create('Re: 2018-07-19 17:23:39')->setSize('xs')->setWeight('bold'),
+                
+                //     FlexText::create('沒問題的啦啦啦阿拉啦啦啦')->setSize('xs'),
+                //     FlexSeparator::create()->setMargin('xxl'),
+
+                //     FlexText::create('貨到缺件反應啦啦啦阿拉啦啦啦')->setSize('xs'),
+                //     FlexText::create('貨到缺件反應啦啦啦阿拉啦啦啦')->setSize('xs'),
+                //     FlexSeparator::create()->setMargin('xxl'),
+
+                //     FlexText::create('Re: 2018-07-19 17:23:39')->setSize('xs')->setWeight('bold'),
+                
+                //     FlexText::create('沒問題的啦啦啦阿拉啦啦啦')->setSize('xs'),
+
+                //     FlexSeparator::create()->setMargin('xxl'),
+                //     FlexButton::create('primary')->setColor('#f97172')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('回覆訊息後按此送出', '您按了送出訊息', json_encode(['lib' => 'trello/Send', 'class' => 'Trello', 'method' => 'reply', 'param' => ['card_id' => '']])))
+                 
+                  )->setLayout('vertical')->setSpacing('md'),
+                'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
+              ]));
   }
 }
 
