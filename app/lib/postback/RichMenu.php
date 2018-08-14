@@ -98,11 +98,11 @@ class Qa {
     if(!(($cardId = $data[0]['card_id']) && ($title = $data[0]['title'])) ) 
       return false;
 
-    if(!$histories = History::find('all', ['where' => ['card_id = ?', $cardId], 'order' => 'created_at DESC']))
+    if(!$histories = History::find('all', ['where' => ['card_id = ?', $cardId], 'order' => 'created_at ASC']))
       return false;
 
     $flexes = [];
-    $flexes[] = FlexText::create('最近更新時間：'. $histories[0]->created_at->format('Y-m-d H:i:s'))->setColor('#aaaaaa')->setSize('xxs')->setAlign('start');
+    $flexes[] = FlexText::create('最近更新時間：'. $histories[count($histories)-1]->created_at->format('Y-m-d H:i:s'))->setColor('#aaaaaa')->setSize('xxs')->setAlign('start');
     foreach($histories as $history) {
       if($history->servicer_id) {
         $flexes[] = FlexText::create('Re: ' . $history->created_at->format('Y-m-d H:i:s'))->setSize('xs')->setWeight('bold');
