@@ -48,6 +48,10 @@ class Line extends ApiController {
           break;
         case 'Text':
 
+          print_R(RichMenu::getMenuList());
+          die;
+          print_R(RichMenuGenerator::create());
+          die;
 
           // switch($log->text) {
           //   case 1:
@@ -183,6 +187,7 @@ class Line extends ApiController {
           break;
 
         case 'Postback':
+          Log::info($data);
           $data = json_decode( $log->data, true );
           //暫時修正
           if( isset($data['class']) ) {
@@ -194,6 +199,7 @@ class Line extends ApiController {
                && method_exists($lib = $data['lib'], $method = $data['method']) && $msg = $lib::$method( $data['param'], $source ) ) )
             return false;
 
+          Log::info('run~~');
           $msg->reply($event->getReplyToken());
           break;
       }
