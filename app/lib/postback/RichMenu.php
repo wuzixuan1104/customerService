@@ -43,7 +43,7 @@ class Qa {
                         FlexBox::create([FlexText::create(Card::STATUS_DEAL == $content->status ? '處理中...' : '待處理')->setSize('xxs')->setAlign('start')->setColor(Card::STATUS_DEAL == $content->status ? '#f37370' : '#bbbbbb'), FlexText::create($content->created_at->format('Y-m-d'))->setSize('xxs')->setAlign('end')->setColor('#bbbbbb')])->setLayout('horizontal')->setMargin('lg')
                       ])->setLayout('vertical')])->setLayout('vertical')->setFlex(7),
                       FlexSeparator::create(),
-                      FlexButton::create('primary')->setColor('#f37370')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('切換', '您已按了切換', json_encode(array('lib' => 'postback/RichMenu', 'class' => 'Qa', 'method' => 'checkoutCard', 'param' => array('card_id' => $content->id) )  ) ))
+                      FlexButton::create('primary')->setColor('#f37370')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('切換', '您已按了切換', json_encode(array('lib' => 'postback/RichMenu', 'class' => 'Qa', 'method' => 'checkoutCard', 'param' => array('card_id' => $content->id, 'title' => 'Q.' .  $content->name) )  ) ))
                     ])->setLayout('horizontal')->setSpacing('md');
         $flexes[] = FlexSeparator::create();
 
@@ -70,7 +70,29 @@ class Qa {
   }
 
   public static function checkoutCard() {
-    
+    $data = func_get_args();
+    if(!(($cardId = $data[0]['card_id']) && ($title = $data[0]['title'])) ) 
+      return false;
+
+    if(!Card::find('one', ['where' => ['id = ?', $cardId]]))
+      return false;
+
+    return MyLineBotMsg::create()->flex('已切換問題', FlexBubble::create([
+            'header' => FlexBox::create([FlexText::create('已切換問題')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2')])->setSpacing('xs')->setLayout('horizontal'),
+            'body' => FlexBox::create([
+              FlexText::create($title)->setWeight('bold')->setColor('#307671'),
+              FlexSeparator::create()->setMargin('xxl'),
+              FlexBox::create([
+                FlexButton::create('primary')->setColor('#fbd785')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('檢視先前的對話紀錄', '查看對話紀錄', json_encode(['lib' => 'postback/RichMenu', 'class' => 'Qa', 'method' => 'dialogRecord', 'param' => ['card_id' => $cardId]]))),
+                FlexButton::create('primary')->setColor('#f97172')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('回覆訊息後按此送出', '送出訊息', json_encode(['lib' => 'postback/RichMenu', 'class' => 'Qa', 'method' => 'dialogRecord', 'param' => ['card_id' => $cardId]])))
+              ])->setLayout('vertical')->setMargin('xxl')->setSpacing('sm')
+            ])->setLayout('vertical'),
+            'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
+          ]));
+  }
+
+  public static function dialogRecord() {
+
   }
 }
 
