@@ -29,7 +29,13 @@ class Send {
     if( !$trello->put('/1/cards/' . $source->card->key_id, array( 'desc' => $oriCard['desc'] . "\r\n### Re: " . date('Y-m-d H:i:s') . "\r\n" . $process['content'] . "\r\n" . "---" )) )
       return MyLineBotMsg::create()->text('送出失敗');
 
-    return MyLineBotMsg::create()->text('已將信件送出給客服系統，請耐心等待回覆！');
+    return MyLineBotMsg::create()->flex('已將信件送出給客服系統，請耐心等待回覆！', FlexBubble::create([
+          'header' => FlexBox::create([FlexText::create('已將信件送出給客服系統')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2') ])->setSpacing('xs')->setLayout('horizontal'),
+          'body' => FlexBox::create([FlexBox::create([FlexButton::create('primary')->setColor('#fbd785')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('檢視送出的對話紀錄', null, json_encode(['lib' => 'postback/RichMenu', 'class' => 'Qa', 'method' => 'dialogRecord', 'param' => ['card_id' => $source->card_id, 'title' => date('Y-m-d H:i:s')]])))])->setLayout('vertical')->setMargin('xxl')->setSpacing('sm')])->setLayout('vertical'),
+          'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
+        ]));
+
+    // return MyLineBotMsg::create()->text('已將信件送出給客服系統，請耐心等待回覆！');
   }
 
   public static function card() {
@@ -102,11 +108,6 @@ class Send {
     $source->card_id = $card->id;
     $source->save();
 
-    return MyLineBotMsg::create()->flex('開始在下方輸入問題內容', FlexBubble::create([
-            'header' => FlexBox::create([FlexText::create('已將信件送出給客服系統，請耐心等待回覆！')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2') ])->setSpacing('xs')->setLayout('horizontal'),
-            'body' => FlexBox::create([FlexBox::create([FlexButton::create('primary')->setColor('#fbd785')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('檢視對話紀錄', null, json_encode(['lib' => 'trello/Send', 'class' => 'Send', 'method' => 'card', 'param' => []])))])->setLayout('vertical')->setMargin('xxl')->setSpacing('sm')])->setLayout('vertical'),
-            'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
-          ]));
-    // return MyLineBotMsg::create()->text('已將信件送出給客服系統，請耐心等待回覆！');
+    return MyLineBotMsg::create()->text('已將信件送出給客服系統，請耐心等待回覆！');
   }
 }
