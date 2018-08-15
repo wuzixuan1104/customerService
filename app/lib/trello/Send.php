@@ -34,8 +34,6 @@ class Send {
           'body' => FlexBox::create([FlexBox::create([FlexButton::create('primary')->setColor('#fbd785')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('檢視送出的對話紀錄', null, json_encode(['lib' => 'postback/RichMenu', 'class' => 'Qa', 'method' => 'dialogRecord', 'param' => ['card_id' => $source->card_id, 'title' => date('Y-m-d H:i:s')]])))])->setLayout('vertical')->setMargin('xxl')->setSpacing('sm')])->setLayout('vertical'),
           'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
         ]));
-
-    // return MyLineBotMsg::create()->text('已將信件送出給客服系統，請耐心等待回覆！');
   }
 
   public static function card() {
@@ -92,7 +90,7 @@ class Send {
       'label_ids' => json_encode( ['status' => $label->id, 'other' => ''] ),
       'source_id' => $source->id,
       'webhook_key_id' => $hook['id'],
-      'name' => $res['name'],
+      'name' => explode("\r\n", $process['content'])[0],
       'code' => $res['shortLink'],
       'status' => Card::STATUS_NEW,
     );
