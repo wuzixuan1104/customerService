@@ -752,7 +752,6 @@ class RichMenuGenerator {
 }
 
 class RichMenu {
-  //now: richmenu-95d20f35f7471d13d440cb36caddb7d3
   public static function create($richMenuBuilder) {
     return ($res = MyLineBot::bot()->createRichMenu($richMenuBuilder)) && $res->isSucceeded() ? $res->getJSONDecodedBody()['richMenuId'] : false;
   }

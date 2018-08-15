@@ -47,11 +47,17 @@ class LineTool {
     $source->process = json_encode( array('idCard' => '', 'idList' => $param['list_id'], 'content' => '', 'date' => date('Y-m-d')) );
     $source->save();
 
-    return MyLineBotMsg::create()->template('這訊息要用手機的賴才看的到哦',
-      MyLineBotMsg::create()->templateConfirm( '輸入問題之後請點擊', [
-        MyLineBotActionMsg::create()->message('取消', '您已按了取消'),
-        MyLineBotActionMsg::create()->postback('送出', array('lib' => 'TrelloTool', 'method' => 'sendCard', 'param' => array() ), '您已按了送出'),
-      ]));
+    return MyLineBotMsg::create()->flex('開始在下方輸入問題內容', FlexBubble::create([
+            'header' => FlexBox::create([FlexText::create('開始在下方輸入問題內容')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2') ])->setSpacing('xs')->setLayout('horizontal'),
+            'body' => FlexBox::create([FlexBox::create([FlexButton::create('primary')->setColor('#f97172')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('回覆訊息後按此送出', null, json_encode(['lib' => 'trello/Send', 'class' => 'Send', 'method' => 'card', 'param' => []])))])->setLayout('vertical')->setMargin('xxl')->setSpacing('sm')])->setLayout('vertical'),
+            'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
+          ]));
+
+    // return MyLineBotMsg::create()->template('這訊息要用手機的賴才看的到哦',
+    //   MyLineBotMsg::create()->templateConfirm( '輸入問題之後請點擊', [
+    //     MyLineBotActionMsg::create()->message('取消', '您已按了取消'),
+    //     MyLineBotActionMsg::create()->postback('送出', array('lib' => 'TrelloTool', 'method' => 'sendCard', 'param' => array() ), '您已按了送出'),
+    //   ]));
   }
 
   //儲存個人處理程序

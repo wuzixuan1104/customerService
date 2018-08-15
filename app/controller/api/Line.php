@@ -48,38 +48,11 @@ class Line extends ApiController {
           break;
         case 'Text':
 
-          // $riches = RichMenu::getMenuList()['richmenus'][0]['richMenuId'];
-          // echo $riches;
-          // die;
-          // foreach($riches['richmenus'] as $v) {
-          //   if($v['richMenuId'] == 'richmenu-cbdc37220d387c99145d2a8ff413d8b3')
-          //     continue;
-          //   if(!RichMenu::delete($v['richMenuId']))
-          //     return false;
-          // }
-          // print_R(RichMenu::getMenuList());
-          // die;
-
-
-          // $msg = MyLineBotMsg::create()->flex('問題分類', FlexBubble::create([
-          //   'header' => FlexBox::create([FlexText::create('問題分類')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2')])->setSpacing('xs')->setLayout('horizontal'),
-          //   'body' => FlexBox::create([
-          //     FlexBox::create([
-          //       FlexBox::create([FlexText::create('type 1')])->setLayout('vertical')->setFlex(7),
-          //       FlexSeparator::create(),
-          //       FlexButton::create('primary')->setColor('#f37370')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('123', '123', '123'))
-          //     ])->setLayout('horizontal')->setSpacing('md'),
-
-          //     FlexSeparator::create(),
-
-          //     FlexBox::create([
-          //       FlexBox::create([FlexText::create('type 2')])->setLayout('vertical')->setFlex(7),
-          //       FlexSeparator::create(),
-          //       FlexButton::create('primary')->setColor('#f37370')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('123', '123', '123'))
-          //     ])->setLayout('horizontal')->setSpacing('md'),
-          //   ])->setLayout('vertical')->setSpacing('md')->setMargin('sm'),
-          //   'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
-          // ]))->reply($event->getReplyToken());
+          $msg = MyLineBotMsg::create()->flex('開始在下方輸入問題內容', FlexBubble::create([
+            'header' => FlexBox::create([FlexText::create('開始在下方輸入問題內容')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2') ])->setSpacing('xs')->setLayout('horizontal'),
+            'body' => FlexBox::create([FlexBox::create([FlexButton::create('primary')->setColor('#f97172')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('回覆訊息後按此送出', null, '123'))])->setLayout('vertical')->setMargin('xxl')->setSpacing('sm')])->setLayout('vertical'),
+            'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
+          ]))->reply($event->getReplyToken());
 
           // switch($log->text) {
           //   case 1:
