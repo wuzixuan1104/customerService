@@ -48,10 +48,38 @@ class Line extends ApiController {
           break;
         case 'Text':
 
-          // print_R(RichMenu::getMenuList());
-          // die;
-          // print_R(RichMenuGenerator::create());
-          // die;
+          $riches = RichMenu::getMenuList()['richmenus'][0]['richMenuId'];
+          echo $riches;
+          die;
+          foreach($riches['richmenus'] as $v) {
+            if($v['richMenuId'] == 'richmenu-cbdc37220d387c99145d2a8ff413d8b3')
+              continue;
+            if(!RichMenu::delete($v['richMenuId']))
+              return false;
+          }
+          print_R(RichMenu::getMenuList());
+          die;
+
+
+          // $msg = MyLineBotMsg::create()->flex('問題分類', FlexBubble::create([
+          //   'header' => FlexBox::create([FlexText::create('問題分類')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2')])->setSpacing('xs')->setLayout('horizontal'),
+          //   'body' => FlexBox::create([
+          //     FlexBox::create([
+          //       FlexBox::create([FlexText::create('type 1')])->setLayout('vertical')->setFlex(7),
+          //       FlexSeparator::create(),
+          //       FlexButton::create('primary')->setColor('#f37370')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('123', '123', '123'))
+          //     ])->setLayout('horizontal')->setSpacing('md'),
+
+          //     FlexSeparator::create(),
+
+          //     FlexBox::create([
+          //       FlexBox::create([FlexText::create('type 2')])->setLayout('vertical')->setFlex(7),
+          //       FlexSeparator::create(),
+          //       FlexButton::create('primary')->setColor('#f37370')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('123', '123', '123'))
+          //     ])->setLayout('horizontal')->setSpacing('md'),
+          //   ])->setLayout('vertical')->setSpacing('md')->setMargin('sm'),
+          //   'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
+          // ]))->reply($event->getReplyToken());
 
           // switch($log->text) {
           //   case 1:
@@ -155,8 +183,10 @@ class Line extends ApiController {
             $msg->reply($event->getReplyToken());
          
           //檢查Source process是否非空，是則新增進去
-          if( !empty($source->process) )
+          if(!empty($source->process))
             LineTool::saveSourceProcess($source, $event->getText());
+
+          
 
           break;
         case 'Image':

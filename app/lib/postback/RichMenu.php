@@ -126,6 +126,31 @@ class Qa {
   }
 }
 
+class NewQa {
+
+  public static function create() {
+    if( !$lists = TList::find('all') )
+      return false;
+
+    $flexes = [];
+    foreach($lists as $list) {
+      $flexes[] = FlexBox::create([
+                    FlexBox::create([FlexText::create($list->name)])->setLayout('vertical')->setFlex(7),
+                    FlexSeparator::create(),
+                    FlexButton::create('primary')->setColor('#f37370')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('選擇', null, json_encode(['lib' => 'postback/RichMenu', 'class' => 'NewQa', 'method' => 'getList', 'param' => ['list_id' => $list->key_id]])))
+                  ])->setLayout('horizontal')->setSpacing('md');
+      $flexes[] = FlexSeparator::create();
+
+    }
+
+    return MyLineBotMsg::create()->flex('問題類別', FlexBubble::create([
+            'header' => FlexBox::create([FlexText::create('選擇問題類別')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2')])->setSpacing('xs')->setLayout('horizontal'),
+            'body' => FlexBox::create($flexes)->setLayout('vertical')->setSpacing('md')->setMargin('sm'),
+            'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
+          ]));
+  }
+}
+
 class Menu {
   public static function create() {
 

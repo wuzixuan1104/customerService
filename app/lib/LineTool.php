@@ -21,25 +21,22 @@ class LineTool {
     if( !$lists = TList::find('all') )
       return false;
 
-    $arr[] = FlexText::create('問題類別')->setWeight('bold')->setSize('lg');
-
+    $flexes = [];
     foreach($lists as $list) {
-      $arr[] = FlexSeparator::create();
-      $arr[] = FlexBox::create([
-                  FlexBox::create([
-                    FlexBox::create([ FlexText::create($list->name) ])->setLayout('baseline')
-                  ])->setLayout('vertical')->setFlex(7),
-                  FlexSeparator::create(),
-                  FlexButton::create('primary')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction( FlexAction::postback( '選擇', $list->name, json_encode(array('lib' => 'LineTool', 'method' => 'getList', 'param' => array('list_id' => $list->key_id) ) ) ) )
-               ])->setLayout('horizontal')->setSpacing('md');
-    }
-    $multis = [];
-    $multis[] = MyLineBotMsg::create()->text('感謝您使用我們的客服信箱，請填選以下流程！');
+      $flexes[] = FlexBox::create([
+                    FlexBox::create([FlexText::create($list->name)])->setLayout('vertical')->setFlex(7),
+                    FlexSeparator::create(),
+                    FlexButton::create('primary')->setColor('#f37370')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('選擇', null, json_encode(['lib' => 'LineTool', 'class' => 'LineTool', 'method' => 'getList', 'param' => ['list_id' => $list->key_id]])))
+                  ])->setLayout('horizontal')->setSpacing('md');
+      $flexes[] = FlexSeparator::create();
 
-    $multis[] = MyLineBotMsg::create()->flex('選擇問題類別', FlexBubble::create([
-      'body' => FlexBox::create($arr)->setLayout('vertical')->setSpacing('md')]));
-    
-    return MyLineBotMsg::create()->multi ($multis);
+    }
+
+    return MyLineBotMsg::create()->flex('問題類別', FlexBubble::create([
+            'header' => FlexBox::create([FlexText::create('選擇問題類別')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2')])->setSpacing('xs')->setLayout('horizontal'),
+            'body' => FlexBox::create($flexes)->setLayout('vertical')->setSpacing('md')->setMargin('sm'),
+            'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
+          ]));
   }
 
   //取得客服問題分類表

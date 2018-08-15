@@ -71,7 +71,13 @@ class Source extends Model {
         'type' => self::getType($event),
       );
 
-      $transaction = function() use (&$obj, $param){
+      if(($richmenus = RichMenu::getMenuList()) && $richMenuId = $richmenus['richmenus'][0]['richMenuId']) {
+        Load::lib('MyLineBot.php');
+        if(!RichMenu::linkToUser($sid, $richMenuId))
+          return false;
+      }
+
+      $transaction = function() use (&$obj, $param){ 
         return $obj = Source::create( $param );
       };
       if( !Source::transaction( $transaction, $obj, $param ) )
