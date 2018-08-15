@@ -48,17 +48,17 @@ class Line extends ApiController {
           break;
         case 'Text':
 
-          $riches = RichMenu::getMenuList()['richmenus'][0]['richMenuId'];
-          echo $riches;
-          die;
-          foreach($riches['richmenus'] as $v) {
-            if($v['richMenuId'] == 'richmenu-cbdc37220d387c99145d2a8ff413d8b3')
-              continue;
-            if(!RichMenu::delete($v['richMenuId']))
-              return false;
-          }
-          print_R(RichMenu::getMenuList());
-          die;
+          // $riches = RichMenu::getMenuList()['richmenus'][0]['richMenuId'];
+          // echo $riches;
+          // die;
+          // foreach($riches['richmenus'] as $v) {
+          //   if($v['richMenuId'] == 'richmenu-cbdc37220d387c99145d2a8ff413d8b3')
+          //     continue;
+          //   if(!RichMenu::delete($v['richMenuId']))
+          //     return false;
+          // }
+          // print_R(RichMenu::getMenuList());
+          // die;
 
 
           // $msg = MyLineBotMsg::create()->flex('問題分類', FlexBubble::create([
