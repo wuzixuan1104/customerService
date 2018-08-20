@@ -45,7 +45,7 @@ class Source extends Model {
   }
 
   public static function isCurrentCard($sid, $cardId) {
-    if(($obj = Source::find_by_sid($sid)) && $obj->card_id == $cardId)
+    if(($obj = Source::find_by_sid($sid)) && ($obj->card_id == $cardId))
       return true;
     return false;
   }
