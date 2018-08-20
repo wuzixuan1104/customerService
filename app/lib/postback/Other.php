@@ -9,7 +9,7 @@
 
 Load::lib ('MyLineBot.php');
 
-class Card {
+class CardResponse {
   public static function checkout() {
     $args = func_get_args();
     $params = $args[0];
