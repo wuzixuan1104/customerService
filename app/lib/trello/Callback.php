@@ -10,15 +10,16 @@ class Callback {
   public function __construct($data) {
     if(!$data)
       return false;
-
+    Log::info('1');
     isset($data['action']) && $this->action = $data['action'];
     isset($data['model']) && $this->model = $data['model'];
-
+    Log::info('2');
     if(!$this->servicer = Servicer::find_by_key_id($this->action['idMemberCreator']))
       return false;
-
+    Log::info('3');
     if(!$this->webhook = Webhook::create(['key_id' => $this->action['id'], 'type' => $this->action['type'], 'mode_id' => $this->model['id'], 'servicer_id' => $this->servicer->id, 'content' => json_encode($this->action['data'])]))
       return false;
+    Log::info('4');
   }
 
   public static function create(array $data) {
