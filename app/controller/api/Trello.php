@@ -23,7 +23,9 @@ class Trello extends ApiController {
 
     Load::lib('Trello/Callback.php');
     $call = Callback::create($data);
+    Log::info('call');
     $call->{$this->callType[trim($data['action']['type'])]}();
+    Log::info('end');
     die;
 
 
