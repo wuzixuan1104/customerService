@@ -49,10 +49,10 @@ class Send {
       return MyLineBotMsg::create()->text('此問題已超過7天未送出，無法操作此步驟');
     }
 
-    if($process['idCard'] && Card::find_by_id($process['idCard'])) {
+    if($process['idCard'] && Card::find_by_key_id($process['idCard'])) {
       return MyLineBotMsg::create()->text("此問題之前已送出，若需要詢問該問題，請操作步驟。\r\n1. 請點選下面選單\"更多\" \r\n2. 點擊\"正在進行中的問題\"進行回覆\r\n 感謝您的使用！");
     }
-    
+
     if( !$list = TList::find_by_key_id($process['idList']) )
       return MyLineBotMsg::create()->text('系統發生問題');
     if( !$servicers = Servicer::find('all', array('where' => array('FIND_IN_SET( ?, `list_ids`)', $list->id) ) ) )
