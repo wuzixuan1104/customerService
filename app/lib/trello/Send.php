@@ -17,10 +17,12 @@ class Send {
 
     $process = json_decode($source->process, true);
 
-    if( $process['date'] && strtotime('today') > strtotime('+1 week', strtotime($process['date'])) ) {
+    if( $process['date'] && strtotime('today') > strtotime('+1 week', strtotime($process['date'])) ) 
       return MyLineBotMsg::create()->text('此問題已超過7天未送出，無法操作此步驟');
-    }
     
+    if(!$process['content'])
+      return MyLineBotMsg::create()->text('請先在下方輸入回應再按送出');
+
     ($source->process = json_encode( array('idCard' => $source->card->key_id, 'idList' => $source->card->list->key_id, 'content' => '', 'date' => date('Y-m-d')) )) && $source->save();
 
     if(!History::create(['card_id' => $source->card_id, 'servicer_id' => 0, 'content' => $process['content']]) )
