@@ -20,7 +20,7 @@ class Trello extends ApiController {
     if( !isset($data['action']['type']) || !isset(Webhook::$typeTexts[($callType = trim($data['action']['type']))]) )
       return false;
     Log::info('test');
-    Load::lib('Trello/Callback.php');
+    Load::lib('trello/Callback.php');
     $call = Callback::create($data)->$callType();
     Log::info('end');
     die;
