@@ -30,10 +30,10 @@ class CardResponse {
       foreach($contents as $content) 
         $content && $flexes[] = FlexText::create($content)->setSize('sm');
     
-    FlexButton::create('primary')->setColor('#f97172')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('回覆訊息後按此送出', '您按了送出訊息', json_encode(['lib' => 'trello/Send', 'class' => 'Send', 'method' => 'reply', 'param' => []])));
+    $flexes[] = FlexButton::create('primary')->setColor('#f97172')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('回覆訊息後按此送出', '您按了送出訊息', json_encode(['lib' => 'trello/Send', 'class' => 'Send', 'method' => 'reply', 'param' => []])));
     
     return MyLineBotMsg::create()->flex('檢視客服人員回應內容', FlexBubble::create([
-          'header' => FlexBox::create([FlexText::create($params['title'])->setWeight('bold')->setSize('md')->setColor('#e8f6f2')])->setSpacing('xs')->setLayout('horizontal'),
+          'header' => FlexBox::create([FlexText::create('Q. ' . $params['title'])->setWeight('bold')->setSize('md')->setColor('#e8f6f2')])->setSpacing('xs')->setLayout('horizontal'),
           'body' => FlexBox::create($flexes)->setLayout('vertical')->setSpacing('md'),
           'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
         ]));
