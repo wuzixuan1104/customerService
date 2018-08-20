@@ -34,50 +34,15 @@ class Line extends ApiController {
         case 'Join':
           if ( $msg = LineTool::start() )
             $msg->reply($event->getReplyToken());
-
-          break;
-        case 'Leave':
           break;
         case 'Follow':
           if ( $msg = LineTool::start() )
             $msg->reply($event->getReplyToken());
-
-          break;
-        case 'Unfollow':
           break;
         case 'Text':
-          //檢查Source process是否非空，是則新增進去
           if(!empty($source->process))
             $source->saveProcess($event->getText());
-            // LineTool::saveSourceProcess($source, $event->getText());
           break;
-        case 'Image':
-          $url = $log->file->url();
-          MyLineBotMsg::create()
-            ->image($url, $url)
-            ->reply($event->getReplyToken());
-          break;
-
-        case 'Video':
-          $url = $log->file->url();
-          MyLineBotMsg::create()
-            ->video($url, $url)
-            ->reply($event->getReplyToken());
-          break;
-
-        case 'Audio':
-          $url = $log->file->url();
-          MyLineBotMsg::create()
-            ->audio($url, 60000)
-            ->reply($event->getReplyToken());
-          break;
-
-        case 'Location':
-          MyLineBotMsg::create()
-            ->location($log->title, $log->address, $log->latitude, $log->longitude)
-            ->reply($event->getReplyToken());
-          break;
-
         case 'Postback':
           $data = json_decode( $log->data, true );
           //暫時修正

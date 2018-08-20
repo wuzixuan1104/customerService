@@ -108,7 +108,7 @@ class Source extends Model {
   }
 
   //儲存個人處理程序
-  public static function saveProcess($text) {
+  public function saveProcess($text) {
     $process = json_decode($this->process, true);
     if( empty($process) || empty($text) )
       return false;
