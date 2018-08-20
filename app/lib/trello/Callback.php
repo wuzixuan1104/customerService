@@ -44,7 +44,7 @@ class Callback {
               MyLineBotMsg::create()->template('這訊息要用手機的賴才看的到哦',
                 MyLineBotMsg::create()->templateConfirm( '輸入之後請點擊', [
                   MyLineBotActionMsg::create()->message('取消', '您已按了取消'),
-                  MyLineBotActionMsg::create()->postback('送出', ['lib' => 'trello/Send', 'method' => 'reply', 'param' => [] ], '您已按了送出'),]))
+                  MyLineBotActionMsg::create()->postback('送出', ['lib' => 'trello/Send', 'class' => 'Send','method' => 'reply', 'param' => [] ], '您已按了送出'),]))
             ]);
 
     $response = $bot->pushMessage($sid, $msg->builder);

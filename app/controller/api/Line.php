@@ -15,9 +15,8 @@ class Line extends ApiController {
   }
 
   public function index() {
-
     Load::lib('MyLineBot.php');
-    Load::lib('LineTool.php');
+
     $events = MyLineBot::events();
   
     foreach( $events as $event ) {
@@ -45,16 +44,10 @@ class Line extends ApiController {
           break;
         case 'Postback':
           $data = json_decode( $log->data, true );
-          //暫時修正
-          if( isset($data['class']) ) {
-            if( !( isset( $data['lib'], $data['method'] ) && ( isset( self::$cache['lib'][$data['lib']] ) ? true : ( Load::lib($data['lib'] . '.php') ? self::$cache['lib'][$data['lib']] = true : true ) )
-              && method_exists($class = $data['class'], $method = $data['method']) && $msg = $class::$method( $data['param'], $source ) ) )
-              return false;
-          }
-          else if ( !( isset( $data['lib'], $data['method'] ) && ( isset( self::$cache['lib'][$data['lib']] ) ? true : ( Load::lib($data['lib'] . '.php') ? self::$cache['lib'][$data['lib']] = true : true ) )
-               && method_exists($lib = $data['lib'], $method = $data['method']) && $msg = $lib::$method( $data['param'], $source ) ) )
+          if( !( isset( $data['lib'], $data['class'], $data['method'] ) && ( isset( self::$cache['lib'][$data['lib']] ) ? true : ( Load::lib($data['lib'] . '.php') ? self::$cache['lib'][$data['lib']] = true : true ) )
+            && method_exists($class = $data['class'], $method = $data['method']) && $msg = $class::$method( $data['param'], $source ) ) )
             return false;
-
+       
           $msg->reply($event->getReplyToken());
           break;
       }
