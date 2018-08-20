@@ -8,23 +8,24 @@
  */
 
 class Trello extends ApiController {
-  public $callType = [Webhook::TYPE_COMMENT_CARD => 'commentCard'];
 
   public function __construct() {
     parent::__construct();
   }
 
   public function callback() {
+
     Log::info(file_get_contents('php://input'));
+    Log::info('===========');
     $data = json_decode(file_get_contents('php://input'), true);
  
-    if( !isset($data['action']['type']) || !isset(Webhook::$typeTexts[$data['action']['type']]) )
+    if( !isset($data['action']['type']) || !isset(Webhook::$typeTexts[($callType = trim($data['action']['type']))]) )
       return false;
-
+    Log::info('test');
     Load::lib('Trello/Callback.php');
     $call = Callback::create($data);
     Log::info('call');
-    $call->{$this->callType[trim($data['action']['type'])]}();
+    $call->$callType();
     Log::info('end');
     die;
 
