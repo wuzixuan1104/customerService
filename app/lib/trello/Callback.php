@@ -3,7 +3,6 @@ Load::lib('MyLineBot.php');
 
 class Callback {
   public $webhook = null;
-  public $content = [];
   public $servicer = null;
   public $action = null;
   public $model = null;
@@ -15,10 +14,10 @@ class Callback {
     isset($data['action']) && $this->action = $data['action'];
     isset($data['model']) && $this->model = $data['model'];
 
-    if( !$this->servicer = Servicer::find_by_key_id($this->action['idMemberCreator']) )
+    if(!$this->servicer = Servicer::find_by_key_id($this->action['idMemberCreator']))
       return false;
 
-    if( !$webhook = Webhook::create(['key_id' => $this->action['id'], 'type' => $this->action['type'], 'mode_id' => $this->model['id'], 'servicer_id' => $this->servicer->id, 'content' => json_encode($this->action['data'])]) )
+    if(!$this->webhook = Webhook::create(['key_id' => $this->action['id'], 'type' => $this->action['type'], 'mode_id' => $this->model['id'], 'servicer_id' => $this->servicer->id, 'content' => json_encode($this->action['data'])]))
       return false;
   }
 
@@ -49,7 +48,7 @@ class Callback {
             ]);
 
     $response = $bot->pushMessage($sid, $msg->builder);
-    $webhook->response = $response->getHTTPStatus() . ' ' . $response->getRawBody();
-    $webhook->save();
+    $this->webhook->response = $response->getHTTPStatus() . ' ' . $response->getRawBody();
+    $this->webhook->save();
   }
 }
