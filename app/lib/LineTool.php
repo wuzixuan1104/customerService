@@ -13,47 +13,7 @@ class LineTool {
 
   public function __construct() {
   }
-
-  /* 目的：開始功能選單
-   * 呼叫此function 的模式 Follow, join, 傳入字串'hello'
-   */
-  public static function start() {
-    if( !$lists = TList::find('all') )
-      return false;
-
-    $flexes = [];
-    foreach($lists as $list) {
-      $flexes[] = FlexBox::create([
-                    FlexBox::create([FlexText::create($list->name)])->setLayout('vertical')->setFlex(7),
-                    FlexSeparator::create(),
-                    FlexButton::create('primary')->setColor('#f37370')->setFlex(3)->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('選擇', null, json_encode(['lib' => 'LineTool', 'class' => 'LineTool', 'method' => 'getList', 'param' => ['list_id' => $list->key_id]])))
-                  ])->setLayout('horizontal')->setSpacing('md');
-      $flexes[] = FlexSeparator::create();
-
-    }
-
-    return MyLineBotMsg::create()->flex('問題類別', FlexBubble::create([
-            'header' => FlexBox::create([FlexText::create('選擇問題類別')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2')])->setSpacing('xs')->setLayout('horizontal'),
-            'body' => FlexBox::create($flexes)->setLayout('vertical')->setSpacing('md')->setMargin('sm'),
-            'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
-          ]));
-  }
-
-  //取得客服問題分類表
-  public static function getList($param, $source) {
-    if( empty($param['list_id']) )
-      return false;
-
-    $source->process = json_encode( array('idCard' => '', 'idList' => $param['list_id'], 'content' => '', 'date' => date('Y-m-d')) );
-    $source->save();
-
-    return MyLineBotMsg::create()->flex('開始在下方輸入問題內容', FlexBubble::create([
-            'header' => FlexBox::create([FlexText::create('開始在下方輸入問題內容')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2') ])->setSpacing('xs')->setLayout('horizontal'),
-            'body' => FlexBox::create([FlexBox::create([FlexButton::create('primary')->setColor('#f97172')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('回覆訊息後按此送出', null, json_encode(['lib' => 'trello/Send', 'class' => 'Send', 'method' => 'card', 'param' => []])))])->setLayout('vertical')->setMargin('xxl')->setSpacing('sm')])->setLayout('vertical'),
-            'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
-          ]));
-  }
-
+  
   //儲存個人處理程序
   public static function saveSourceProcess($source, $text) {
     $process = json_decode($source->process, true);

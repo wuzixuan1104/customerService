@@ -18,7 +18,6 @@ class Line extends ApiController {
 
     Load::lib('MyLineBot.php');
     Load::lib('LineTool.php');
-
     $events = MyLineBot::events();
   
     foreach( $events as $event ) {
@@ -47,17 +46,10 @@ class Line extends ApiController {
         case 'Unfollow':
           break;
         case 'Text':
-          $pattern = 'hello';
-          $pattern = !preg_match ('/\(\?P<k>.+\)/', $pattern) ? '/(?P<k>(' . $pattern . '))/i' : ('/(' . $pattern . ')/i');
-          preg_match_all ($pattern, $log->text, $result);
- 
-          //傳送hello時跳出開始menu
-          if ($result['k'] && $msg = LineTool::start() )
-            $msg->reply($event->getReplyToken());
-         
           //檢查Source process是否非空，是則新增進去
           if(!empty($source->process))
-            LineTool::saveSourceProcess($source, $event->getText());
+            $source->saveProcess($event->getText());
+            // LineTool::saveSourceProcess($source, $event->getText());
           break;
         case 'Image':
           $url = $log->file->url();

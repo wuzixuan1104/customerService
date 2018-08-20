@@ -7,7 +7,7 @@
  * @link        https://www.ioa.tw/
  */
 
-Load::lib('TrelloApi.php');
+Load::lib('trello/Api.php');
 
 class Send {
   public static function reply() {
@@ -26,7 +26,7 @@ class Send {
     if(!History::create(['card_id' => $source->card_id, 'servicer_id' => 0, 'content' => $process['content']]) )
           return false;
 
-    $trello = TrelloApi::create();
+    $trello = Api::create();
     if( !$oriCard = $trello->get('/1/cards/' . $source->card->key_id) )
       return MyLineBotMsg::create()->text('查無原本問題');
 
@@ -66,7 +66,7 @@ class Send {
     );
 
     //新增trello card
-    $trello = TrelloApi::create();
+    $trello = Api::create();
     if( !$res = $trello->post('/1/cards', $param) )
       return MyLineBotMsg::create()->text('無法傳送trello卡片');
 
@@ -117,7 +117,7 @@ class Send {
     if(!($card && $labels && $oriStatus))
       return false;
 
-    $trello = TrelloApi::create();
+    $trello = Api::create();
     if( !$trello->put('/1/cards/' . $card->key_id, $card->status == Card::STATUS_FINISH ? array('dueComplete' => true, 'pos' => 'bottom') : array('dueComplete' => false, 'pos' => 'top') ) )
       return false;
 

@@ -106,4 +106,20 @@ class Source extends Model {
 
     return $obj;
   }
+
+  //儲存個人處理程序
+  public static function saveProcess($text) {
+    $process = json_decode($this->process, true);
+    if( empty($process) || empty($text) )
+      return false;
+
+    if( $process['date'] && strtotime('today') > strtotime('+1 week', strtotime($process['date'])) ) {
+      $process = '';
+    } else {
+      $process['content'] .= $text . "\r\n";
+      $process = json_encode($process);
+    }
+    $this->process = $process;
+    $this->save();
+  }
 }
