@@ -13,22 +13,6 @@ class LineTool {
 
   public function __construct() {
   }
-  
-  //儲存個人處理程序
-  public static function saveSourceProcess($source, $text) {
-    $process = json_decode($source->process, true);
-    if( empty($process) || empty($text) )
-      return false;
-
-    if( $process['date'] && strtotime('today') > strtotime('+1 week', strtotime($process['date'])) ) {
-      $process = '';
-    } else {
-      $process['content'] .= $text . "\r\n";
-      $process = json_encode($process);
-    }
-    $source->process = $process;
-    $source->save();
-  }
 
   //評分表
   public static function sendScoreForm($cardId, $servicerId) {

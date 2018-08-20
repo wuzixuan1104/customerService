@@ -165,7 +165,7 @@ class NewQa {
   }
 }
 
-class Menu {
+class Explain {
   public static function create() {
 
   }
