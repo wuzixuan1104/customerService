@@ -130,12 +130,10 @@ class Send {
         case $oriStatus:
           if( !$trello->delete('/1/cards/' . $card->key_id . '/idLabels/' . $label->key_id ) )
             return false;
-          echo 1;
           break;
         case $card->status:
           if( !$trello->post('/1/cards/' . $card->key_id . '/idLabels', array('value' => $label->key_id) ) )
             return false;
-          echo 2;
           break;
       }
     }
