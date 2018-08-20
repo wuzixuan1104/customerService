@@ -14,8 +14,6 @@ class Trello extends ApiController {
   }
 
   public function callback() {
-
-    Log::info(file_get_contents('php://input'));
     Log::info('===========');
     $data = json_decode(file_get_contents('php://input'), true);
  
@@ -23,9 +21,7 @@ class Trello extends ApiController {
       return false;
     Log::info('test');
     Load::lib('Trello/Callback.php');
-    $call = Callback::create($data);
-    Log::info('call');
-    $call->$callType();
+    $call = Callback::create($data)->$callType();
     Log::info('end');
     die;
 

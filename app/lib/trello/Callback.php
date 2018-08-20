@@ -8,6 +8,7 @@ class Callback {
   public $model = null;
 
   public function __construct($data) {
+    Log::info('0');
     if(!$data)
       return false;
     Log::info('1');
