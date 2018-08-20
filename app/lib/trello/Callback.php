@@ -75,17 +75,13 @@ class Callback {
         return false;
 
       $bot = MyLineBot::create();
-      if(!$msg = LineTool::sendScoreForm($card->id, $servicer->id))
+      if(!$msg = LineTool::sendScoreForm($card->id, $this->servicer->id))
         return false;
 
       $response = $bot->pushMessage($sid, $msg->builder);
       $this->webhook->response = $response->getHTTPStatus() . ' ' . $response->getRawBody();
       $this->webhook->save();
     }
-
-    print_r($oriStatus);
-
-    echo $card->status;
     
     //label標籤 將舊的刪除 添加新的
     if( $oriStatus != $card->status && $labels = Label::find('all', ['select' => 'key_id, tag', 'where' => ['tag IN (?)', [$oriStatus, $card->status] ] ])) {
