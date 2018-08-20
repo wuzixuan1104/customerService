@@ -109,10 +109,10 @@ class Send {
     return MyLineBotMsg::create()->text('已將信件送出給客服系統，請耐心等待回覆！');
   }
 
-  public static function updateCardStatus($card, $labels) {
-    if(!($card && $labels))
+  public static function updateCardStatus($card, $labels, $oriStatus) {
+    if(!($card && $labels && $oriStatus))
       return false;
-    
+
     $trello = TrelloApi::create();
     if( !$trello->put('/1/cards/' . $card->key_id, $card->status == Card::STATUS_FINISH ? array('dueComplete' => true, 'pos' => 'bottom') : array('dueComplete' => false, 'pos' => 'top') ) )
       return false;
@@ -122,10 +122,12 @@ class Send {
         case $oriStatus:
           if( !$trello->delete('/1/cards/' . $card->key_id . '/idLabels/' . $label->key_id ) )
             return false;
+          echo 1;
           break;
         case $card->status:
           if( !$trello->post('/1/cards/' . $card->key_id . '/idLabels', array('value' => $label->key_id) ) )
             return false;
+          echo 2;
           break;
       }
     }

@@ -82,12 +82,22 @@ class Callback {
       $this->webhook->response = $response->getHTTPStatus() . ' ' . $response->getRawBody();
       $this->webhook->save();
     }
-   
+
+    print_r($oriStatus);
+
+    echo $card->status;
+    
     //label標籤 將舊的刪除 添加新的
     if( $oriStatus != $card->status && $labels = Label::find('all', ['select' => 'key_id, tag', 'where' => ['tag IN (?)', [$oriStatus, $card->status] ] ])) {
       Load::lib('trello/Send.php');
-      Send::updateCardStatus($card, $labels);
+      Send::updateCardStatus($card, $labels, $oriStatus);
     }
+  }
+
+  public function deleteCard() {
+    if( $card = Card::find_by_key_id($this->action['data']['card']['id']) )
+      if( $card->destroy() )
+        return false;
   }
 
 }
