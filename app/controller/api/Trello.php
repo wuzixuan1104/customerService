@@ -14,17 +14,13 @@ class Trello extends ApiController {
   }
 
   public function callback() {
-    Log::info('===========');
     $data = json_decode(file_get_contents('php://input'), true);
  
     if( !isset($data['action']['type']) || !isset(Webhook::$typeTexts[($callType = trim($data['action']['type']))]) )
       return false;
-    Log::info('test');
     Load::lib('trello/Callback.php');
     $call = Callback::create($data)->$callType();
-    Log::info('end');
     die;
-
 
 
 
