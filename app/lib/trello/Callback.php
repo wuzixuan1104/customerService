@@ -51,4 +51,44 @@ class Callback {
     $this->webhook->response = $response->getHTTPStatus() . ' ' . $response->getRawBody();
     $this->webhook->save();
   }
+
+  public function updateCheckItemStateOnCard() {
+    if( !$card = Card::find_by_key_id($this->action['data']['card']['id']) )
+      return false;
+
+    $item = $this->action['data']['checkItem'];
+    $statusTexts = array_flip(Card::$statusTexts);
+
+    $oriStatus = $card->status;
+
+    //是否變更 trello傳來的狀態 與 Card Status
+    if( $statusTexts[$item['name']] == Card::STATUS_DEAL && $card->status != Card::STATUS_FINISH)
+      $card->status = ($item['state'] == 'complete') ? Card::STATUS_DEAL : Card::STATUS_YET;
+    elseif( $statusTexts[$item['name']] == Card::STATUS_FINISH )
+      $card->status = ($item['state'] == 'complete') ? Card::STATUS_FINISH : Card::STATUS_DEAL;
+
+    $card->save();
+
+    if($card->status == Card::STATUS_FINISH) {
+      Load::lib('LineTool.php');
+      if(!$sid = $card->source->sid)
+        return false;
+
+      $bot = MyLineBot::create();
+      if(!$msg = LineTool::sendScoreForm($card->id, $servicer->id))
+        return false;
+
+      $response = $bot->pushMessage($sid, $msg->builder);
+      $this->webhook->response = $response->getHTTPStatus() . ' ' . $response->getRawBody();
+      $this->webhook->save();
+    }
+   
+    //label標籤 將舊的刪除 添加新的
+    if( $oriStatus != $card->status && $labels = Label::find('all', ['select' => 'key_id, tag', 'where' => ['tag IN (?)', [$oriStatus, $card->status] ] ])) {
+      Load::lib('trello/Send.php');
+      Send::updateCardStatus($card, $labels);
+    }
+    echo 'success';die;
+  }
+
 }
