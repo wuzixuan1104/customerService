@@ -70,14 +70,11 @@ class Callback {
     $card->save();
 
     if($card->status == Card::STATUS_FINISH) {
-      // Load::lib('LineTool.php');
       Load::lib('other/Score.php');
       if(!$sid = $card->source->sid)
         return false;
 
       $bot = MyLineBot::create();
-      // if(!$msg = LineTool::sendScoreForm($card->id, $this->servicer->id))
-      //   return false;   
       if(!$msg = Score::sendForm($card->id, $this->servicer->id))
         return false;
 
