@@ -106,9 +106,7 @@ class Send {
       return MyLineBotMsg::create()->text('資料庫處理失敗');
 
     //將source的idCard做更新
-    $source->process = '';
-    $source->card_id = $card->id;
-    $source->save();
+    ($source->process = json_encode( array('idCard' => $source->card->key_id, 'idList' => $source->card->list->key_id, 'content' => '', 'date' => date('Y-m-d')) )) && ($source->card_id = $card->id) && $source->save();
 
     return MyLineBotMsg::create()->text('已將信件送出給客服系統，請耐心等待回覆！');
   }
