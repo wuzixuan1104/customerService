@@ -39,13 +39,22 @@ class Callback {
       return false;
 
     $bot = MyLineBot::create();
-    $msg = MyLineBotMsg::create ()->multi ([
-              MyLineBotMsg::create ()->text ($this->action['data']['text']),
-              MyLineBotMsg::create()->template('這訊息要用手機的賴才看的到哦',
-                MyLineBotMsg::create()->templateConfirm( '輸入之後請點擊', [
-                  MyLineBotActionMsg::create()->message('取消', '您已按了取消'),
-                  MyLineBotActionMsg::create()->postback('送出', ['lib' => 'trello/Send', 'class' => 'Send','method' => 'reply', 'param' => [] ], '您已按了送出'),]))
-            ]);
+
+    if(Source::isCurrentCard($sid, $card->id)) {
+      $msg = MyLineBotMsg::create ()->multi ([
+                MyLineBotMsg::create ()->text ($this->action['data']['text']),
+                MyLineBotMsg::create()->template('這訊息要用手機的賴才看的到哦',
+                  MyLineBotMsg::create()->templateConfirm( '輸入之後請點擊', [
+                    MyLineBotActionMsg::create()->message('取消', '您已按了取消'),
+                    MyLineBotActionMsg::create()->postback('送出', ['lib' => 'trello/Send', 'class' => 'Send','method' => 'reply', 'param' => [] ], '您已按了送出'),]))
+              ]);
+    } else {
+      $msg = MyLineBotMsg::create()->flex('您有個問題客服已回應，可以前往查看', FlexBubble::create([
+          'header' => FlexBox::create([FlexText::create('您有個問題客服已回應，可以前往查看')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2') ])->setSpacing('xs')->setLayout('horizontal'),
+          'body' => FlexBox::create([FlexBox::create([FlexButton::create('primary')->setColor('#fbd785')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('切換問題並查看', null, json_encode(['lib' => 'postback/Other', 'class' => 'Card', 'method' => 'checkout', 'param' => ['content' => $this->action['data']['text'], 'title' => $card->title, 'card_id' => $card->id, 'datetime' => date('Y-m-d H:i:s')]])))])->setLayout('vertical')->setMargin('xxl')->setSpacing('sm')])->setLayout('vertical'),
+          'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
+        ]));
+    }
 
     $response = $bot->pushMessage($sid, $msg->builder);
     $this->webhook->response = $response->getHTTPStatus() . ' ' . $response->getRawBody();
@@ -95,5 +104,7 @@ class Callback {
       if( $card->destroy() )
         return false;
   }
+
+
 
 }

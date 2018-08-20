@@ -44,6 +44,12 @@ class Source extends Model {
     return $this->delete ();
   }
 
+  public static function isCurrentCard($sid, $cardId) {
+    if(($obj = Source::find_by_sid($sid)) && $obj->card_id == $cardId)
+      return true;
+    return false;
+  }
+
   public static function getType($event) {
     if( $event->isUserEvent() ) return Source::TYPE_USER;
     if( $event->isGroupEvent() ) return Source::TYPE_GROUP;
