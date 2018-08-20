@@ -60,7 +60,7 @@ class Callback {
     $statusTexts = array_flip(Card::$statusTexts);
 
     $oriStatus = $card->status;
-
+  
     //是否變更 trello傳來的狀態 與 Card Status
     if( $statusTexts[$item['name']] == Card::STATUS_DEAL && $card->status != Card::STATUS_FINISH)
       $card->status = ($item['state'] == 'complete') ? Card::STATUS_DEAL : Card::STATUS_YET;
@@ -88,7 +88,6 @@ class Callback {
       Load::lib('trello/Send.php');
       Send::updateCardStatus($card, $labels);
     }
-    echo 'success';die;
   }
 
 }
