@@ -8,8 +8,9 @@
 不同種類的問題可以分別指派給不同群的客服專員回答，當有人提出該分類的問題，便會發送通知給該專員回答，而每個問題都會有時間提醒，問題會依照時間有不同的標籤顏色警示。
 
 ## trello客服後台
-<img align="center" src='assets/img/trello1.png' width='800'>
-
+<p align="center">
+  <img src='assets/img/trello1.png' width='800'>
+</p>
 ## Client端開始操作機器人摟！
 ### Step0. 打開 "更多" 選單
 ### Step1. 點選 "使用說明"，讓您更方便操作
@@ -17,8 +18,9 @@
 ### Step2. 點選 "我要問問題", 開始回覆並送出訊息至Trello後台
 + 接著選擇問題分類後開始回覆
 + 後台收到機器人傳來的訊息，客服人員便會開始處理並回覆，若此問題尚未結束仍然可以問下一個問題(問題分類不拘)
-<img align="center" src='assets/img/linebot/1.PNG' width='300'>
-
+<p align="center">
+  <img src='assets/img/linebot/1.PNG' width='300'>
+</p>
 ### Step3. 當您一次有多個問題時，您可以點選 "進行中的問題"，並對尚未結束的問題進行切換
 
 > 列表會顯示`問題進度狀態`，依照`分類`做排序
