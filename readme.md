@@ -7,11 +7,18 @@
 目前問題種類簡單分為：檢舉配送品質、退貨問題、貨到缺件反應、付款問題、換貨問題、維修保固問題、發票問題、我要申訴。
 不同種類的問題可以分別指派給不同群的客服專員回答，當有人提出該分類的問題，便會發送通知給該專員回答，而每個問題都會有時間提醒，問題會依照時間有不同的標籤顏色警示。
 
+## 技術
++ Linebot Api: https://developers.line.me/en/docs/messaging-api/overview/
++ Trello Api: https://developers.trello.com/v1.0/reference#introduction 
+
+## 樣板
++ 自行設計使用Line Flex template : https://developers.line.me/en/docs/messaging-api/flex-message-elements/
+
 ## trello客服後台
 <img src='assets/img/trello1.png' width='800'>
 
 ## Client端開始操作機器人摟！
-### Step0. 打開 "更多" 選單
+### Step0. 打開下方 "更多" 選單
 ### Step1. 點選 "使用說明"，讓您更方便操作
 + 使用說明也會在一加入機器人後跳出
 ### Step2. 點選 "我要問問題", 開始回覆並送出訊息至Trello後台
