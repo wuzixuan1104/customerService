@@ -178,7 +178,7 @@ class Contact {
 
     return MyLineBotMsg::create()->flex('開始在下方輸入意見內容', FlexBubble::create([
       'header' => FlexBox::create([FlexText::create('開始在下方輸入意見內容')->setWeight('bold')->setSize('lg')->setColor('#e8f6f2') ])->setSpacing('xs')->setLayout('horizontal'),
-      'body' => FlexBox::create([FlexBox::create([FlexButton::create('primary')->setColor('#f97172')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('回覆訊息後按此送出', null, json_encode(['lib' => 'other/Opinion', 'class' => 'Opinion', 'method' => 'send', 'param' => []])))])->setLayout('vertical')->setMargin('xxl')->setSpacing('sm')])->setLayout('vertical'),
+      'body' => FlexBox::create([FlexBox::create([FlexButton::create('primary')->setColor('#f97172')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('回覆訊息後按此送出', null, json_encode(['lib' => 'other/Contact', 'class' => 'Contact', 'method' => 'send', 'param' => []])))])->setLayout('vertical')->setMargin('xxl')->setSpacing('sm')])->setLayout('vertical'),
       'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
     ]));
   }
