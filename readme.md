@@ -25,10 +25,10 @@
 1. 進行中的問題列表
 <img src='assets/img/linebot/2.PNG' width='300'>
 
-<!-- 3. 點選"切換", 切換列表有以下兩個按鈕
+3. 點選"切換", 切換列表有以下兩個按鈕
 <img src='assets/img/linebot/3.PNG' width='300'>
 
-+ 點選 "檢視先前的歷史紀錄"
+<!--+ 點選 "檢視先前的歷史紀錄"
 <img src='assets/img/linebot/4.PNG' width='300'>
 
 + 輸入問題後，再點選 "回覆訊息後按此送出"
