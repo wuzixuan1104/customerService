@@ -12,7 +12,7 @@
 + Trello Api: https://developers.trello.com/v1.0/reference#introduction 
 
 ## 樣板
-+ 自行設計使用Line Flex template : https://developers.line.me/en/docs/messaging-api/flex-message-elements/
++ 自行設計，使用Line Flex template : https://developers.line.me/en/docs/messaging-api/flex-message-elements/
 
 ## trello客服後台
 <img src='assets/img/trello1.png' width='800'>
