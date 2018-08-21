@@ -13,10 +13,13 @@ class Contact {
   public static function send() {
     ($args = func_get_args()) && ($source = $args[1]) && ($process = json_decode($source->process, true));
     
+    if(!$process['content'])
+      return MyLineBotMsg::create()->text('請於下方輸入文字訊息後再送出');
+
     if(!Opinion::create(['source_id' => $source->id, 'card_id' => 0, 'servicer_id' => 0, 'score' => '', 'content' => $process['content']]))
       return MyLineBotMsg::create()->text('系統發生錯誤');
 
-    return MyLineBotMsg::create()->text('已順利送出您的意見回饋');
+    return MyLineBotMsg::create()->text('已順利送出，感謝您的意見回饋！');
   }
 }
 
