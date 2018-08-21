@@ -18,9 +18,9 @@
 + 接著選擇問題分類後開始回覆
 + 後台收到機器人傳來的訊息，客服人員便會開始處理並回覆，若此問題尚未結束仍然可以問下一個問題(問題分類不拘)
 
-<p align="center">
+<!-- <p align="center"> -->
   <img src='assets/img/linebot/1.PNG' width='300'>
-</p>
+<!-- </p> -->
 
 ### Step3. 當您一次有多個問題時，您可以點選 "進行中的問題"，並對尚未結束的問題進行切換
 
@@ -28,29 +28,29 @@
 
 1. 進行中的問題列表
 
-<p align="center">
+<!-- <p align="center"> -->
   <img src='assets/img/linebot/2.PNG' width='300'>
-</p>
+<!-- </p> -->
 
 3. 點選"切換", 切換列表有以下兩個按鈕
 
-<p align="center">
+<!-- <p align="center"> -->
   <img src='assets/img/linebot/3.PNG' width='300'>
-</p>
+<!-- </p> -->
 
 + 點選 "檢視先前的歷史紀錄"
 
-<p align="center">
+<!-- <p align="center"> -->
   <img src='assets/img/linebot/4.PNG' width='300'>
-</p>
+<!-- </p> -->
 
 + 輸入問題後，再點選 "回覆訊息後按此送出"
 
 + 送出成功
 
-<p align="center">
+<!-- <p align="center"> -->
   <img src='assets/img/linebot/5.PNG' width='300'>
-</p>
+<!-- </p> -->
 
 + 客服回覆後傳送至機器人，可以針對回覆繼續一來一往的回答雙方問題
 
@@ -64,7 +64,7 @@
 ### Step6. 點選 "意見回饋"
 1. 回覆後，點選 "送出鈕"
 
-<p align="center">
+<!-- <p align="center"> -->
   <img src='assets/img/linebot/6.PNG' width='300'>
-</p>
+<!-- </p> -->
 
