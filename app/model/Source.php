@@ -44,6 +44,12 @@ class Source extends Model {
     return $this->delete ();
   }
 
+  public static function isCurrentCard($sid, $cardId) {
+    if(($obj = Source::find_by_sid($sid)) && ($obj->card_id == $cardId))
+      return true;
+    return false;
+  }
+
   public static function getType($event) {
     if( $event->isUserEvent() ) return Source::TYPE_USER;
     if( $event->isGroupEvent() ) return Source::TYPE_GROUP;
@@ -105,5 +111,21 @@ class Source extends Model {
     }
 
     return $obj;
+  }
+
+  //儲存個人處理程序
+  public function saveProcess($text) {
+    $process = json_decode($this->process, true);
+    if( empty($process) || empty($text) )
+      return false;
+
+    if( $process['date'] && strtotime('today') > strtotime('+1 week', strtotime($process['date'])) ) {
+      $process = '';
+    } else {
+      $process['content'] .= $text . "\r\n";
+      $process = json_encode($process);
+    }
+    $this->process = $process;
+    $this->save();
   }
 }

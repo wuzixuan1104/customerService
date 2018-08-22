@@ -12,57 +12,6 @@
 class main extends Controller {
 
   public function index () {
-    Load::lib('MyLineBot.php');
-
-    $a = FlexCarousel::create([
-    FlexBubble::create([
-      'header' => FlexBox::create([ FlexText::create('Title')->setSize('xl')->setWeight('bold') ])->setLayout('vertical'),
-      'hero' => FlexImage::create('https://sitthi.me:3807/static/fifa.jpg')->setSize('full')->setAspectRatio('20:13')->setAspectMode('cover'),
-      'body' =>
-        FlexBox::create([
-          FlexBox::create([ FlexText::create('LIVE!!')->setSize('lg')->setColor('#555555')->setWeight('bold')->setAlign('center') ])->setLayout('vertical')->setSpacing('md'),
-          FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
-          FlexSeparator::create()->setMargin('lg'),
-          FlexBox::create([
-            FlexBox::create([
-              FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
-              FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
-            ])->setLayout('horizontal')->setSpacing('sm'),
-            FlexBox::create([
-              FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
-              FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
-            ])->setLayout('horizontal')->setSpacing('sm'),
-          ])->setLayout('vertical')->setMargin('lg')->setSpacing('sm'),
-        ])->setLayout('vertical'),
-      'footer' => FlexBox::create([ FlexButton::create('secondary')->setAction( FlexAction::postback('a', '123', 'e') )->setMargin('sm') ])->setLayout('vertical')
-
-    ]),
-
-    FlexBubble::create([
-      'header' => FlexBox::create([ FlexText::create('Title')->setSize('xl')->setWeight('bold') ])->setLayout('vertical'),
-      'hero' => FlexImage::create('https://sitthi.me:3807/static/fifa.jpg')->setSize('full')->setAspectRatio('20:13')->setAspectMode('cover'),
-      'body' =>
-        FlexBox::create([
-          FlexBox::create([ FlexText::create('LIVE!!')->setSize('lg')->setColor('#555555')->setWeight('bold')->setAlign('center') ])->setLayout('vertical')->setSpacing('md'),
-          FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
-          FlexSeparator::create()->setMargin('lg'),
-          FlexBox::create([
-            FlexBox::create([
-              FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
-              FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
-            ])->setLayout('horizontal')->setSpacing('sm'),
-            FlexBox::create([
-              FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
-              FlexButton::create('primary')->setAction( FlexAction::postback('a', '123', 'e') ),
-            ])->setLayout('horizontal')->setSpacing('sm'),
-          ])->setLayout('vertical')->setMargin('lg')->setSpacing('sm'),
-        ])->setLayout('vertical'),
-      'footer' => FlexBox::create([ FlexButton::create('secondary')->setAction( FlexAction::postback('a', '123', 'e') )->setMargin('sm') ])->setLayout('vertical')
-
-    ]),
-  ]);
-    print_R($a);
-    die;
 
     $asset = Asset::create (2)
                   // ->addCSS ('/assets/css/icon-site.css')

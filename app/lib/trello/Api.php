@@ -1,7 +1,7 @@
 <?php
 Load::lib('Curl.php');
 
-class TrelloApi {
+class Api {
   private $key;
   private $token;
   public $url;
@@ -13,7 +13,7 @@ class TrelloApi {
   }
 
   public static function create() {
-    return new TrelloApi( config('trello', 'key'), config('trello', 'token') );
+    return new Api( config('trello', 'key'), config('trello', 'token') );
   }
 
   public function post($req, $args = false) {

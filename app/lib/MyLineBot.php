@@ -351,8 +351,8 @@ class MyLineBotActionMsg {
   public function uri($label, $url) {
     return is_string($label) ? new UriTemplateActionBuilder($label, $url) : null;
   }
-  public function postback($label, $data, $text) {
-    return is_string($label) && ($data = is_array($data) ? json_encode($data) : $data ) && !is_null($text) ? new PostbackTemplateActionBuilder($label, $data, $text) : null;
+  public function postback($label, $data, $text = null) {
+    return is_string($label) && ($data = is_array($data) ? json_encode($data) : $data ) ? new PostbackTemplateActionBuilder($label, $data, null) : null;
   }
 
   public function imagemapMsg($text, $x, $y, $width, $height) {
@@ -727,7 +727,7 @@ class FlexAction {
 class RichMenuGenerator {
   public static function create() {
     if(!$richMenuId = RichMenu::create(BuildRichMenu::create(
-                  BuildRichMenu::size(843), false, '客服系統', '更多',
+                  BuildRichMenu::size(843), true, '客服系統', '更多',
                   [ 
                     BuildRichMenu::area(BuildRichMenu::areaBound(0, 0, 625, 843), MyLineBotActionMsg::create()->postback('我要問問題', json_encode( ['lib' => 'postback/RichMenu', 'class' => 'NewQa', 'method' => 'create', 'param' => [] ]), '我要問問題')),
                     BuildRichMenu::area(BuildRichMenu::areaBound(625, 0, 625, 843), MyLineBotActionMsg::create()->postback('進行中的問題', json_encode( ['lib' => 'postback/RichMenu', 'class' => 'Qa', 'method' => 'create', 'param' => [] ]), '進行中的問題')),

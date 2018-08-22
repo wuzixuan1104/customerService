@@ -11,8 +11,8 @@ class cli extends Controller {
   public $boardId = '5b3f393987de8b4eae408938';
 
   public function index () {
-    Load::lib('TrelloApi.php');
-    $trello = TrelloApi::create();
+    Load::lib('trello/Api.php');
+    $trello = Api::create();
 
     //board 目前先指定其中一版
     if( !$board = Board::create( array('key_id' => $this->boardId, 'name' => 'EC客服信箱', 'code' => 'lVs4BU5d') ) )

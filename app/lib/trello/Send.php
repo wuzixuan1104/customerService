@@ -7,7 +7,7 @@
  * @link        https://www.ioa.tw/
  */
 
-Load::lib('TrelloApi.php');
+Load::lib('trello/Api.php');
 
 class Send {
   public static function reply() {
@@ -17,12 +17,18 @@ class Send {
 
     $process = json_decode($source->process, true);
 
+    if( $process['date'] && strtotime('today') > strtotime('+1 week', strtotime($process['date'])) ) 
+      return MyLineBotMsg::create()->text('此問題已超過7天未送出，無法操作此步驟');
+    
+    if(!$process['content'])
+      return MyLineBotMsg::create()->text('請先在下方輸入回應再按送出');
+
     ($source->process = json_encode( array('idCard' => $source->card->key_id, 'idList' => $source->card->list->key_id, 'content' => '', 'date' => date('Y-m-d')) )) && $source->save();
 
     if(!History::create(['card_id' => $source->card_id, 'servicer_id' => 0, 'content' => $process['content']]) )
           return false;
 
-    $trello = TrelloApi::create();
+    $trello = Api::create();
     if( !$oriCard = $trello->get('/1/cards/' . $source->card->key_id) )
       return MyLineBotMsg::create()->text('查無原本問題');
 
@@ -39,10 +45,14 @@ class Send {
   public static function card() {
     $source = func_get_args()[1];
     $process = json_decode($source->process, true);
-    if( $process['date'] && strtotime('today') > strtotime('+1 week', strtotime($process['date'])) ) {
+    if($process['date'] && strtotime('today') > strtotime('+1 week', strtotime($process['date'])) ) {
       $source->process = '';
       $source->save();
       return MyLineBotMsg::create()->text('此問題已超過7天未送出，無法操作此步驟');
+    }
+
+    if($process['idCard'] && Card::find_by_key_id($process['idCard'])) {
+      return MyLineBotMsg::create()->text("此問題之前已送出，若需要詢問該問題，請操作以下步驟。\r\n1. 請點選下面選單\"更多\" \r\n2. 點擊\"進行中的問題\"進行回覆\r\n 感謝您的使用！");
     }
 
     if( !$list = TList::find_by_key_id($process['idList']) )
@@ -62,7 +72,7 @@ class Send {
     );
 
     //新增trello card
-    $trello = TrelloApi::create();
+    $trello = Api::create();
     if( !$res = $trello->post('/1/cards', $param) )
       return MyLineBotMsg::create()->text('無法傳送trello卡片');
 
@@ -102,10 +112,31 @@ class Send {
       return MyLineBotMsg::create()->text('資料庫處理失敗');
 
     //將source的idCard做更新
-    $source->process = '';
-    $source->card_id = $card->id;
-    $source->save();
+    ($source->process = json_encode( array('idCard' => $source->card->key_id, 'idList' => $source->card->list->key_id, 'content' => '', 'date' => date('Y-m-d')) )) && ($source->card_id = $card->id) && $source->save();
 
     return MyLineBotMsg::create()->text('已將信件送出給客服系統，請耐心等待回覆！');
   }
+
+  public static function updateCardStatus($card, $labels, $oriStatus) {
+    if(!($card && $labels && $oriStatus))
+      return false;
+
+    $trello = Api::create();
+    if( !$trello->put('/1/cards/' . $card->key_id, $card->status == Card::STATUS_FINISH ? array('dueComplete' => true, 'pos' => 'bottom') : array('dueComplete' => false, 'pos' => 'top') ) )
+      return false;
+
+    foreach( $labels as $label ) {
+      switch( $label->tag ) {
+        case $oriStatus:
+          if( !$trello->delete('/1/cards/' . $card->key_id . '/idLabels/' . $label->key_id ) )
+            return false;
+          break;
+        case $card->status:
+          if( !$trello->post('/1/cards/' . $card->key_id . '/idLabels', array('value' => $label->key_id) ) )
+            return false;
+          break;
+      }
+    }
+  }
+
 }

@@ -33,7 +33,7 @@ class Card extends Model {
   static $statusTexts = array (
     self::STATUS_NEW  => '新new',
     self::STATUS_YET => '尚未處理',
-    self::STATUS_DEAL  => '處理中...',
+    self::STATUS_DEAL  => '處理中',
     self::STATUS_FINISH  => '已完成',
   );
 
