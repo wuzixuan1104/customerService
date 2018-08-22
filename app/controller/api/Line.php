@@ -38,24 +38,6 @@ class Line extends ApiController {
           //   $msg->reply($event->getReplyToken());
           break;
         case 'Text':
-
-          $buttons = [];
-          foreach(array_chunk(range(1, 10), 3) as $gValue) {
-            $tmp = [];
-            foreach($gValue as $v) 
-              $tmp[] = FlexButton::create('primary')->setColor('#efa35c')->setAction(FlexAction::postBack((string)$v, $v . '分', json_encode(array('lib' => 'other/Score', 'class' => 'Score', 'method' => 'getScore', 'param' => array('card_id' => '123', 'servicer_id' => '123', 'score' => '123'))  ) ) );
-            $buttons[] = FlexBox::create($tmp)->setLayout('horizontal')->setSpacing('sm');
-          }
-
-            MyLineBotMsg::create()->flex('test', FlexBubble::create([
-              'header'  => FlexBox::create([
-                            FlexText::create('客服評分表(請點選1~10分)')->setColor('#e8f6f2')->setSize('lg')->setWeight('bold')])->setLayout('horizontal')->setSpacing('xs'), 
-              'body'    => FlexBox::create([
-                            FlexBox::create($buttons)->setLayout('vertical')->setMargin('lg')->setSpacing('sm')
-                           ])->setLayout('vertical'),
-              'styles' => FlexStyles::create()->setHeader( FlexBlock::create()->setBackgroundColor('#12776e') )
-            ]))->reply($event->getReplyToken());
-            die;
           //檢查Source process是否非空，是則新增進去
           if(!empty($source->process))
             $source->saveProcess($event->getText());
