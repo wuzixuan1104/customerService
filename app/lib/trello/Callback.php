@@ -41,7 +41,6 @@ class Callback {
     $bot = MyLineBot::create();
 
     if(Source::isCurrentCard($sid, $card->id)) {
-
       $flexes = [];
       $flexes[] = FlexText::create('傳送時間：'. date('Y-m-d H:i:s'))->setColor('#aaaaaa')->setSize('xxs')->setAlign('start');
       $contents = explode("\r\n", $this->action['data']['text']);
@@ -50,11 +49,11 @@ class Callback {
       $flexes[] = FlexButton::create('primary')->setColor('#f97172')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('回覆訊息後按此送出', '您按了送出訊息', json_encode(['lib' => 'trello/Send', 'class' => 'Send', 'method' => 'reply', 'param' => []])));
      
       $msg = MyLineBotMsg::create()->flex('檢視問題內容', FlexBubble::create([
-              'header' => FlexBox::create([FlexText::create($title)->setWeight('bold')->setSize('md')->setColor('#e8f6f2')])->setSpacing('xs')->setLayout('horizontal'),
+              'header' => FlexBox::create([FlexText::create('客服回覆問題')->setWeight('bold')->setSize('md')->setColor('#e8f6f2')])->setSpacing('xs')->setLayout('horizontal'),
               'body' => FlexBox::create($flexes)->setLayout('vertical')->setSpacing('md'),
               'styles' => FlexStyles::create()->setHeader(FlexBlock::create()->setBackgroundColor('#12776e'))
             ]));
-     
+   
       // $msg = MyLineBotMsg::create ()->multi ([
       //           MyLineBotMsg::create ()->text ($this->action['data']['text']),
       //           MyLineBotMsg::create()->template('這訊息要用手機的賴才看的到哦',
