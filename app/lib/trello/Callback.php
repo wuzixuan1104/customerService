@@ -91,9 +91,9 @@ class Callback {
       $card->status = ($item['state'] == 'complete') ? Card::STATUS_FINISH : Card::STATUS_DEAL;
 
     $card->save();
-
+    
     if($card->status == Card::STATUS_FINISH) {
-      Load::lib('other/Score.php');
+      Load::lib('other/Contact.php');
       if(!$sid = $card->source->sid)
         return false;
 
@@ -105,7 +105,6 @@ class Callback {
       $this->webhook->response = $response->getHTTPStatus() . ' ' . $response->getRawBody();
       $this->webhook->save();
     }
-    
     //label標籤 將舊的刪除 添加新的
     if( $oriStatus != $card->status && $labels = Label::find('all', ['select' => 'key_id, tag', 'where' => ['tag IN (?)', [$oriStatus, $card->status] ] ])) {
       Load::lib('trello/Send.php');
