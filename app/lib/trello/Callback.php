@@ -43,7 +43,7 @@ class Callback {
     if(Source::isCurrentCard($sid, $card->id)) {
       $flexes = [];
       $flexes[] = FlexText::create('傳送時間：'. date('Y-m-d H:i:s'))->setColor('#aaaaaa')->setSize('xxs')->setAlign('start');
-      $contents = explode("\r\n", $this->action['data']['text']);
+      $contents = explode("<br>", $this->action['data']['text']);
       foreach($contents as $content) 
         $content && $flexes[] = FlexText::create($content)->setSize('xs');
       $flexes[] = FlexButton::create('primary')->setColor('#f97172')->setHeight('sm')->setGravity('center')->setAction(FlexAction::postback('回覆訊息後按此送出', '您按了送出訊息', json_encode(['lib' => 'trello/Send', 'class' => 'Send', 'method' => 'reply', 'param' => []])));
