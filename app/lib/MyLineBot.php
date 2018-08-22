@@ -726,27 +726,28 @@ class FlexAction {
 
 class RichMenuGenerator {
   public static function create() {
-
-    if($lists = RichMenu::getMenuList() && isset($lists['richmenus'])) 
-      foreach($lists['richmenus'] as $list) 
-        if(!RichMenu::delete($list['richMenuId']))
-          return false;
-
     if(!$richMenuId = RichMenu::create(BuildRichMenu::create(
                   BuildRichMenu::size(843), false, '客服系統', '更多',
                   [ 
-                    BuildRichMenu::area(BuildRichMenu::areaBound(0, 0, 833, 843), MyLineBotActionMsg::create()->postback('您已點擊正在進行中的問題', json_encode( ['lib' => 'postback/RichMenu', 'class' => 'Qa', 'method' => 'create', 'param' => [] ]), '您已點擊正在進行中的問題')),
-                    BuildRichMenu::area(BuildRichMenu::areaBound(834, 0, 833, 843), MyLineBotActionMsg::create()->postback('您已點擊首頁', json_encode( ['lib' => 'postback/RichMenu', 'class' => 'Menu', 'method' => 'create', 'param' => [] ]), '您已點擊首頁')),
-                    BuildRichMenu::area(BuildRichMenu::areaBound(1668, 0, 833, 843), MyLineBotActionMsg::create()->postback('您已點擊意見回饋', json_encode( ['lib' => 'postback/RichMenu', 'class' => 'Contact', 'method' => 'create', 'param' => [] ]), '您已點擊意見回饋')),
+                    BuildRichMenu::area(BuildRichMenu::areaBound(0, 0, 625, 843), MyLineBotActionMsg::create()->postback('我要問問題', json_encode( ['lib' => 'postback/RichMenu', 'class' => 'NewQa', 'method' => 'create', 'param' => [] ]), '我要問問題')),
+                    BuildRichMenu::area(BuildRichMenu::areaBound(625, 0, 625, 843), MyLineBotActionMsg::create()->postback('進行中的問題', json_encode( ['lib' => 'postback/RichMenu', 'class' => 'Qa', 'method' => 'create', 'param' => [] ]), '進行中的問題')),
+                    BuildRichMenu::area(BuildRichMenu::areaBound(1250, 0, 625, 843), MyLineBotActionMsg::create()->postback('意見回饋', json_encode( ['lib' => 'postback/RichMenu', 'class' => 'Contact', 'method' => 'create', 'param' => [] ]), '意見回饋')),
+                    BuildRichMenu::area(BuildRichMenu::areaBound(1875, 0, 625, 843), MyLineBotActionMsg::create()->postback('使用說明', json_encode( ['lib' => 'postback/RichMenu', 'class' => 'Explain', 'method' => 'create', 'param' => [] ]), '使用說明')),
                   ]
     )))
       return false;
 
-    if(!$img = RichMenu::uploadImage($richMenuId, '/Users/wu-tzu-hsuan/www/customerService/assets/img/menu_v1.png', 'image/png'))
+    if(!$img = RichMenu::uploadImage($richMenuId, '/Users/wu-tzu-hsuan/www/customerService/assets/img/menu_v2.png', 'image/png'))
       return false;
-
+    
     if($unlink = RichMenu::unlinkToUser('Uef2e17250863e4724e74578bd34ed333') && !RichMenu::linkToUser('Uef2e17250863e4724e74578bd34ed333', $richMenuId))
       return false;
+
+    if($lists = RichMenu::getMenuList() && isset($lists['richmenus'])) 
+      foreach($lists['richmenus'] as $list) 
+        if($list['richMenuId'] != $richMenuId && !RichMenu::delete($list['richMenuId']))
+          return false;
+
     return true;
   }
 }
