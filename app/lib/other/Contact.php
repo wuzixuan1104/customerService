@@ -33,7 +33,7 @@ class Score {
     foreach(array_chunk(range(1, 10), 3) as $gValue) {
       $tmp = [];
       foreach($gValue as $v) 
-        $tmp[] = FlexButton::create('primary')->setColor('#efa35c')->setAction(FlexAction::postBack((string)$v, $v . '分', json_encode(array('lib' => 'other/Score', 'class' => 'Score', 'method' => 'getScore', 'param' => array('card_id' => $cardId, 'servicer_id' => $servicerId, 'score' => $v))  ) ) );
+        $tmp[] = FlexButton::create('primary')->setColor('#efa35c')->setAction(FlexAction::postBack((string)$v, $v . '分', json_encode(array('lib' => 'other/Contact', 'class' => 'Score', 'method' => 'getScore', 'param' => array('card_id' => $cardId, 'servicer_id' => $servicerId, 'score' => $v))  ) ) );
       $buttons[] = FlexBox::create($tmp)->setLayout('horizontal')->setSpacing('sm');
     }
 
