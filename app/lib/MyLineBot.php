@@ -725,7 +725,14 @@ class FlexAction {
 }
 
 class RichMenuGenerator {
+  public static function create4user($sid) {
+    if(!RichMenu::linkToUser($sid, 'richmenu-51074838d66199df599ff02364052026'))
+      return false;
+    return true;
+  }
   public static function create() {
+
+   
     if(!$richMenuId = RichMenu::create(BuildRichMenu::create(
                   BuildRichMenu::size(843), true, '客服系統', '更多',
                   [ 
@@ -737,19 +744,15 @@ class RichMenuGenerator {
     )))
       return false;
 
-    if(!$img = RichMenu::uploadImage($richMenuId, '/Users/wu-tzu-hsuan/www/customerService/assets/img/menu_v2.png', 'image/png'))
-      return false;
-    
-    if($unlink = RichMenu::unlinkToUser('Uef2e17250863e4724e74578bd34ed333') && !RichMenu::linkToUser('Uef2e17250863e4724e74578bd34ed333', $richMenuId))
+    if(!$img = RichMenu::uploadImage($richMenuId, '/Users/chestnuter/www/linebot/customerService/assets/img/menu_v2.png', 'image/png'))
       return false;
 
-    if($lists = RichMenu::getMenuList() && isset($lists['richmenus'])) 
-      foreach($lists['richmenus'] as $list) 
-        if($list['richMenuId'] != $richMenuId && !RichMenu::delete($list['richMenuId']))
-          return false;
-
+    if($unlink = RichMenu::unlinkToUser('U946c6cf2c20e67cb29aa2a0ac1467187') && !RichMenu::linkToUser('Uef2e17250863e4724e74578bd34ed333', $richMenuId))
+      return false;
     return true;
   }
+
+  
 }
 
 class RichMenu {
@@ -763,8 +766,7 @@ class RichMenu {
     return ($res = MyLineBot::bot()->getRichMenuId($userId)) && $res->isSucceeded() ? $res->getJSONDecodedBody() : false;
   }
   public static function linkToUser($userId, $richMenuId) {
-    Log::error('debug4: ' . $userId . '/' . $richMenuId);
-    Log::error('debug5' . json_encode(MyLineBot::bot()->linkRichMenu($userId, $richMenuId)) );
+
     return ($res = MyLineBot::bot()->linkRichMenu($userId, $richMenuId)) && $res->isSucceeded() ? true : false;
   }
   public static function unlinkToUser($userId) {
