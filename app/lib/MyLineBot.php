@@ -763,6 +763,8 @@ class RichMenu {
     return ($res = MyLineBot::bot()->getRichMenuId($userId)) && $res->isSucceeded() ? $res->getJSONDecodedBody() : false;
   }
   public static function linkToUser($userId, $richMenuId) {
+    Log::error('debug4: ' . $userId . '/' . $richMenuId);
+    Log::error('debug5' . json_encode(MyLineBot::bot()->linkRichMenu($userId, $richMenuId)) );
     return ($res = MyLineBot::bot()->linkRichMenu($userId, $richMenuId)) && $res->isSucceeded() ? true : false;
   }
   public static function unlinkToUser($userId) {

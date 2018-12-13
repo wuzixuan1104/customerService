@@ -70,7 +70,7 @@ class Source extends Model {
     Log::error('debug0: 123');
     if( !$sid = $event->getEventSourceId() )
       return false;
-
+    Log::error('debug sourceId: ' . $sid);
     if( !$obj = Source::find('one', array('where' => array('sid = ?', $sid) ) ) ) {
       $param = array(
         'sid' => $sid,
