@@ -67,6 +67,7 @@ class Source extends Model {
   }
 
   public static function checkSourceExist($event) {
+    Log::error('debug0: 123');
     if( !$sid = $event->getEventSourceId() )
       return false;
 
@@ -76,10 +77,12 @@ class Source extends Model {
         'title' => Source::getTitle($event),
         'type' => self::getType($event),
       );
-
+      Log::error('debug1: ' . json_encode($param));
       if(($richmenus = RichMenu::getMenuList()) && $richMenuId = $richmenus['richmenus'][0]['richMenuId']) {
+        Log::error('debug2: ' . $richmenus['richmenus'][0]['richMenuId']);
         if(!RichMenu::linkToUser($sid, $richMenuId))
           return false;
+        Log::error('debug3: ');
       } 
 
       $transaction = function() use (&$obj, $param){ 
