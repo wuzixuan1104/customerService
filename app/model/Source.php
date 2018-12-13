@@ -77,7 +77,7 @@ class Source extends Model {
         'type' => self::getType($event),
       );
 
-      $transaction = function() use (&$obj, $param){ 
+      $transaction = function() use (&$obj, $sid, $param){
         if(!RichMenuGenerator::create4user($sid))
           return false;
         return $obj = Source::create( $param );
