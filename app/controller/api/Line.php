@@ -29,14 +29,6 @@ class Line extends ApiController {
         return false;
 
       switch( get_class($log) ) {
-        case 'Join':
-          // if ( $msg = LineTool::start() )
-          //   $msg->reply($event->getReplyToken());
-          break;
-        case 'Follow':
-          // if ( $msg = LineTool::start() )
-          //   $msg->reply($event->getReplyToken());
-          break;
         case 'Text':
           //檢查Source process是否非空，是則新增進去
           if(!empty($source->process))
